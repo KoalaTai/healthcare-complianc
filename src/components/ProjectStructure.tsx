@@ -143,6 +143,9 @@ export function ProjectStructure() {
               {[
                 { name: 'Cybersecurity Plan v2.0', status: 'generated' },
                 { name: '21 CFR Part 11 Compliance Strategy', status: 'generated' },
+                { name: 'AI Model Validation Protocol', status: 'generated' },
+                { name: 'IQ Protocol', status: 'generated' },
+                { name: 'Disaster Recovery Plan', status: 'generated' },
                 { name: 'Terms of Service', status: 'generated' },
                 { name: 'Privacy Policy', status: 'generated' },
                 { name: 'Service Level Agreement', status: 'generated' }
@@ -172,7 +175,8 @@ export function ProjectStructure() {
                 'AI_Model_Validation_Protocol.md',
                 'Installation_Qualification_IQ_Protocol.md',
                 'Disaster_Recovery_Plan.md',
-                'compliance_architecture.py'
+                'enterprise_sso_config.py',
+                'multi_tenant_architecture.py'
               ].map((file, index) => (
                 <div key={index} className="flex items-center gap-2 p-2 rounded-md border">
                   <FileText size={16} className="text-muted-foreground" />

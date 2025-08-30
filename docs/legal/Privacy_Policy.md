@@ -1,293 +1,243 @@
-# Privacy Policy
-## VirtualBackroom.ai Regulatory Compliance SaaS Platform
+*This document is an AI-generated template and requires review by qualified legal counsel.*
 
-**Legal Disclaimer:** *This document is an AI-generated template and requires review by qualified legal counsel.*
+# Privacy Policy - VirtualBackroom.ai
 
-**Document Control:**
-- Version: 2.0
-- Effective Date: [To be determined]
-- Last Updated: 2024
-- Data Protection Officer: [To be assigned]
+**Effective Date**: [DATE]  
+**Last Updated**: [DATE]
 
----
+## 1. Introduction
 
-## 1. Introduction and Scope
+VirtualBackroom.ai ("we," "our," or "us") respects your privacy and is committed to protecting your personal data. This Privacy Policy explains how we collect, use, process, and disclose information about you when you use our regulatory compliance analysis service.
 
-This Privacy Policy describes how VirtualBackroom.ai, Inc. ("Company", "We", "Us", "Our") collects, uses, processes, and protects personal information when you use our regulatory compliance analysis platform ("Service").
+This policy applies to all users of VirtualBackroom.ai, including individuals accessing the service through enterprise single sign-on systems.
 
-This Policy applies to all users of VirtualBackroom.ai, including:
-- Individual users accessing the Service
-- Organizations subscribing to enterprise accounts
-- Visitors to our website and marketing materials
+## 2. Information We Collect
 
-**Important Notice**: VirtualBackroom.ai is designed for business-to-business use. We do not knowingly collect personal information from individuals under 18 years of age.
+### 2.1 Information You Provide Directly
 
-## 2. Legal Bases for Processing
+**Account Information**:
+- Name, email address, and professional title (obtained through enterprise SSO)
+- Organization affiliation and role within organization
+- Contact information for account administration
 
-We process personal information under the following lawful bases:
-- **Contract Performance**: Processing necessary to provide the Service you've requested
-- **Legitimate Interest**: Business operations, security, and service improvement
-- **Legal Obligation**: Compliance with applicable laws and regulations
-- **Consent**: Specific consent for marketing communications (where required)
+**Content Data**:
+- Quality management system documents uploaded for analysis
+- Comments, notes, and annotations added to analysis reports
+- Configuration preferences and analysis settings
 
-For EU users under GDPR, we rely primarily on contract performance and legitimate interest as our lawful bases for processing.
+### 2.2 Information Collected Automatically
 
-## 3. Information We Collect
+**Usage Information**:
+- Login times, session duration, and feature usage patterns
+- Document upload timestamps and analysis request details
+- System interactions and navigation patterns within the service
 
-### 3.1 Account Information
-- **User Identity Data**: Name, email address, job title, organization
-- **Authentication Data**: Encrypted passwords, MFA tokens, session identifiers
-- **Profile Information**: Professional role, regulatory specialization, preferences
-- **Billing Information**: Organization name, billing address, payment methods
+**Technical Information**:
+- IP addresses, browser type and version
+- Device identifiers and operating system information
+- Referral URLs and access times
 
-### 3.2 Service Usage Data
-- **Document Metadata**: Filename, size, upload timestamp, document type
-- **Analysis Requests**: Regulatory standards selected, analysis parameters
-- **User Activity**: Login/logout times, feature usage, export actions
-- **System Interactions**: API calls, error events, performance metrics
+**Log Data**:
+- Application logs including error reports and performance metrics
+- Security event logs and access attempt records
+- System monitoring and diagnostic information
 
-### 3.3 Technical Data
-- **Device Information**: Browser type, operating system, device identifiers
-- **Network Data**: IP address, location (country/region level)
-- **Performance Data**: Response times, error rates, system performance metrics
-- **Security Data**: Failed login attempts, suspicious activity indicators
+### 2.3 Information from Third Parties
 
-### 3.4 Document Content
-- **Uploaded Documents**: Regulatory documents, SOPs, work instructions, quality manuals
-- **Analysis Results**: AI-generated gap analysis, compliance recommendations
-- **Export Reports**: PDF reports containing analysis findings and audit trails
+**Enterprise SSO Providers**:
+- Microsoft 365, Google Workspace, or other configured identity providers
+- User identity verification and authentication status
+- Organization membership and basic profile information
 
-**Critical Privacy Commitment**: Customer-uploaded documents and their content will **NEVER** be used to train general-purpose AI models or shared with third parties except as specified in this Policy.
+## 3. How We Use Your Information
 
-## 4. How We Use Your Information
+### 3.1 Service Provision
+- **Document Analysis**: Process uploaded documents to generate compliance gap analysis reports
+- **Account Management**: Maintain user accounts and organization workspaces
+- **Communication**: Send service-related notifications and updates
+- **Support**: Provide technical support and customer service
 
-### 4.1 Service Delivery
-- **Document Analysis**: Processing uploaded documents through AI analysis engines
-- **Report Generation**: Creating compliance gap analysis reports and recommendations
-- **Account Management**: User authentication, authorization, and access control
-- **Feature Delivery**: Providing dashboard functionality, history tracking, export capabilities
+### 3.2 Service Improvement
+- **Performance Optimization**: Analyze usage patterns to improve system performance
+- **Feature Development**: Understand user needs to develop new functionality
+- **Quality Assurance**: Monitor service quality and identify issues
 
-### 4.2 Service Improvement
-- **Performance Optimization**: Analyzing usage patterns to improve system performance
-- **Feature Development**: Understanding user needs to develop new capabilities
-- **Quality Assurance**: Monitoring analysis accuracy and system reliability
-- **Security Enhancement**: Detecting and preventing security threats
+### 3.3 Security and Compliance
+- **Fraud Prevention**: Detect and prevent unauthorized access attempts
+- **Audit Trail**: Maintain records required for regulatory compliance
+- **Legal Compliance**: Meet obligations under applicable laws and regulations
 
-### 4.3 Legal and Compliance
-- **Audit Trails**: Maintaining comprehensive logs for regulatory compliance
-- **Legal Obligations**: Complying with subpoenas, court orders, and regulatory requests
-- **Risk Management**: Monitoring for fraud, abuse, and policy violations
-- **Validation Evidence**: Supporting system validation and compliance documentation
+### 3.4 AI Model Restrictions
+**IMPORTANT**: We do NOT use customer-uploaded documents for training any general-purpose AI models or machine learning systems. Your proprietary documents remain confidential and are processed solely for generating your specific compliance analysis reports.
 
-### 4.4 Communications
-- **Service Notifications**: System updates, maintenance notices, security alerts
-- **Account Management**: Billing notices, subscription changes, support responses
-- **Marketing Communications**: Product updates, industry insights (with consent)
-- **Training Materials**: Educational content related to regulatory compliance
+## 4. Information Sharing and Disclosure
 
-## 5. Information Sharing and Disclosure
+### 4.1 No Sale of Personal Information
+We do not sell, rent, or trade personal information to third parties for commercial purposes.
 
-### 5.1 Third-Party Service Providers
-We may share information with trusted service providers who assist in Service delivery:
+### 4.2 Limited Sharing Scenarios
 
-#### Cloud Infrastructure (AWS)
-- **Purpose**: Hosting, computing, storage, and security services
-- **Data Shared**: All technical and content data required for Service operation
-- **Safeguards**: AWS complies with SOC 2 Type 2, ISO 27001, and other security standards
-- **Location**: Data processed in specified AWS regions (customer-selectable)
+**Service Providers**:
+- Cloud infrastructure providers (AWS) for hosting and data storage
+- Authentication providers for identity verification
+- Support tool providers for customer service delivery
+- All third-party processors are bound by strict confidentiality agreements
 
-#### AI Analysis Provider (OpenAI)
-- **Purpose**: Document analysis and natural language processing
-- **Data Shared**: Document content and analysis parameters only
-- **Safeguards**: Business Associate Agreement, data use restrictions
-- **Restrictions**: Data not used for training general-purpose models
+**Legal Requirements**:
+- When required by law, regulation, legal process, or governmental request
+- To protect rights, property, or safety of VirtualBackroom.ai, users, or others
+- In connection with legal proceedings where information is relevant and necessary
 
-#### Payment Processing
-- **Purpose**: Subscription billing and payment processing
-- **Data Shared**: Billing information and payment transactions only
-- **Safeguards**: PCI DSS compliant payment processors
-- **Restrictions**: Payment data not stored by Company
+**Business Transfers**:
+- In connection with merger, acquisition, or sale of assets
+- Purchasers will be bound by same privacy commitments
 
-### 5.2 Legal Disclosures
-We may disclose information when required by law or to protect our rights:
-- **Regulatory Requests**: FDA, EMA, or other regulatory authority investigations
-- **Legal Process**: Court orders, subpoenas, or other legal demands
-- **Safety Protection**: Preventing harm to users or public safety
-- **Rights Protection**: Enforcing our Terms of Service or protecting intellectual property
+### 4.3 Organization-Level Sharing
+Within your organization workspace:
+- Administrators can view user activity and access reports
+- Team members may access shared analyses and reports
+- Audit trail information is available to authorized organization users
 
-### 5.3 Business Transfers
-In the event of merger, acquisition, or asset sale, Customer information may be transferred to the acquiring entity, subject to:
-- Notification to affected Customers
-- Continuation of privacy protections
-- Option for data deletion prior to transfer
+## 5. Data Security and Protection
 
-### 5.4 No Sale of Personal Information
-We do not sell, rent, or lease personal information to third parties for commercial purposes.
+### 5.1 Technical Safeguards
+- **Encryption**: All data encrypted in transit (TLS 1.3) and at rest (AES-256)
+- **Access Controls**: Role-based access with multi-factor authentication
+- **Network Security**: Isolated network environments and firewall protection
+- **Monitoring**: 24/7 security monitoring and incident response
 
-## 6. Data Security and Protection
+### 5.2 Organizational Safeguards
+- **Employee Training**: Regular security and privacy training for all staff
+- **Access Limitations**: Personnel access limited to job requirements
+- **Background Checks**: Security clearance requirements for employees with data access
+- **Incident Response**: Formal procedures for security incident management
 
-### 6.1 Technical Safeguards
-- **Encryption**: AES-256 encryption at rest, TLS 1.3 in transit
-- **Access Controls**: Multi-factor authentication, role-based permissions
-- **Network Security**: VPC isolation, security groups, WAF protection
-- **Monitoring**: 24/7 security monitoring and automated threat detection
+### 5.3 Multi-Tenant Architecture
+- **Data Isolation**: Strict separation of data between different organizations
+- **Access Controls**: Database-level and application-level isolation controls
+- **Audit Trails**: Complete logging of cross-organizational access attempts
 
-### 6.2 Administrative Safeguards
-- **Personnel Training**: Regular security and privacy training for all staff
-- **Background Checks**: Security clearance for personnel with data access
-- **Incident Response**: Documented procedures for security incident handling
-- **Vendor Management**: Due diligence and oversight of third-party providers
+## 6. Data Retention
 
-### 6.3 Physical Safeguards
-- **Data Centers**: AWS data centers with SOC 1/2/3 compliance
-- **Environmental Controls**: Climate control, fire suppression, power backup
-- **Access Controls**: Biometric access controls and 24/7 monitoring
-- **Asset Management**: Secure disposal of storage media and equipment
+### 6.1 Retention Periods
 
-## 7. Data Retention and Deletion
+**Account Information**: Retained for duration of active subscription plus 7 years for audit purposes
+**Document Content**: Retained according to customer retention settings, default 7 years
+**Analysis Reports**: Retained for 10 years to support regulatory audit requirements
+**Audit Logs**: Retained for 7 years as required for compliance purposes
+**Usage Analytics**: Aggregated, non-personal usage data retained indefinitely
 
-### 7.1 Retention Periods
-- **Active Subscriptions**: Data retained for duration of subscription plus applicable legal requirements
-- **Account Information**: Retained for 7 years after account closure for compliance purposes
-- **Audit Logs**: Minimum 7 years retention for GxP compliance requirements
-- **Technical Logs**: 90 days for operational logs, 7 years for security events
+### 6.2 Data Deletion
+- **Account Deletion**: Complete data deletion within 30 days of account closure
+- **Document Deletion**: Individual documents can be deleted upon customer request
+- **Legal Holds**: Data subject to legal preservation requirements may be retained longer
 
-### 7.2 Data Deletion
-- **Customer Request**: Customers may request data deletion subject to legal retention requirements
-- **Automated Deletion**: Systematic deletion of data after retention periods expire
-- **Secure Deletion**: Cryptographic wiping and secure disposal procedures
-- **Verification**: Deletion completion certificates available upon request
+## 7. Your Privacy Rights
 
-### 7.3 Legal Hold
-Data subject to legal hold (litigation, regulatory investigation) will be preserved beyond normal retention periods until hold is released.
+### 7.1 Access and Correction
+- **Data Access**: Request copies of your personal information
+- **Data Correction**: Update or correct inaccurate personal information
+- **Data Export**: Export your data in commonly used formats
+
+### 7.2 GDPR Rights (EU Users)
+- **Right to Rectification**: Correct inaccurate personal data
+- **Right to Erasure**: Request deletion of personal data in certain circumstances
+- **Right to Restrict Processing**: Limit processing of personal data
+- **Right to Data Portability**: Receive personal data in structured, machine-readable format
+- **Right to Object**: Object to processing based on legitimate interests
+
+### 7.3 CCPA Rights (California Users)
+- **Right to Know**: Information about personal information collection and use
+- **Right to Delete**: Request deletion of personal information
+- **Right to Opt-Out**: Opt out of sale of personal information (Note: we do not sell personal information)
+- **Right to Non-Discrimination**: Equal service regardless of privacy rights exercise
+
+### 7.4 Exercising Your Rights
+To exercise privacy rights:
+- Email: privacy@virtualbackroom.ai
+- Include: Full name, organization, and specific request details
+- Response Time: We will respond within 30 days (or as required by applicable law)
 
 ## 8. International Data Transfers
 
-### 8.1 Cross-Border Transfers
-- **Primary Processing**: Data processed in customer-selected AWS regions
-- **Backup Storage**: Cross-region replication for disaster recovery
-- **Support Access**: Limited access by Company personnel for technical support
-- **Third-Party Services**: OpenAI processing may occur in multiple regions
+### 8.1 Data Processing Locations
+- Primary data processing occurs in AWS data centers within the United States
+- European customers may request data processing within EU/EEA regions
+- Data transfers comply with applicable international transfer mechanisms
 
 ### 8.2 Transfer Safeguards
-- **Standard Contractual Clauses**: EU-approved SCCs for transfers outside EEA
-- **Adequacy Decisions**: Reliance on adequacy decisions where available
+- **Standard Contractual Clauses**: EU-approved model clauses for data transfers
+- **Adequacy Decisions**: Reliance on jurisdictions with adequate protection findings
 - **Additional Safeguards**: Technical and organizational measures for data protection
-- **Impact Assessments**: Regular assessment of transfer risks and safeguards
 
-## 9. Your Privacy Rights
+## 9. Special Categories of Data
 
-### 9.1 Access and Transparency Rights
-- **Access**: Request copies of your personal information
-- **Transparency**: Understand how your information is processed
-- **Categories**: Information about data categories and processing purposes
-- **Sources**: Information about sources of collected data
+### 9.1 Health Information (HIPAA)
+For healthcare customers processing protected health information:
+- **Business Associate Agreement**: Separate HIPAA compliance agreement required
+- **Additional Safeguards**: Enhanced security controls for PHI
+- **Breach Notification**: Expedited breach notification procedures
+- **Access Controls**: Heightened access restrictions and audit requirements
 
-### 9.2 Control and Correction Rights
-- **Rectification**: Correct inaccurate or incomplete information
-- **Deletion**: Request deletion of your personal information (subject to retention requirements)
-- **Restriction**: Limit processing of your information in certain circumstances
-- **Portability**: Export your data in standard formats
+### 9.2 Sensitive Business Information
+- **Trade Secrets**: Proprietary QMS documents treated as confidential information
+- **Competitive Information**: Strict controls prevent cross-customer data exposure
+- **Regulatory Submissions**: Enhanced protection for FDA and regulatory filing materials
 
-### 9.3 Objection and Withdrawal Rights
-- **Object**: Object to processing based on legitimate interest
-- **Marketing**: Opt out of marketing communications at any time
-- **Consent Withdrawal**: Withdraw consent for specific processing activities
-- **Automated Processing**: Object to automated decision-making (where applicable)
+## 10. Cookies and Tracking Technologies
 
-### 9.4 Exercising Your Rights
-To exercise your privacy rights:
-- **Email**: privacy@virtualbackroom.ai
-- **Support Portal**: Submit request through customer support
-- **Identity Verification**: Verification required to prevent unauthorized access
-- **Response Time**: 30 days for most requests (may be extended with notification)
+### 10.1 Essential Cookies
+- **Authentication**: Session management and user authentication
+- **Security**: CSRF protection and security token management
+- **Functionality**: User preferences and application state management
 
-## 10. HIPAA Compliance (Healthcare Customers)
+### 10.2 Analytics Cookies
+- **Usage Analytics**: Understanding feature usage and system performance
+- **Error Tracking**: Identifying and resolving technical issues
+- **Performance Monitoring**: System optimization and capacity planning
 
-### 10.1 Business Associate Relationship
-For customers processing Protected Health Information (PHI):
-- **Business Associate Agreement**: Required prior to PHI processing
-- **Use Limitations**: PHI used only for permitted purposes under BAA
-- **Safeguards**: Administrative, physical, and technical safeguards implemented
-- **Breach Notification**: HIPAA-compliant breach notification procedures
-
-### 10.2 Minimum Necessary Standard
-- **Access Controls**: User access limited to minimum necessary for job function
-- **Data Minimization**: Requests for only necessary PHI elements
-- **Purpose Limitation**: PHI used only for authorized purposes
-- **Disclosure Restrictions**: PHI disclosure limited to permitted recipients
-
-### 10.3 Patient Rights
-When PHI is involved:
-- **Access Rights**: Patients' rights to access their information honored through Customer
-- **Amendment Rights**: Process for PHI corrections and amendments
-- **Accounting**: Tracking of PHI disclosures as required
-- **Complaint Process**: Mechanism for PHI-related complaints
+### 10.3 Cookie Controls
+- Essential cookies cannot be disabled without impacting service functionality
+- Analytics cookies can be managed through browser settings
+- Organization administrators can configure cookie policies for their users
 
 ## 11. Children's Privacy
 
-VirtualBackroom.ai is a business service not intended for use by children under 18. We do not knowingly collect personal information from children. If we become aware of such collection, we will promptly delete the information.
+VirtualBackroom.ai is designed for business and professional use. We do not knowingly collect personal information from individuals under 16 years of age. If we become aware of such collection, we will delete the information immediately.
 
-## 12. Cookies and Tracking
+## 12. Changes to This Privacy Policy
 
-### 12.1 Cookie Usage
-- **Essential Cookies**: Required for Service functionality and security
-- **Performance Cookies**: Analyze Service usage and performance (with consent)
-- **Functional Cookies**: Remember user preferences and settings
-- **Analytics**: Aggregate usage analytics for service improvement
+### 12.1 Policy Updates
+- We may update this Privacy Policy periodically to reflect changes in practices or applicable law
+- Material changes will be communicated with at least 30 days advance notice
+- Continued use of the service constitutes acceptance of updated privacy practices
 
-### 12.2 Third-Party Tracking
-- **Limited Third-Party Tools**: Only essential service providers
-- **No Advertising Networks**: No behavioral advertising or tracking
-- **Opt-Out Options**: Browser settings and platform preferences honored
+### 12.2 Notification Methods
+- Email notifications to registered users
+- In-application notifications and banners
+- Posted updates on our website with effective date changes
 
-## 13. Data Breach Notification
+## 13. Contact Information
 
-### 13.1 Incident Response
-In the event of a data security incident:
-- **Internal Response**: Immediate containment and investigation procedures
-- **Risk Assessment**: Evaluation of potential harm and notification requirements
-- **Customer Notification**: Prompt notification if customer data potentially affected
-- **Regulatory Notification**: Compliance with applicable breach notification laws
-
-### 13.2 Notification Timeline
-- **Discovery to Assessment**: 24 hours for initial risk evaluation
-- **Customer Notification**: 72 hours if personal data potentially affected
-- **Regulatory Notification**: Per applicable law requirements (typically 72 hours)
-- **Public Disclosure**: Only if required by law or significant public risk
-
-## 14. Contact Information
-
-### 14.1 Privacy Officer
+### 13.1 Privacy Questions
+For privacy-related questions or concerns:
 - **Email**: privacy@virtualbackroom.ai
-- **Mail**: [Physical address to be determined]
-- **Phone**: [Phone number to be determined]
+- **Mail**: [COMPANY ADDRESS]
+- **Phone**: [PHONE NUMBER]
 
-### 14.2 EU Representative (GDPR)
-For EU users:
-- **Representative**: [To be appointed if required]
-- **Contact**: [EU representative contact information]
+### 13.2 Data Protection Officer
+For GDPR-related inquiries:
+- **Email**: dpo@virtualbackroom.ai
+- **Role**: Data Protection Officer
+- **Jurisdiction**: EU/EEA privacy matters
 
-### 14.3 Data Protection Authority
-EU users may contact their local Data Protection Authority regarding privacy concerns:
-- **European Data Protection Board**: https://edpb.europa.eu/
-- **Local Authorities**: Contact information available on EDPB website
+## 14. Supervisory Authority
 
-## 15. Policy Updates
-
-This Privacy Policy may be updated periodically to reflect changes in our practices, technology, legal requirements, or business operations. We will notify users of material changes via:
-- Email notification to registered users
-- Prominent notice within the Service
-- Updated policy posted on our website
-
-**Continued use of the Service after policy updates constitutes acceptance of the revised Privacy Policy.**
+EU users have the right to lodge complaints with supervisory authorities:
+- Contact your local data protection authority
+- EU supervisory authority list: https://edpb.europa.eu/about-edpb/board/members_en
+- We encourage direct contact with us first to resolve concerns
 
 ---
 
-**Document History:**
-- Version 1.0: Initial Privacy Policy (Legacy Flask Application)
-- Version 2.0: Updated for SaaS Platform, GDPR Compliance, and SaMD Classification
-
-**Next Review Date:** [Date + 12 months]
-
-**Legal Review Required:** This document requires review by qualified legal counsel familiar with privacy law, healthcare regulation, and international data protection requirements.
+**This Privacy Policy is effective as of the date listed above and governs our collection, use, and disclosure of your information when you use VirtualBackroom.ai.**
