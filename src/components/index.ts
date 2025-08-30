@@ -15,3 +15,12 @@ export { InfrastructureMonitoring } from './InfrastructureMonitoring';
 export { PharmaceuticalAI } from './PharmaceuticalAI';
 export { GlobalAIRouter } from './GlobalAIRouter';
 export { ValidationAndPerformance } from './ValidationAndPerformance';
+
+//  Navigation and Pages
+export { Navigation } from './Navigation';
+export { GlobalRegulationsPage } from './GlobalRegulationsPage';
+export { EnterpriseSSOPage } from './EnterpriseSSOPage';
+export { AIModelsPage } from './AIModelsPage';
+export { CompliancePage } from './CompliancePage';
+export { ArchitecturePage } from './ArchitecturePage';
+export { BreadcrumbNavigation } from './BreadcrumbNavigation';
