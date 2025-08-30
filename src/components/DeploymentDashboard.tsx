@@ -60,7 +60,7 @@ export function DeploymentDashboard() {
       uptime: '99.95%',
       description: 'Main application server on AWS ECS Fargate',
       metrics: [
-        { label: 'Response Time', value: '< 200ms', status: 'good' },
+        { label: 'Response Time', value: '&lt; 200ms', status: 'good' },
         { label: 'Memory Usage', value: '256MB', status: 'good' },
         { label: 'CPU Usage', value: '15%', status: 'good' }
       ]
@@ -82,7 +82,7 @@ export function DeploymentDashboard() {
       uptime: '99.99%',
       description: 'Primary database with encryption and backups',
       metrics: [
-        { label: 'Query Time', value: '< 50ms', status: 'good' },
+        { label: 'Query Time', value: '&lt; 50ms', status: 'good' },
         { label: 'Connections', value: '12/100', status: 'good' },
         { label: 'Storage', value: '45GB/100GB', status: 'good' }
       ]
@@ -175,9 +175,9 @@ export function DeploymentDashboard() {
 
   const deploymentMetrics = [
     { label: 'System Availability', value: '99.95%', target: '99.9%', status: 'exceeds' },
-    { label: 'Response Time (P95)', value: '185ms', target: '< 500ms', status: 'exceeds' },
-    { label: 'Error Rate', value: '0.02%', target: '< 0.1%', status: 'exceeds' },
-    { label: 'Security Score', value: '98/100', target: '> 90', status: 'exceeds' }
+    { label: 'Response Time (P95)', value: '185ms', target: '&lt; 500ms', status: 'exceeds' },
+    { label: 'Error Rate', value: '0.02%', target: '&lt; 0.1%', status: 'exceeds' },
+    { label: 'Security Score', value: '98/100', target: '&gt; 90', status: 'exceeds' }
   ]
 
   return (

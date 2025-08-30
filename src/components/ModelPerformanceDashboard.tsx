@@ -563,15 +563,15 @@ export function ModelPerformanceDashboard() {
                   <h4 className="text-sm font-medium">SLA Compliance</h4>
                   <div className="space-y-1">
                     <div className="flex justify-between text-xs">
-                      <span>Response Time < 30s</span>
+                      <span>Response Time &lt; 30s</span>
                       <span className="text-green-600">98.5% ✓</span>
                     </div>
                     <div className="flex justify-between text-xs">
-                      <span>Accuracy > 85%</span>
+                      <span>Accuracy &gt; 85%</span>
                       <span className="text-green-600">96.2% ✓</span>
                     </div>
                     <div className="flex justify-between text-xs">
-                      <span>Uptime > 99%</span>
+                      <span>Uptime &gt; 99%</span>
                       <span className="text-green-600">99.2% ✓</span>
                     </div>
                   </div>
