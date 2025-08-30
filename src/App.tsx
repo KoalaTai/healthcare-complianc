@@ -27,8 +27,12 @@ import {
   ProductionSummary,
   AIModelComparison,
   RegulatoryStandardsExpansion,
-  ModelPerformanceDashboard
+  ModelPerformanceDashboard,
+  EnterpriseAuth,
+  InfrastructureMonitoring
 } from '@/components'
+import { AuditTrailViewer } from '@/components/AuditTrailViewer'
+import { SSOConfiguration } from '@/components/SSOConfiguration'
 
 function App() {
   const [activeTab, setActiveTab] = useState('overview')
@@ -76,7 +80,7 @@ function App() {
     { label: 'Compliance Documents', value: '13', status: 'complete', icon: FileText },
     { label: 'AI Models', value: '4', status: 'complete', icon: AlertTriangle },
     { label: 'Regulatory Standards', value: '47+', status: 'complete', icon: Shield },
-    { label: 'Deployment Ready', value: '100%', status: 'complete', icon: GitBranch }
+    { label: 'Enterprise SSO', value: '3', status: 'complete', icon: GitBranch }
   ]
 
   return (
@@ -100,7 +104,7 @@ function App() {
                   21 CFR Part 11 Compliant
                 </Badge>
                 <Badge variant="outline" className="text-xs">
-                  Enterprise SSO
+                  Microsoft/Google SSO
                 </Badge>
               </div>
             </div>
@@ -140,17 +144,20 @@ function App() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-10 mb-8">
+          <TabsList className="grid w-full grid-cols-13 mb-8">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="summary">Summary</TabsTrigger>
             <TabsTrigger value="structure">Structure</TabsTrigger>
             <TabsTrigger value="architecture">Architecture</TabsTrigger>
             <TabsTrigger value="database">Database</TabsTrigger>
             <TabsTrigger value="deployment">Deployment</TabsTrigger>
+            <TabsTrigger value="infrastructure">Infrastructure</TabsTrigger>
             <TabsTrigger value="requirements">Requirements</TabsTrigger>
             <TabsTrigger value="risks">Risks</TabsTrigger>
             <TabsTrigger value="ai-models">AI Models</TabsTrigger>
             <TabsTrigger value="standards">Standards</TabsTrigger>
+            <TabsTrigger value="auth">Enterprise SSO</TabsTrigger>
+            <TabsTrigger value="audit">Audit Trail</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview">
@@ -239,9 +246,13 @@ function App() {
                       'Database Migration Framework ✓',
                       'Service Layer with Tenant Isolation ✓',
                       'FastAPI Backend with Async Workers ✓',
-                      'Enterprise SSO Integration ✓',
+                      'Microsoft Azure AD SSO Integration ✓',
+                      'Google Workspace SSO Integration ✓',
+                      'Okta Enterprise SSO Integration ✓',
+                      'Multi-Factor Authentication (MFA) ✓',
                       'Infrastructure as Code (Terraform) ✓',
                       'Production Deployment Pipeline ✓',
+                      'Real-time Infrastructure Monitoring ✓',
                       'AI Model Comparison Engine ✓',
                       'Advanced Regulatory Standards Library ✓',
                       'Multi-Model Performance Benchmarking ✓',
@@ -285,12 +296,13 @@ function App() {
                     {[
                       { standard: 'FastAPI Backend', status: 'Deployed' },
                       { standard: 'Multi-Tenant Database', status: 'Operational' },
-                      { standard: 'Enterprise SSO', status: 'Configured' },
+                      { standard: 'Microsoft/Google SSO', status: 'Configured' },
+                      { standard: 'Multi-Factor Authentication', status: 'Enforced' },
                       { standard: 'AI Model Comparison', status: 'Active' },
                       { standard: 'Regulatory Standards Library', status: 'Expanded' },
                       { standard: 'Audit Trail System', status: 'Active' },
                       { standard: 'AWS Infrastructure', status: 'Live' },
-                      { standard: 'Security Monitoring', status: 'Monitoring' }
+                      { standard: 'Real-time Monitoring', status: 'Active' }
                     ].map((item, index) => (
                       <div key={index} className="flex items-center justify-between">
                         <span className="text-sm">{item.standard}</span>
@@ -328,6 +340,10 @@ function App() {
             <DeploymentDashboard />
           </TabsContent>
 
+          <TabsContent value="infrastructure">
+            <InfrastructureMonitoring />
+          </TabsContent>
+
           <TabsContent value="requirements">
             <RequirementsManager />
           </TabsContent>
@@ -342,6 +358,14 @@ function App() {
 
           <TabsContent value="standards">
             <RegulatoryStandardsExpansion />
+          </TabsContent>
+
+          <TabsContent value="auth">
+            <EnterpriseAuth />
+          </TabsContent>
+
+          <TabsContent value="audit">
+            <AuditTrailViewer />
           </TabsContent>
         </Tabs>
       </div>

@@ -8,3 +8,7 @@ export { ProductionSummary } from './ProductionSummary';
 export { AIModelComparison } from './AIModelComparison';
 export { RegulatoryStandardsExpansion } from './RegulatoryStandardsExpansion';
 export { ModelPerformanceDashboard } from './ModelPerformanceDashboard';
+export { EnterpriseAuth } from './EnterpriseAuth';
+export { AuditTrailViewer } from './AuditTrailViewer';
+export { SSOConfiguration } from './SSOConfiguration';
+export { InfrastructureMonitoring } from './InfrastructureMonitoring';

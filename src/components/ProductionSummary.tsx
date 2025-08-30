@@ -20,7 +20,7 @@ export function ProductionSummary() {
     { 
       aspect: 'Authentication', 
       v1: 'Hardcoded dictionary', 
-      v2: 'Enterprise SSO + MFA',
+      v2: 'Microsoft/Google SSO + MFA',
       improvement: '∞% security increase'
     },
     { 

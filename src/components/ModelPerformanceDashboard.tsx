@@ -11,6 +11,7 @@ import {
   TrendUp, 
   TrendDown, 
   AlertCircle,
+  AlertTriangle,
   CheckCircle,
   Clock,
   DollarSign,
