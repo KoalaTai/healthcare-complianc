@@ -27,10 +27,11 @@ import {
   ProductionSummary,
   AIModelComparison,
   RegulatoryStandardsExpansion,
-  ModelPerformanceDashboard,
+  ValidationAndPerformance,
   EnterpriseAuth,
   InfrastructureMonitoring,
-  PharmaceuticalAI
+  PharmaceuticalAI,
+  GlobalAIRouter
 } from '@/components'
 import { AuditTrailViewer } from '@/components/AuditTrailViewer'
 import { SSOConfiguration } from '@/components/SSOConfiguration'
@@ -79,8 +80,8 @@ function App() {
 
   const quickStats = [
     { label: 'Compliance Documents', value: '13', status: 'complete', icon: FileText },
-    { label: 'AI Models', value: '8', status: 'complete', icon: AlertTriangle },
-    { label: 'Regulatory Standards', value: '62+', status: 'complete', icon: Shield },
+    { label: 'AI Models', value: '12', status: 'complete', icon: AlertTriangle },
+    { label: 'Global Regulations', value: '8', status: 'complete', icon: Shield },
     { label: 'Enterprise SSO', value: '3', status: 'complete', icon: GitBranch }
   ]
 
@@ -145,21 +146,23 @@ function App() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-14 mb-8">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="summary">Summary</TabsTrigger>
-            <TabsTrigger value="structure">Structure</TabsTrigger>
-            <TabsTrigger value="architecture">Architecture</TabsTrigger>
-            <TabsTrigger value="database">Database</TabsTrigger>
-            <TabsTrigger value="deployment">Deployment</TabsTrigger>
-            <TabsTrigger value="infrastructure">Infrastructure</TabsTrigger>
-            <TabsTrigger value="requirements">Requirements</TabsTrigger>
-            <TabsTrigger value="risks">Risks</TabsTrigger>
-            <TabsTrigger value="ai-models">AI Models</TabsTrigger>
-            <TabsTrigger value="pharma-ai">Pharma AI</TabsTrigger>
-            <TabsTrigger value="standards">Standards</TabsTrigger>
-            <TabsTrigger value="auth">Enterprise SSO</TabsTrigger>
-            <TabsTrigger value="audit">Audit Trail</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-8 xl:grid-cols-15 mb-8 gap-1 h-auto p-2">
+            <TabsTrigger value="overview" className="text-xs px-2 py-1">Overview</TabsTrigger>
+            <TabsTrigger value="summary" className="text-xs px-2 py-1">Summary</TabsTrigger>
+            <TabsTrigger value="structure" className="text-xs px-2 py-1">Structure</TabsTrigger>
+            <TabsTrigger value="architecture" className="text-xs px-2 py-1">Architecture</TabsTrigger>
+            <TabsTrigger value="database" className="text-xs px-2 py-1">Database</TabsTrigger>
+            <TabsTrigger value="deployment" className="text-xs px-2 py-1">Deployment</TabsTrigger>
+            <TabsTrigger value="validation" className="text-xs px-2 py-1">Validation</TabsTrigger>
+            <TabsTrigger value="infrastructure" className="text-xs px-2 py-1">Infrastructure</TabsTrigger>
+            <TabsTrigger value="requirements" className="text-xs px-2 py-1">Requirements</TabsTrigger>
+            <TabsTrigger value="risks" className="text-xs px-2 py-1">Risks</TabsTrigger>
+            <TabsTrigger value="ai-models" className="text-xs px-2 py-1">AI Models</TabsTrigger>
+            <TabsTrigger value="pharma-ai" className="text-xs px-2 py-1">Pharma AI</TabsTrigger>
+            <TabsTrigger value="global-router" className="text-xs px-2 py-1">Global Router</TabsTrigger>
+            <TabsTrigger value="standards" className="text-xs px-2 py-1">Standards</TabsTrigger>
+            <TabsTrigger value="auth" className="text-xs px-2 py-1">Enterprise SSO</TabsTrigger>
+            <TabsTrigger value="audit" className="text-xs px-2 py-1">Audit Trail</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview">
@@ -350,6 +353,10 @@ function App() {
             <DeploymentDashboard />
           </TabsContent>
 
+          <TabsContent value="validation">
+            <ValidationAndPerformance />
+          </TabsContent>
+
           <TabsContent value="infrastructure">
             <InfrastructureMonitoring />
           </TabsContent>
@@ -368,6 +375,10 @@ function App() {
 
           <TabsContent value="pharma-ai">
             <PharmaceuticalAI />
+          </TabsContent>
+
+          <TabsContent value="global-router">
+            <GlobalAIRouter />
           </TabsContent>
 
           <TabsContent value="standards">

@@ -13,3 +13,5 @@ export { AuditTrailViewer } from './AuditTrailViewer';
 export { SSOConfiguration } from './SSOConfiguration';
 export { InfrastructureMonitoring } from './InfrastructureMonitoring';
 export { PharmaceuticalAI } from './PharmaceuticalAI';
+export { GlobalAIRouter } from './GlobalAIRouter';
+export { ValidationAndPerformance } from './ValidationAndPerformance';
