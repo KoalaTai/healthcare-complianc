@@ -12,7 +12,8 @@ import {
   Home,
   BookOpen,
   Lock,
-  BarChart3
+  BarChart3,
+  Search
 } from '@phosphor-icons/react'
 
 interface NavigationProps {
@@ -29,6 +30,13 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
       label: 'Overview',
       icon: Home,
       description: 'Project dashboard and status'
+    },
+    {
+      id: 'search',
+      label: 'Global Search',
+      icon: Search,
+      description: 'Search across all platform features',
+      badge: 'AI-Powered'
     },
     {
       id: 'regulations',

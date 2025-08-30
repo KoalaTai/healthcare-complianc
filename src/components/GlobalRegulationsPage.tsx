@@ -4,6 +4,9 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { RegulatorySearchEngine } from './RegulatorySearchEngine'
+import { EnhancedEnterpriseSSOPage } from './EnhancedEnterpriseSSOPage'
 import { 
   Globe, 
   FileText, 
@@ -17,7 +20,9 @@ import {
   ExternalLink,
   Shield,
   CheckCircle,
-  Plus
+  Plus,
+  Database,
+  Zap
 } from '@phosphor-icons/react'
 
 interface Regulation {
@@ -34,6 +39,7 @@ interface Regulation {
 export function GlobalRegulationsPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedRegion, setSelectedRegion] = useState('all')
+  const [currentView, setCurrentView] = useState<'overview' | 'search' | 'browse'>('overview')
 
   const regulations: Regulation[] = [
     {
@@ -142,6 +148,25 @@ export function GlobalRegulationsPage() {
     return matchesSearch && matchesRegion
   })
 
+  if (currentView === 'search') {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" onClick={() => setCurrentView('overview')}>
+            ← Back to Overview
+          </Button>
+          <div>
+            <h2 className="text-2xl font-bold">Advanced Regulatory Search</h2>
+            <p className="text-muted-foreground text-sm">
+              Deep search across all regulatory content with AI-powered relevance
+            </p>
+          </div>
+        </div>
+        <RegulatorySearchEngine />
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -155,13 +180,45 @@ export function GlobalRegulationsPage() {
             Access comprehensive regulatory frameworks from major global markets
           </p>
         </div>
-        <Button>
-          <Plus size={16} className="mr-2" />
-          Request New Standard
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => setCurrentView('search')}>
+            <Search size={16} className="mr-2" />
+            Advanced Search
+          </Button>
+          <Button>
+            <Plus size={16} className="mr-2" />
+            Request New Standard
+          </Button>
+        </div>
       </div>
 
-      {/* Search and Filters */}
+      {/* Enhanced Search Preview */}
+      <Card className="border-2 border-dashed border-primary/20 bg-gradient-to-r from-primary/5 to-accent/5">
+        <CardContent className="p-6">
+          <div className="text-center space-y-4">
+            <div className="flex items-center justify-center gap-3">
+              <Search size={24} className="text-primary" />
+              <Zap size={24} className="text-accent" />
+              <Database size={24} className="text-primary" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-2">
+                AI-Powered Regulatory Search Engine
+              </h3>
+              <p className="text-sm text-muted-foreground mb-4 max-w-2xl mx-auto">
+                Search across 1,200+ regulatory requirements, 469 standard sections, and thousands of compliance clauses with intelligent relevance ranking and cross-reference detection.
+              </p>
+              <Button onClick={() => setCurrentView('search')} size="lg">
+                <Search size={16} className="mr-2" />
+                Launch Advanced Search
+                <ChevronRight size={16} className="ml-2" />
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Quick Search */}
       <Card>
         <CardContent className="p-6">
           <div className="flex flex-col lg:flex-row gap-4">
@@ -169,7 +226,7 @@ export function GlobalRegulationsPage() {
               <div className="relative">
                 <Search size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                 <Input
-                  placeholder="Search regulations, descriptions, or applicability areas..."
+                  placeholder="Quick search regulations, descriptions, or applicability areas..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10"
@@ -278,6 +335,17 @@ export function GlobalRegulationsPage() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Button 
+              variant="outline" 
+              className="h-auto p-4 flex flex-col items-center gap-2"
+              onClick={() => setCurrentView('search')}
+            >
+              <Search size={24} />
+              <div className="text-center">
+                <div className="font-medium">Advanced Search</div>
+                <div className="text-xs text-muted-foreground">AI-powered regulatory search</div>
+              </div>
+            </Button>
             <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2">
               <Scale size={24} />
               <div className="text-center">
@@ -290,13 +358,6 @@ export function GlobalRegulationsPage() {
               <div className="text-center">
                 <div className="font-medium">Compliance Mapping</div>
                 <div className="text-xs text-muted-foreground">Map your QMS to standards</div>
-              </div>
-            </Button>
-            <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2">
-              <Users size={24} />
-              <div className="text-center">
-                <div className="font-medium">Training Materials</div>
-                <div className="text-xs text-muted-foreground">Access regulatory training content</div>
               </div>
             </Button>
           </div>

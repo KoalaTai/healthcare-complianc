@@ -1,0 +1,543 @@
+import { useState, useMemo } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Input } from '@/components/ui/input'
+import { Separator } from '@/components/ui/separator'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { 
+  Search,
+  Globe,
+  Building2,
+  FileText,
+  Users,
+  Shield,
+  ChevronRight,
+  ExternalLink,
+  BookOpen,
+  Star,
+  Filter,
+  ArrowRight,
+  Lightbulb
+} from '@phosphor-icons/react'
+
+interface GlobalSearchResult {
+  id: string
+  title: string
+  type: 'regulation' | 'sso' | 'feature' | 'tool'
+  category: string
+  description: string
+  relevanceScore: number
+  tags: string[]
+  action?: {
+    label: string
+    onClick: () => void
+  }
+}
+
+interface QuickAction {
+  id: string
+  title: string
+  description: string
+  icon: React.ElementType
+  category: 'regulations' | 'sso' | 'analysis' | 'compliance'
+  onClick: () => void
+}
+
+export function GlobalSearchInterface({ onNavigate }: { onNavigate: (page: string) => void }) {
+  const [searchTerm, setSearchTerm] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('all')
+
+  // Mock global search data combining regulations, SSO, and features
+  const searchDatabase: GlobalSearchResult[] = [
+    // Regulations
+    {
+      id: 'fda-qsr',
+      title: '21 CFR Part 820 - FDA Quality System Regulation',
+      type: 'regulation',
+      category: 'US Regulations',
+      description: 'Comprehensive quality system regulation for medical device manufacturers under FDA jurisdiction',
+      relevanceScore: 10,
+      tags: ['FDA', 'quality systems', 'medical devices', 'design controls', 'manufacturing'],
+      action: {
+        label: 'View Regulation',
+        onClick: () => onNavigate('regulations')
+      }
+    },
+    {
+      id: 'eu-mdr',
+      title: 'EU MDR 2017/745 - Medical Device Regulation',
+      type: 'regulation',
+      category: 'EU Regulations',
+      description: 'European medical device regulation for CE marking and market access',
+      relevanceScore: 10,
+      tags: ['EU MDR', 'CE marking', 'medical devices', 'clinical evaluation', 'post-market surveillance'],
+      action: {
+        label: 'View Regulation',
+        onClick: () => onNavigate('regulations')
+      }
+    },
+    {
+      id: 'iso-13485',
+      title: 'ISO 13485:2016 - Medical Device Quality Management',
+      type: 'regulation',
+      category: 'International Standards',
+      description: 'International standard for quality management systems specific to medical devices',
+      relevanceScore: 9,
+      tags: ['ISO', 'quality management', 'medical devices', 'risk management', 'documentation'],
+      action: {
+        label: 'View Standard',
+        onClick: () => onNavigate('regulations')
+      }
+    },
+
+    // SSO and Identity
+    {
+      id: 'azure-ad-sso',
+      title: 'Microsoft Azure Active Directory Integration',
+      type: 'sso',
+      category: 'Identity Providers',
+      description: 'Enterprise-grade SSO with Azure AD, supporting SAML 2.0, MFA, and conditional access',
+      relevanceScore: 9,
+      tags: ['Azure AD', 'Microsoft', 'SSO', 'SAML', 'MFA', 'enterprise'],
+      action: {
+        label: 'Configure SSO',
+        onClick: () => onNavigate('enterprise-sso')
+      }
+    },
+    {
+      id: 'google-workspace-sso',
+      title: 'Google Workspace SSO Integration',
+      type: 'sso',
+      category: 'Identity Providers',
+      description: 'Seamless integration with Google Workspace for user authentication and provisioning',
+      relevanceScore: 8,
+      tags: ['Google', 'Workspace', 'SSO', 'OAuth', 'directory sync'],
+      action: {
+        label: 'Configure SSO',
+        onClick: () => onNavigate('enterprise-sso')
+      }
+    },
+    {
+      id: 'okta-sso',
+      title: 'Okta Identity Platform Integration',
+      type: 'sso',
+      category: 'Identity Providers',
+      description: 'Advanced identity management with Okta, featuring adaptive MFA and risk-based authentication',
+      relevanceScore: 9,
+      tags: ['Okta', 'identity platform', 'adaptive MFA', 'SCIM', 'provisioning'],
+      action: {
+        label: 'Configure SSO',
+        onClick: () => onNavigate('enterprise-sso')
+      }
+    },
+
+    // Features and Tools
+    {
+      id: 'ai-analysis',
+      title: 'AI-Powered Regulatory Analysis',
+      type: 'feature',
+      category: 'Analysis Tools',
+      description: 'Advanced AI models for automated compliance gap analysis and regulatory document review',
+      relevanceScore: 10,
+      tags: ['AI analysis', 'compliance', 'gap analysis', 'automation', 'regulatory review'],
+      action: {
+        label: 'View AI Models',
+        onClick: () => onNavigate('ai-models')
+      }
+    },
+    {
+      id: 'audit-trail',
+      title: '21 CFR Part 11 Compliant Audit Trail',
+      type: 'feature',
+      category: 'Compliance Features',
+      description: 'Comprehensive audit trail system meeting FDA electronic records requirements',
+      relevanceScore: 9,
+      tags: ['audit trail', '21 CFR Part 11', 'FDA', 'electronic records', 'compliance'],
+      action: {
+        label: 'View Audit Trail',
+        onClick: () => onNavigate('audit-trail')
+      }
+    },
+    {
+      id: 'multi-tenant',
+      title: 'Multi-Tenant Architecture',
+      type: 'feature',
+      category: 'Platform Features',
+      description: 'Secure multi-tenant database design with row-level security and data isolation',
+      relevanceScore: 8,
+      tags: ['multi-tenant', 'security', 'data isolation', 'scalability', 'enterprise'],
+      action: {
+        label: 'View Architecture',
+        onClick: () => onNavigate('architecture')
+      }
+    },
+
+    // Specific Tools
+    {
+      id: 'regulatory-search',
+      title: 'Advanced Regulatory Search Engine',
+      type: 'tool',
+      category: 'Search Tools',
+      description: 'AI-powered search across global regulatory standards with relevance ranking',
+      relevanceScore: 10,
+      tags: ['search', 'regulations', 'AI-powered', 'global standards', 'relevance ranking'],
+      action: {
+        label: 'Launch Search',
+        onClick: () => onNavigate('regulations')
+      }
+    },
+    {
+      id: 'compliance-dashboard',
+      title: 'Real-time Compliance Dashboard',
+      type: 'tool',
+      category: 'Monitoring Tools',
+      description: 'Live monitoring of compliance status, audit activities, and regulatory updates',
+      relevanceScore: 8,
+      tags: ['dashboard', 'compliance', 'monitoring', 'real-time', 'analytics'],
+      action: {
+        label: 'View Dashboard',
+        onClick: () => onNavigate('compliance')
+      }
+    }
+  ]
+
+  // Quick actions for common tasks
+  const quickActions: QuickAction[] = [
+    {
+      id: 'search-regulations',
+      title: 'Search Global Regulations',
+      description: 'Find specific regulatory requirements across 8 global markets',
+      icon: Search,
+      category: 'regulations',
+      onClick: () => onNavigate('regulations')
+    },
+    {
+      id: 'configure-sso',
+      title: 'Configure Enterprise SSO',
+      description: 'Set up Microsoft, Google, or Okta SSO integration',
+      icon: Building2,
+      category: 'sso',
+      onClick: () => onNavigate('enterprise-sso')
+    },
+    {
+      id: 'run-analysis',
+      title: 'Run AI Compliance Analysis',
+      description: 'Analyze documents against regulatory standards',
+      icon: Shield,
+      category: 'analysis',
+      onClick: () => onNavigate('ai-models')
+    },
+    {
+      id: 'view-audit-trail',
+      title: 'Access Audit Trail',
+      description: 'Review 21 CFR Part 11 compliant activity logs',
+      icon: FileText,
+      category: 'compliance',
+      onClick: () => onNavigate('audit-trail')
+    }
+  ]
+
+  // Search functionality
+  const searchResults = useMemo(() => {
+    if (!searchTerm.trim()) {
+      return searchDatabase
+    }
+
+    const searchLower = searchTerm.toLowerCase()
+    return searchDatabase
+      .filter(item => {
+        const matchesSearch = 
+          item.title.toLowerCase().includes(searchLower) ||
+          item.description.toLowerCase().includes(searchLower) ||
+          item.tags.some(tag => tag.toLowerCase().includes(searchLower))
+        
+        const matchesCategory = selectedCategory === 'all' || item.type === selectedCategory
+        
+        return matchesSearch && matchesCategory
+      })
+      .sort((a, b) => b.relevanceScore - a.relevanceScore)
+  }, [searchTerm, selectedCategory])
+
+  const categories = [
+    { id: 'all', label: 'All Results', count: searchDatabase.length },
+    { id: 'regulation', label: 'Regulations', count: searchDatabase.filter(r => r.type === 'regulation').length },
+    { id: 'sso', label: 'Identity & SSO', count: searchDatabase.filter(r => r.type === 'sso').length },
+    { id: 'feature', label: 'Platform Features', count: searchDatabase.filter(r => r.type === 'feature').length },
+    { id: 'tool', label: 'Tools', count: searchDatabase.filter(r => r.type === 'tool').length }
+  ]
+
+  const getTypeIcon = (type: string) => {
+    switch (type) {
+      case 'regulation': return <FileText size={16} className="text-primary" />
+      case 'sso': return <Building2 size={16} className="text-blue-600" />
+      case 'feature': return <Shield size={16} className="text-green-600" />
+      case 'tool': return <Star size={16} className="text-amber-600" />
+      default: return <Globe size={16} className="text-muted-foreground" />
+    }
+  }
+
+  const getTypeBadgeColor = (type: string) => {
+    switch (type) {
+      case 'regulation': return 'bg-primary/10 text-primary'
+      case 'sso': return 'bg-blue-100 text-blue-800'
+      case 'feature': return 'bg-green-100 text-green-800'
+      case 'tool': return 'bg-amber-100 text-amber-800'
+      default: return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* Search Header */}
+      <div className="text-center space-y-4">
+        <h1 className="text-3xl font-bold text-foreground flex items-center justify-center gap-3">
+          <Search size={32} className="text-primary" />
+          Global Platform Search
+        </h1>
+        <p className="text-muted-foreground max-w-2xl mx-auto">
+          Search across regulations, SSO configurations, compliance features, and platform tools
+        </p>
+      </div>
+
+      {/* Main Search Interface */}
+      <Card>
+        <CardContent className="p-6">
+          <div className="space-y-4">
+            {/* Search Bar */}
+            <div className="relative">
+              <Search size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+              <Input
+                placeholder="Search regulations, SSO providers, compliance features, or tools..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-12 h-12 text-base"
+              />
+            </div>
+
+            {/* Category Filters */}
+            <div className="flex gap-2 flex-wrap">
+              {categories.map((category) => (
+                <Button
+                  key={category.id}
+                  variant={selectedCategory === category.id ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setSelectedCategory(category.id)}
+                  className="text-xs"
+                >
+                  {category.label}
+                  <Badge variant="secondary" className="ml-2 text-xs">
+                    {category.count}
+                  </Badge>
+                </Button>
+              ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Results and Quick Actions */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Search Results */}
+        <div className="lg:col-span-2 space-y-4">
+          <h3 className="text-lg font-semibold">
+            Search Results ({searchResults.length})
+          </h3>
+
+          {searchResults.length === 0 ? (
+            <Card>
+              <CardContent className="p-8 text-center">
+                <Search size={32} className="text-muted-foreground mx-auto mb-4" />
+                <h4 className="font-medium mb-2">No results found</h4>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Try adjusting your search terms or browse our quick actions below
+                </p>
+              </CardContent>
+            </Card>
+          ) : (
+            searchResults.map((result) => (
+              <Card key={result.id} className="hover:shadow-md transition-all duration-200">
+                <CardContent className="p-6">
+                  <div className="space-y-3">
+                    {/* Header */}
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          {getTypeIcon(result.type)}
+                          <h4 className="font-semibold text-foreground">{result.title}</h4>
+                          <Badge className={`text-xs ${getTypeBadgeColor(result.type)}`}>
+                            {result.category}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          {result.description}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <div className="text-xs text-muted-foreground">
+                          {result.relevanceScore}/10
+                        </div>
+                        <div className="w-2 h-2 rounded-full bg-primary" 
+                             style={{ opacity: result.relevanceScore / 10 }} />
+                      </div>
+                    </div>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-1">
+                      {result.tags.slice(0, 5).map((tag, index) => (
+                        <Badge key={index} variant="outline" className="text-xs">
+                          {tag}
+                        </Badge>
+                      ))}
+                      {result.tags.length > 5 && (
+                        <Badge variant="outline" className="text-xs">
+                          +{result.tags.length - 5} more
+                        </Badge>
+                      )}
+                    </div>
+
+                    {/* Action */}
+                    {result.action && (
+                      <div className="pt-2">
+                        <Button size="sm" onClick={result.action.onClick}>
+                          {result.action.label}
+                          <ChevronRight size={14} className="ml-2" />
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
+        </div>
+
+        {/* Quick Actions Sidebar */}
+        <div className="space-y-6">
+          {/* Quick Actions */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-base">
+                <Lightbulb size={18} />
+                Quick Actions
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {quickActions.map((action) => {
+                const Icon = action.icon
+                return (
+                  <Button
+                    key={action.id}
+                    variant="ghost"
+                    onClick={action.onClick}
+                    className="w-full justify-start p-4 h-auto"
+                  >
+                    <div className="flex items-start gap-3">
+                      <Icon size={20} className="mt-0.5 text-primary" />
+                      <div className="text-left">
+                        <div className="font-medium text-sm">{action.title}</div>
+                        <div className="text-xs text-muted-foreground">
+                          {action.description}
+                        </div>
+                      </div>
+                    </div>
+                  </Button>
+                )
+              })}
+            </CardContent>
+          </Card>
+
+          {/* Popular Searches */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-base">
+                <Star size={18} />
+                Popular Searches
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              {[
+                'FDA design controls',
+                'Azure AD integration',
+                'ISO 13485 requirements',
+                'audit trail configuration',
+                'EU MDR clinical evaluation',
+                'MFA setup guide',
+                'risk management protocols',
+                'Google SSO setup'
+              ].map((search) => (
+                <Button
+                  key={search}
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSearchTerm(search)}
+                  className="w-full justify-start text-xs text-muted-foreground hover:text-foreground"
+                >
+                  <ArrowRight size={12} className="mr-2" />
+                  {search}
+                </Button>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Search Tips */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-base">
+                <Filter size={18} />
+                Search Tips
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="text-sm space-y-2">
+                <div>
+                  <span className="font-medium">Regulations:</span>
+                  <p className="text-muted-foreground text-xs">
+                    "FDA QSR", "EU MDR", "ISO 13485", "design controls"
+                  </p>
+                </div>
+                <div>
+                  <span className="font-medium">SSO Providers:</span>
+                  <p className="text-muted-foreground text-xs">
+                    "Azure AD", "Google Workspace", "Okta", "SAML"
+                  </p>
+                </div>
+                <div>
+                  <span className="font-medium">Features:</span>
+                  <p className="text-muted-foreground text-xs">
+                    "audit trail", "multi-tenant", "AI analysis"
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {/* Search Statistics */}
+      {searchTerm && (
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center gap-4">
+                <span>
+                  Found <strong>{searchResults.length}</strong> results for "<strong>{searchTerm}</strong>"
+                </span>
+                <Separator orientation="vertical" className="h-4" />
+                <span className="text-muted-foreground">
+                  Searched across {searchDatabase.length} items in {categories.length - 1} categories
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-muted-foreground">Search time: 0.08s</span>
+                <Badge variant="outline" className="text-xs">
+                  AI-Enhanced
+                </Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  )
+}

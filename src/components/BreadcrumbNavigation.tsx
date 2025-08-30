@@ -14,6 +14,7 @@ interface BreadcrumbNavigationProps {
 
 const pageMapping: Record<string, { title: string; category?: string }> = {
   'overview': { title: 'Overview' },
+  'search': { title: 'Global Search', category: 'Platform' },
   'regulations': { title: 'Global Regulations', category: 'Compliance' },
   'enterprise-sso': { title: 'Enterprise SSO', category: 'Security' },
   'ai-models': { title: 'AI Models', category: 'Performance' },

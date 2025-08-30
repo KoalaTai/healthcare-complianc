@@ -15,7 +15,8 @@ import {
   Clock,
   AlertTriangle,
   Download,
-  Plus
+  Plus,
+  Search
 } from '@phosphor-icons/react'
 import { 
   ProjectStructure,
@@ -42,6 +43,8 @@ import { ArchitecturePage } from '@/components/ArchitecturePage'
 import { AuditTrailViewer } from '@/components/AuditTrailViewer'
 import { SSOConfiguration } from '@/components/SSOConfiguration'
 import { BreadcrumbNavigation } from '@/components/BreadcrumbNavigation'
+import { EnhancedEnterpriseSSOPage } from '@/components/EnhancedEnterpriseSSOPage'
+import { GlobalSearchInterface } from '@/components/GlobalSearchInterface'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('overview')
@@ -54,10 +57,12 @@ function App() {
 
   const renderPage = () => {
     switch (currentPage) {
+      case 'search':
+        return <GlobalSearchInterface onNavigate={setCurrentPage} />
       case 'regulations':
         return <GlobalRegulationsPage />
       case 'enterprise-sso':
-        return <EnterpriseSSOPage />
+        return <EnhancedEnterpriseSSOPage />
       case 'ai-models':
         return <AIModelsPage />
       case 'compliance':
@@ -335,6 +340,10 @@ function App() {
                 </div>
               </div>
               <div className="flex items-center gap-4">
+                <Button size="sm" onClick={() => setCurrentPage('search')}>
+                  <Search size={16} className="mr-2" />
+                  Global Search
+                </Button>
                 <Badge variant="secondary" className="px-3 py-1">
                   <CheckCircle size={14} className="mr-1" />
                   All Phases Complete - Production Ready

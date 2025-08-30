@@ -16,6 +16,11 @@ export { PharmaceuticalAI } from './PharmaceuticalAI';
 export { GlobalAIRouter } from './GlobalAIRouter';
 export { ValidationAndPerformance } from './ValidationAndPerformance';
 
+// Advanced Search and Enhanced Components
+export { RegulatorySearchEngine } from './RegulatorySearchEngine';
+export { EnhancedEnterpriseSSOPage } from './EnhancedEnterpriseSSOPage';
+export { GlobalSearchInterface } from './GlobalSearchInterface';
+
 //  Navigation and Pages
 export { Navigation } from './Navigation';
 export { GlobalRegulationsPage } from './GlobalRegulationsPage';
