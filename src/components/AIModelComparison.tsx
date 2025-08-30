@@ -94,6 +94,42 @@ export function AIModelComparison() {
           status: 'active'
         },
         {
+          modelName: 'PharmaGPT-4',
+          provider: 'BioPharma AI',
+          accuracy: 97.1,
+          speed: 7.2,
+          cost: 120,
+          compliance: 98.5,
+          lastTested: '2024-01-15',
+          strengths: ['21 CFR 211 Expertise', 'GMP Validation', 'Drug Manufacturing'],
+          weaknesses: ['High Cost', 'Limited to Pharma'],
+          status: 'active'
+        },
+        {
+          modelName: 'RegulatoryAI Pro',
+          provider: 'MedTech Solutions',
+          accuracy: 95.8,
+          speed: 9.1,
+          cost: 95,
+          compliance: 97.2,
+          lastTested: '2024-01-15',
+          strengths: ['FDA Submissions', 'ICH Guidelines', 'Clinical Trials'],
+          weaknesses: ['Slower Updates', 'Complex Setup'],
+          status: 'active'
+        },
+        {
+          modelName: 'PharmaClaude',
+          provider: 'Anthropic (Specialized)',
+          accuracy: 93.4,
+          speed: 11.8,
+          cost: 75,
+          compliance: 95.7,
+          lastTested: '2024-01-15',
+          strengths: ['Drug Safety', 'Pharmacovigilance', 'CAPA Analysis'],
+          weaknesses: ['Limited Manufacturing', 'Beta Stage'],
+          status: 'testing'
+        },
+        {
           modelName: 'GPT-4o Mini',
           provider: 'OpenAI',
           accuracy: 87.3,
@@ -103,6 +139,18 @@ export function AIModelComparison() {
           lastTested: '2024-01-15',
           strengths: ['Very Fast', 'Low Cost', 'Good for Initial Screening'],
           weaknesses: ['Lower Accuracy', 'Less Detailed Analysis'],
+          status: 'testing'
+        },
+        {
+          modelName: 'BioCompliance AI',
+          provider: 'Regulatory Sciences Inc',
+          accuracy: 92.7,
+          speed: 10.5,
+          cost: 85,
+          compliance: 94.8,
+          lastTested: '2024-01-15',
+          strengths: ['Biological Products', 'FDA Biologics', 'Quality by Design'],
+          weaknesses: ['New Platform', 'Limited Training Data'],
           status: 'testing'
         },
         {
@@ -183,11 +231,29 @@ export function AIModelComparison() {
 
   const availableModels = modelData.filter(m => m.status === 'active' || m.status === 'testing')
   const regulations = [
+    // Pharmaceutical Regulations (New Focus)
+    { value: '21-cfr-211', label: '21 CFR 211 - Current Good Manufacturing Practice (cGMP)' },
+    { value: '21-cfr-210', label: '21 CFR 210 - Drug Manufacturing Standards' },
+    { value: 'ich-q7', label: 'ICH Q7 - Good Manufacturing Practice for APIs' },
+    { value: 'ich-q8', label: 'ICH Q8 - Pharmaceutical Development' },
+    { value: 'ich-q9', label: 'ICH Q9 - Quality Risk Management' },
+    { value: 'ich-q10', label: 'ICH Q10 - Quality System' },
+    { value: 'ich-q11', label: 'ICH Q11 - Development & Manufacture of APIs' },
+    { value: 'ich-q12', label: 'ICH Q12 - Lifecycle Management' },
+    { value: '21-cfr-314', label: '21 CFR 314 - New Drug Applications (NDA)' },
+    { value: '21-cfr-320', label: '21 CFR 320 - Bioavailability/Bioequivalence' },
+    { value: '21-cfr-600', label: '21 CFR 600 - Biological Products' },
+    { value: 'usp-general', label: 'USP General Chapters' },
+    { value: 'eu-gmp', label: 'EU GMP Guidelines' },
+    { value: 'pic-s-gmp', label: 'PIC/S GMP Guidelines' },
+    // Medical Device Regulations
     { value: '21-cfr-820', label: '21 CFR 820 - Medical Device QSR' },
     { value: 'iso-13485', label: 'ISO 13485 - Medical Device QMS' },
+    { value: 'eu-mdr', label: 'EU MDR - Medical Device Regulation' },
+    // General Quality Systems
     { value: 'iso-9001', label: 'ISO 9001 - Quality Management' },
     { value: 'fda-guidance', label: 'FDA Guidance Documents' },
-    { value: 'eu-mdr', label: 'EU MDR - Medical Device Regulation' }
+    { value: 'who-gmp', label: 'WHO Good Manufacturing Practices' }
   ]
 
   return (

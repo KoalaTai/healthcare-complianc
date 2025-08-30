@@ -29,7 +29,8 @@ import {
   RegulatoryStandardsExpansion,
   ModelPerformanceDashboard,
   EnterpriseAuth,
-  InfrastructureMonitoring
+  InfrastructureMonitoring,
+  PharmaceuticalAI
 } from '@/components'
 import { AuditTrailViewer } from '@/components/AuditTrailViewer'
 import { SSOConfiguration } from '@/components/SSOConfiguration'
@@ -78,8 +79,8 @@ function App() {
 
   const quickStats = [
     { label: 'Compliance Documents', value: '13', status: 'complete', icon: FileText },
-    { label: 'AI Models', value: '4', status: 'complete', icon: AlertTriangle },
-    { label: 'Regulatory Standards', value: '47+', status: 'complete', icon: Shield },
+    { label: 'AI Models', value: '8', status: 'complete', icon: AlertTriangle },
+    { label: 'Regulatory Standards', value: '62+', status: 'complete', icon: Shield },
     { label: 'Enterprise SSO', value: '3', status: 'complete', icon: GitBranch }
   ]
 
@@ -144,7 +145,7 @@ function App() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-13 mb-8">
+          <TabsList className="grid w-full grid-cols-14 mb-8">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="summary">Summary</TabsTrigger>
             <TabsTrigger value="structure">Structure</TabsTrigger>
@@ -155,6 +156,7 @@ function App() {
             <TabsTrigger value="requirements">Requirements</TabsTrigger>
             <TabsTrigger value="risks">Risks</TabsTrigger>
             <TabsTrigger value="ai-models">AI Models</TabsTrigger>
+            <TabsTrigger value="pharma-ai">Pharma AI</TabsTrigger>
             <TabsTrigger value="standards">Standards</TabsTrigger>
             <TabsTrigger value="auth">Enterprise SSO</TabsTrigger>
             <TabsTrigger value="audit">Audit Trail</TabsTrigger>
@@ -254,6 +256,11 @@ function App() {
                       'Production Deployment Pipeline ✓',
                       'Real-time Infrastructure Monitoring ✓',
                       'AI Model Comparison Engine ✓',
+                      'Pharmaceutical AI Models (8 Specialized) ✓',
+                      'cGMP Manufacturing Analysis ✓',
+                      'FDA Submission AI Support ✓',
+                      'Biologics & Advanced Therapy AI ✓',
+                      'ICH Guidelines Implementation ✓',
                       'Advanced Regulatory Standards Library ✓',
                       'Multi-Model Performance Benchmarking ✓',
                       'Cybersecurity Plan v2.0 ✓',
@@ -299,6 +306,9 @@ function App() {
                       { standard: 'Microsoft/Google SSO', status: 'Configured' },
                       { standard: 'Multi-Factor Authentication', status: 'Enforced' },
                       { standard: 'AI Model Comparison', status: 'Active' },
+                      { standard: 'Pharmaceutical AI Models', status: 'Active' },
+                      { standard: 'cGMP Analysis Engine', status: 'Live' },
+                      { standard: 'FDA Submission AI', status: 'Active' },
                       { standard: 'Regulatory Standards Library', status: 'Expanded' },
                       { standard: 'Audit Trail System', status: 'Active' },
                       { standard: 'AWS Infrastructure', status: 'Live' },
@@ -354,6 +364,10 @@ function App() {
 
           <TabsContent value="ai-models">
             <AIModelComparison />
+          </TabsContent>
+
+          <TabsContent value="pharma-ai">
+            <PharmaceuticalAI />
           </TabsContent>
 
           <TabsContent value="standards">
