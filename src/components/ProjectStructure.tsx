@@ -141,11 +141,11 @@ export function ProjectStructure() {
             </CardHeader>
             <CardContent className="space-y-4">
               {[
-                { name: 'Software Development Plan', status: 'generated' },
-                { name: 'Risk Management Plan', status: 'generated' },
-                { name: 'Software Requirements Spec', status: 'template' },
-                { name: 'Validation Master Plan', status: 'template' },
-                { name: 'Cybersecurity Plan', status: 'pending' }
+                { name: 'Cybersecurity Plan v2.0', status: 'generated' },
+                { name: '21 CFR Part 11 Compliance Strategy', status: 'generated' },
+                { name: 'Terms of Service', status: 'generated' },
+                { name: 'Privacy Policy', status: 'generated' },
+                { name: 'Service Level Agreement', status: 'generated' }
               ].map((doc, index) => (
                 <div key={index} className="flex items-center justify-between p-3 border rounded-md">
                   <span className="text-sm font-medium">{doc.name}</span>
@@ -169,10 +169,10 @@ export function ProjectStructure() {
             </CardHeader>
             <CardContent className="space-y-3">
               {[
-                'ARCHITECTURE_v2.md',
-                'database_schemas.py',
-                'api_endpoints.py',
-                'migration_plan.md'
+                'AI_Model_Validation_Protocol.md',
+                'Installation_Qualification_IQ_Protocol.md',
+                'Disaster_Recovery_Plan.md',
+                'compliance_architecture.py'
               ].map((file, index) => (
                 <div key={index} className="flex items-center gap-2 p-2 rounded-md border">
                   <FileText size={16} className="text-muted-foreground" />
@@ -230,20 +230,26 @@ function createDefaultStructure(): FileNode[] {
           name: 'docs',
           type: 'folder',
           children: [
-            { name: 'Software_Development_Plan_v2.md', type: 'file', status: 'generated' },
-            { name: 'Risk_Management_Plan_v2.md', type: 'file', status: 'generated' },
-            { name: 'Software_Requirements_Specification_v2.md', type: 'file', status: 'template' },
-            { name: 'Validation_Master_Plan_v2.md', type: 'file', status: 'template' },
-            { name: 'Cybersecurity_Plan_v2.md', type: 'file', status: 'pending' },
-            { name: 'ARCHITECTURE_v2.md', type: 'file', status: 'template' }
+            { name: 'Cybersecurity_Plan_v2.md', type: 'file', status: 'generated', description: 'AWS-specific security controls and implementation' },
+            { name: '21_CFR_Part_11_Compliance_Strategy.md', type: 'file', status: 'generated', description: 'Electronic records and signatures compliance' },
+            { name: 'Disaster_Recovery_Plan.md', type: 'file', status: 'generated', description: 'Business continuity and data protection procedures' },
+            {
+              name: 'legal',
+              type: 'folder',
+              children: [
+                { name: 'Terms_of_Service.md', type: 'file', status: 'generated', description: 'B2B SaaS terms and conditions' },
+                { name: 'Privacy_Policy.md', type: 'file', status: 'generated', description: 'GDPR and HIPAA compliant privacy policy' },
+                { name: 'Service_Level_Agreement_SLA.md', type: 'file', status: 'generated', description: 'Enterprise customer SLA template' }
+              ]
+            }
           ]
         },
         {
           name: 'validation',
           type: 'folder',
           children: [
-            { name: 'test_cases.md', type: 'file', status: 'pending' },
-            { name: 'ai_validation_strategy.md', type: 'file', status: 'pending' }
+            { name: 'AI_Model_Validation_Protocol.md', type: 'file', status: 'generated', description: 'Golden dataset and accuracy validation protocol' },
+            { name: 'Installation_Qualification_IQ_Protocol.md', type: 'file', status: 'generated', description: 'AWS infrastructure validation checklist' }
           ]
         },
         {

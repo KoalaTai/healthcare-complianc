@@ -28,43 +28,43 @@ function App() {
   const [activeTab, setActiveTab] = useState('overview')
   const [projectData, setProjectData] = useKV('virtualbackroom-project', {
     name: 'VirtualBackroom.ai V2.0',
-    phase: 'Planning',
-    progress: 15,
+    phase: 'Security & Compliance Implementation',
+    progress: 75,
     lastUpdated: new Date().toISOString()
   })
 
   const phases = [
     { 
       name: 'Project Scaffolding & Compliance Framework', 
-      status: 'in-progress',
-      progress: 60,
+      status: 'complete',
+      progress: 100,
       tasks: ['Repository Structure', 'QMS Documentation', 'Compliance Templates']
     },
     { 
-      name: 'Feature Definition & Requirements', 
-      status: 'pending',
-      progress: 0,
-      tasks: ['User Stories', 'Epic Planning', 'Acceptance Criteria']
+      name: 'Security & Compliance Implementation', 
+      status: 'complete',
+      progress: 100,
+      tasks: ['Cybersecurity Plan', '21 CFR Part 11 Strategy', 'Legal Documentation']
     },
     { 
-      name: 'Technical Architecture & Design', 
-      status: 'pending',
-      progress: 0,
-      tasks: ['System Architecture', 'Database Design', 'API Specifications']
+      name: 'Validation Protocols & Testing', 
+      status: 'complete',
+      progress: 100,
+      tasks: ['AI Model Validation', 'IQ Protocol', 'Disaster Recovery Plan']
     },
     { 
-      name: 'Validation & Testing Strategy', 
-      status: 'pending',
-      progress: 0,
-      tasks: ['Test Plans', 'AI Validation', 'Compliance Testing']
+      name: 'Operational Readiness & Deployment', 
+      status: 'in-progress',
+      progress: 25,
+      tasks: ['User Training', 'SOPs', 'Go-Live Preparation']
     }
   ]
 
   const quickStats = [
-    { label: 'Requirements', value: '24', status: 'complete', icon: FileText },
-    { label: 'Risks Identified', value: '8', status: 'warning', icon: AlertTriangle },
-    { label: 'Architecture Components', value: '12', status: 'complete', icon: GitBranch },
-    { label: 'Compliance Docs', value: '5', status: 'in-progress', icon: Shield }
+    { label: 'Compliance Documents', value: '8', status: 'complete', icon: FileText },
+    { label: 'Validation Protocols', value: '2', status: 'complete', icon: AlertTriangle },
+    { label: 'Legal Documents', value: '3', status: 'complete', icon: GitBranch },
+    { label: 'Security Controls', value: '45+', status: 'complete', icon: Shield }
   ]
 
   return (
@@ -84,7 +84,7 @@ function App() {
             <div className="flex items-center gap-4">
               <Badge variant="secondary" className="px-3 py-1">
                 <Clock size={14} className="mr-1" />
-                Phase I: Planning
+                Phase II: Security Implementation
               </Badge>
               <Button size="sm">
                 <Download size={16} className="mr-2" />
@@ -185,11 +185,11 @@ function App() {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {[
-                      'Software Development Plan',
-                      'Risk Management Plan',
-                      'Software Requirements Specification',
-                      'Validation Master Plan',
-                      'Cybersecurity Plan'
+                      'Cybersecurity Plan v2.0',
+                      '21 CFR Part 11 Compliance Strategy',
+                      'AI Model Validation Protocol',
+                      'Installation Qualification Protocol',
+                      'Disaster Recovery Plan'
                     ].map((doc, index) => (
                       <div key={index} className="flex items-center justify-between">
                         <span className="text-sm">{doc}</span>
@@ -208,15 +208,15 @@ function App() {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {[
-                      { standard: 'ISO 13485', status: 'In Progress' },
-                      { standard: 'IEC 62304', status: 'Planned' },
-                      { standard: '21 CFR Part 11', status: 'In Progress' },
-                      { standard: 'HIPAA', status: 'Planned' }
+                      { standard: 'ISO 13485', status: 'Addressed' },
+                      { standard: 'IEC 62304', status: 'Addressed' },
+                      { standard: '21 CFR Part 11', status: 'Completed' },
+                      { standard: 'HIPAA', status: 'Completed' }
                     ].map((item, index) => (
                       <div key={index} className="flex items-center justify-between">
                         <span className="text-sm">{item.standard}</span>
                         <Badge 
-                          variant={item.status === 'In Progress' ? 'default' : 'secondary'}
+                          variant={item.status === 'Completed' || item.status === 'Addressed' ? 'default' : 'secondary'}
                           className="text-xs"
                         >
                           {item.status}
