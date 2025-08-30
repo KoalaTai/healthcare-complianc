@@ -17,10 +17,12 @@ import {
   Download,
   Plus
 } from '@phosphor-icons/react'
-import { ProjectStructure } from '@/components/ProjectStructure'
-import { ArchitectureDiagram } from '@/components/ArchitectureDiagram'
-import { RequirementsManager } from '@/components/RequirementsManager'
-import { RiskAssessment } from '@/components/RiskAssessment'
+import { 
+  ProjectStructure,
+  ArchitectureDiagram,
+  RequirementsManager,
+  RiskAssessment 
+} from '@/components'
 
 function App() {
   const [activeTab, setActiveTab] = useState('overview')
