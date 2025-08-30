@@ -5,3 +5,6 @@ export { RiskAssessment } from './RiskAssessment';
 export { DatabaseSchema } from './DatabaseSchema';
 export { DeploymentDashboard } from './DeploymentDashboard';
 export { ProductionSummary } from './ProductionSummary';
+export { AIModelComparison } from './AIModelComparison';
+export { RegulatoryStandardsExpansion } from './RegulatoryStandardsExpansion';
+export { ModelPerformanceDashboard } from './ModelPerformanceDashboard';

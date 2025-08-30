@@ -24,7 +24,10 @@ import {
   RiskAssessment,
   DatabaseSchema,
   DeploymentDashboard,
-  ProductionSummary 
+  ProductionSummary,
+  AIModelComparison,
+  RegulatoryStandardsExpansion,
+  ModelPerformanceDashboard
 } from '@/components'
 
 function App() {
@@ -71,8 +74,8 @@ function App() {
 
   const quickStats = [
     { label: 'Compliance Documents', value: '13', status: 'complete', icon: FileText },
-    { label: 'Database Tables', value: '6', status: 'complete', icon: AlertTriangle },
-    { label: 'Security Controls', value: '65+', status: 'complete', icon: Shield },
+    { label: 'AI Models', value: '4', status: 'complete', icon: AlertTriangle },
+    { label: 'Regulatory Standards', value: '47+', status: 'complete', icon: Shield },
     { label: 'Deployment Ready', value: '100%', status: 'complete', icon: GitBranch }
   ]
 
@@ -87,7 +90,7 @@ function App() {
                 VirtualBackroom.ai V2.0
               </h1>
               <p className="text-sm text-muted-foreground mt-1">
-                Enterprise SaaS Platform - Production Ready & Deployed
+                AI-Powered Regulatory Compliance Platform - Production Ready & Deployed
               </p>
               <div className="flex items-center gap-2 mt-2">
                 <Badge variant="default" className="bg-green-600 text-white text-xs">
@@ -137,7 +140,7 @@ function App() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-8 mb-8">
+          <TabsList className="grid w-full grid-cols-10 mb-8">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="summary">Summary</TabsTrigger>
             <TabsTrigger value="structure">Structure</TabsTrigger>
@@ -146,6 +149,8 @@ function App() {
             <TabsTrigger value="deployment">Deployment</TabsTrigger>
             <TabsTrigger value="requirements">Requirements</TabsTrigger>
             <TabsTrigger value="risks">Risks</TabsTrigger>
+            <TabsTrigger value="ai-models">AI Models</TabsTrigger>
+            <TabsTrigger value="standards">Standards</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview">
@@ -237,6 +242,9 @@ function App() {
                       'Enterprise SSO Integration ✓',
                       'Infrastructure as Code (Terraform) ✓',
                       'Production Deployment Pipeline ✓',
+                      'AI Model Comparison Engine ✓',
+                      'Advanced Regulatory Standards Library ✓',
+                      'Multi-Model Performance Benchmarking ✓',
                       'Cybersecurity Plan v2.0 ✓',
                       '21 CFR Part 11 Compliance Strategy ✓', 
                       'AI Model Validation Protocol ✓',
@@ -278,6 +286,8 @@ function App() {
                       { standard: 'FastAPI Backend', status: 'Deployed' },
                       { standard: 'Multi-Tenant Database', status: 'Operational' },
                       { standard: 'Enterprise SSO', status: 'Configured' },
+                      { standard: 'AI Model Comparison', status: 'Active' },
+                      { standard: 'Regulatory Standards Library', status: 'Expanded' },
                       { standard: 'Audit Trail System', status: 'Active' },
                       { standard: 'AWS Infrastructure', status: 'Live' },
                       { standard: 'Security Monitoring', status: 'Monitoring' }
@@ -324,6 +334,14 @@ function App() {
 
           <TabsContent value="risks">
             <RiskAssessment />
+          </TabsContent>
+
+          <TabsContent value="ai-models">
+            <AIModelComparison />
+          </TabsContent>
+
+          <TabsContent value="standards">
+            <RegulatoryStandardsExpansion />
           </TabsContent>
         </Tabs>
       </div>
