@@ -102,10 +102,11 @@ FOR SELECT TO app_user USING (
   - System Admin: Platform administration (limited to service provider)
 
 #### Technical Access Controls
-- **Multi-Factor Authentication**: Required for all user accounts via AWS Cognito
-- **Session Management**: JWT tokens with 8-hour expiration and refresh token rotation
-- **Concurrent Session Limits**: Maximum 3 active sessions per user
-- **Account Lockout**: Automated lockout after 5 failed authentication attempts
+- **Enterprise SSO Integration**: Primary authentication via Microsoft Azure AD or Google Workspace
+- **Multi-Factor Authentication**: Enforced at enterprise identity provider level
+- **Session Management**: SSO session inheritance with configurable timeout per enterprise policy
+- **Fallback Authentication**: Local JWT tokens for non-enterprise users with same security standards
+- **Account Lockout**: Coordinated between IdP and application layer (5 failed attempts)
 
 ### 3.5 Use of Secure, Computer-Generated Timestamps (§11.10(e))
 

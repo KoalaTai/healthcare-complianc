@@ -43,14 +43,14 @@ export function ArchitectureDiagram() {
       description: 'Managed API gateway for routing, rate limiting, and request/response transformation',
       technology: 'AWS API Gateway',
       status: 'new',
-      connections: ['cognito-auth', 'fastapi-backend']
+      connections: ['enterprise-sso', 'fastapi-backend']
     },
     {
-      id: 'cognito-auth',
-      name: 'AWS Cognito',
+      id: 'enterprise-sso',
+      name: 'Enterprise SSO',
       type: 'service',
-      description: 'Production-grade identity provider replacing hardcoded authentication',
-      technology: 'AWS Cognito',
+      description: 'Microsoft Azure AD or Google Workspace integration for enterprise authentication with SAML 2.0/OIDC protocols',
+      technology: 'Azure AD / Google Workspace',
       status: 'new',
       connections: ['api-gateway']
     },
@@ -179,11 +179,11 @@ export function ArchitectureDiagram() {
                     </div>
                     <div 
                       className={`p-4 rounded-lg border cursor-pointer ${getComponentColor('service', 'new')}`}
-                      onClick={() => setSelectedComponent('cognito-auth')}
+                      onClick={() => setSelectedComponent('enterprise-sso')}
                     >
                       <Shield size={24} className="mx-auto mb-2" />
-                      <div className="font-medium">Cognito Auth</div>
-                      <div className="text-xs text-muted-foreground">Identity Provider</div>
+                      <div className="font-medium">Enterprise SSO</div>
+                      <div className="text-xs text-muted-foreground">Azure AD / Google</div>
                     </div>
                   </div>
                 </div>

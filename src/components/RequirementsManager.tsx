@@ -366,13 +366,13 @@ function getDefaultRequirements(): Requirement[] {
       id: 'req-1',
       epic: 'Epic 1: Production-Grade Identity & Access Management',
       title: 'User Registration and Authentication',
-      description: 'As a user, I can securely sign up, log in, and manage my account via a dedicated identity provider (e.g., AWS Cognito, Auth0).',
+      description: 'As a user, I can securely sign up, log in, and manage my account via enterprise SSO (Microsoft Azure AD, Google Workspace) or fallback local authentication.',
       acceptanceCriteria: [
-        'User can register with email and password',
-        'Email verification is required for account activation',
-        'Users can log in with verified credentials',
-        'Password reset functionality is available',
-        'Multi-factor authentication is supported'
+        'Enterprise SSO integration with Azure AD and Google Workspace',
+        'SAML 2.0 and OIDC protocol support',
+        'Single Sign-On experience for enterprise users',
+        'Fallback local authentication for non-enterprise users',
+        'Multi-factor authentication inherited from enterprise IdP'
       ],
       priority: 'high',
       status: 'completed'

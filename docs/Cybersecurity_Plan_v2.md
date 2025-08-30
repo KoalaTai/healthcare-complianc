@@ -18,7 +18,7 @@ This cybersecurity plan establishes the security controls and implementation req
 ### 2.1 AWS Cloud-Native Security Model
 The V2.0 architecture leverages AWS managed services to implement defense-in-depth security:
 
-- **Identity Layer**: AWS Cognito User Pools for authentication and authorization
+- **Identity Layer**: Enterprise SSO integration (Microsoft Azure AD, Google Workspace) with SAML 2.0/OIDC protocols
 - **Network Layer**: VPC with private subnets, security groups, and NACLs
 - **Application Layer**: ECS Fargate with container-level isolation
 - **Data Layer**: Encrypted RDS PostgreSQL and S3 with KMS encryption
@@ -44,17 +44,18 @@ The V2.0 architecture leverages AWS managed services to implement defense-in-dep
   - OpenAI API call permissions (via secrets manager)
 - **Administrative Roles**: Separate roles for DevOps, Security, and Compliance teams
 
-#### User Authentication via AWS Cognito
-- **Multi-Factor Authentication (MFA)**: Required for all users
-- **Password Policy**: 
-  - Minimum 12 characters
-  - Complexity requirements (uppercase, lowercase, numbers, symbols)
-  - Password history enforcement (last 12 passwords)
-  - Maximum age: 90 days
+#### Enterprise SSO Integration
+- **Primary Identity Providers**: 
+  - Microsoft Azure Active Directory (Azure AD)
+  - Google Workspace (formerly G Suite)
+  - Okta, Auth0 (secondary options)
+- **Protocol Support**: SAML 2.0 and OpenID Connect (OIDC)
+- **Multi-Factor Authentication (MFA)**: Enforced at IdP level (enterprise policy)
 - **Session Management**: 
-  - JWT token expiry: 8 hours
-  - Refresh token rotation enabled
-  - Concurrent session limits: 3 per user
+  - Token expiry: Configured per enterprise policy (default 8 hours)
+  - Single Sign-On (SSO) session inheritance
+  - Centralized logout via IdP
+- **Fallback Authentication**: Local account option for non-enterprise users with same MFA requirements
 
 #### Role-Based Access Control (RBAC)
 - **Organization Admin**: Full tenant management, user invitation, billing
@@ -285,7 +286,7 @@ The V2.0 architecture leverages AWS managed services to implement defense-in-dep
 
 ### Phase 1: Foundation (Months 1-2)
 - AWS environment setup with security controls
-- Cognito implementation and testing
+- Enterprise SSO integration (Azure AD/Google Workspace)
 - Basic monitoring and logging implementation
 
 ### Phase 2: Core Security (Months 2-3)
