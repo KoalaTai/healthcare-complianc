@@ -23,7 +23,8 @@ import {
   Target,
   Building,
   Globe,
-  Bell
+  Bell,
+  Upload
 } from '@phosphor-icons/react'
 import { 
   ProjectStructure,
@@ -66,7 +67,8 @@ import {
   RegulatoryUpdatesFeed,
   RegulatoryFeedConfiguration,
   InteractiveTutorial,
-  TutorialDashboard
+  TutorialDashboard,
+  DocumentUploadWorkflow
 } from '@/components'
 
 function App() {
@@ -80,6 +82,8 @@ function App() {
 
   const renderPage = () => {
     switch (currentPage) {
+      case 'document-upload':
+        return <DocumentUploadWorkflow />
       case 'tutorial-dashboard':
         return <TutorialDashboard 
           onStartTutorial={() => {
@@ -448,6 +452,16 @@ function App() {
                 </div>
               </div>
               <div className="flex items-center gap-4">
+                <Button 
+                  size="sm" 
+                  onClick={() => {
+                    setCurrentPage('document-upload')
+                    toast.success('Opening Document Upload & AI Analysis')
+                  }}
+                >
+                  <Upload size={16} className="mr-2" />
+                  Upload & Analyze
+                </Button>
                 <Button 
                   size="sm" 
                   onClick={() => {

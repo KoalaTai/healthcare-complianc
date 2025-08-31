@@ -51,4 +51,5 @@ export { SSOProviderWizard } from './SSOProviderWizard';
 // Tutorial System
 export { InteractiveTutorial } from './InteractiveTutorial';
 export { TutorialHighlight } from './TutorialHighlight';
-export { TutorialDashboard } from './TutorialDashboard';
+export { TutorialDashboard } from './TutorialDashboard'
+export { DocumentUploadWorkflow } from './DocumentUploadWorkflow';

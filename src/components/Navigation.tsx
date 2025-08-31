@@ -19,7 +19,8 @@ import {
   Building,
   Activity,
   Server,
-  Bell
+  Bell,
+  Upload
 } from '@phosphor-icons/react'
 
 interface NavigationProps {
@@ -37,6 +38,13 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
       icon: House,
       description: 'Production deployment status',
       badge: 'Live'
+    },
+    {
+      id: 'document-upload',
+      label: 'Document Upload & Analysis',
+      icon: Upload,
+      description: 'AI-powered regulatory document analysis',
+      badge: 'AI Workflow'
     },
     {
       id: 'tutorial-dashboard',
