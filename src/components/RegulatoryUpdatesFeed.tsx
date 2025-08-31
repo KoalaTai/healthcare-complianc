@@ -25,7 +25,16 @@ import {
   Tag,
   TrendUp,
   Eye,
-  Settings
+  Settings,
+  Flag,
+  CaretUp,
+  CaretDown,
+  Copy,
+  Share,
+  SortAscending,
+  SortDescending,
+  Funnel,
+  Archive
 } from '@phosphor-icons/react'
 import { toast } from 'sonner'
 

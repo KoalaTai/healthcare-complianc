@@ -14,11 +14,21 @@ interface BreadcrumbNavigationProps {
 
 const pageMapping: Record<string, { title: string; category?: string }> = {
   'overview': { title: 'Overview' },
+  'regulatory-updates': { title: 'Regulatory Updates Feed', category: 'Monitoring' },
+  'feed-configuration': { title: 'Feed Configuration', category: 'Monitoring' },
+  'gap-analysis': { title: 'Gap Analysis Report', category: 'Analysis' },
+  'regulatory-analysis': { title: 'Regulatory Analysis Engine', category: 'AI Platform' },
+  'audit-simulation': { title: 'Audit Simulation Engine', category: 'Training' },
+  'multi-tenant': { title: 'Multi-Tenant Dashboard', category: 'Administration' },
+  'production-monitoring': { title: 'Production Monitoring', category: 'Operations' },
   'search': { title: 'Global Search', category: 'Platform' },
   'regulations': { title: 'Global Regulations', category: 'Compliance' },
   'enterprise-sso': { title: 'Enterprise SSO', category: 'Security' },
+  'sso-integration': { title: 'SSO Integration Hub', category: 'Security' },
+  'sso-docs': { title: 'SSO Documentation', category: 'Security' },
   'ai-models': { title: 'AI Models', category: 'Performance' },
-  'compliance': { title: 'Compliance Documentation', category: 'QMS' },
+  'compliance': { title: 'Compliance Tracking', category: 'QMS' },
+  'compliance-page': { title: 'QMS Documentation', category: 'QMS' },
   'architecture': { title: 'System Architecture', category: 'Technical' },
   'audit-trail': { title: 'Audit Trail', category: 'Security' },
   'deployment': { title: 'Deployment Status', category: 'Operations' }

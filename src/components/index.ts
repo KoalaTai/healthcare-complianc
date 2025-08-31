@@ -40,10 +40,10 @@ export { AuditSimulationEngine } from './AuditSimulationEngine';
 export { MultiTenantDashboard } from './MultiTenantDashboard';
 export { ProductionMonitoringDashboard } from './ProductionMonitoringDashboard';
 
-// SSO Components from sso directory
-export { SSOProviderConfig } from './sso/SSOProviderConfig';
-export { SSOConfigurationWizard } from './sso/SSOConfigurationWizard';
-export { SSOManagementDashboard } from './sso/SSOManagementDashboard';
-export { SSOTestingValidation } from './sso/SSOTestingValidation';
-export { AutomatedSSOIntegrationHub } from './sso/AutomatedSSOIntegrationHub';
-export { SSOIntegrationDocumentation } from './sso/SSOIntegrationDocumentation';
+// SSO Components
+export { SSOConfigurationWizard } from './SSOConfigurationWizard';
+export { SSOManagementDashboard } from './SSOManagementDashboard';
+export { SSOTestingValidation } from './SSOTestingValidation';
+export { AutomatedSSOIntegrationHub } from './AutomatedSSOIntegrationHub';
+export { SSOIntegrationDocumentation } from './SSOIntegrationDocumentation';
+export { SSOProviderWizard } from './SSOProviderWizard';
