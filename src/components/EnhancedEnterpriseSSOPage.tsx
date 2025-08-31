@@ -334,4 +334,3 @@ export const EnhancedEnterpriseSSOPage: React.FC = () => {
     </div>
   )
 }
-}
