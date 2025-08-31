@@ -659,44 +659,6 @@ export function SSOConfigurationWizard({ provider, onComplete }: {
     )
   }
 
-      {/* Configuration Summary */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm">Configuration Summary</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-            <div className="space-y-2">
-              <h6 className="font-medium">Identity Provider</h6>
-              <div className="text-muted-foreground">Provider: {provider}</div>
-              <div className="text-muted-foreground">Domain: {config.basicConfig.domain || 'Not configured'}</div>
-              <div className="text-muted-foreground">Auto-provisioning: {config.securitySettings.autoProvisioning ? 'Enabled' : 'Disabled'}</div>
-            </div>
-            <div className="space-y-2">
-              <h6 className="font-medium">Security Settings</h6>
-              <div className="text-muted-foreground">MFA Required: {config.securitySettings.mfaRequired ? 'Yes' : 'No'}</div>
-              <div className="text-muted-foreground">Session Timeout: {config.securitySettings.sessionTimeout} minutes</div>
-              <div className="text-muted-foreground">Conditional Access: {config.securitySettings.conditionalAccess ? 'Enabled' : 'Disabled'}</div>
-            </div>
-          </div>
-
-          {/* Export Configuration */}
-          <Separator />
-          <div className="flex gap-3">
-            <Button variant="outline" size="sm">
-              <Download size={14} className="mr-2" />
-              Export Configuration
-            </Button>
-            <Button variant="outline" size="sm">
-              <Copy size={14} className="mr-2" />
-              Copy Config JSON
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  )
-
   const steps: WizardStep[] = [
     {
       id: 'basic',
