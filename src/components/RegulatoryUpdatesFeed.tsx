@@ -45,6 +45,8 @@ interface RegulatoryUpdate {
   tags: string[]
   isBookmarked: boolean
   isRead: boolean
+  isArchived?: boolean
+  isFlagged?: boolean
   impact: string
   relatedStandards: string[]
 }
@@ -60,6 +62,10 @@ export function RegulatoryUpdatesFeed() {
   const [isLoading, setIsLoading] = useState(false)
   const [lastSync, setLastSync] = useKV('updates-last-sync', '')
   const [activeTab, setActiveTab] = useState('all')
+  const [expandedUpdate, setExpandedUpdate] = useState<string | null>(null)
+  const [quickFilterTags, setQuickFilterTags] = useState<string[]>([])
+  const [sortBy, setSortBy] = useState('publishDate')
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc')
 
   // Mock regulatory updates data - in production this would come from real API feeds
   const mockUpdates: RegulatoryUpdate[] = [
@@ -79,6 +85,8 @@ export function RegulatoryUpdatesFeed() {
       tags: ['SaMD', 'Clinical Evaluation', 'Risk Classification', 'Software'],
       isBookmarked: false,
       isRead: false,
+      isArchived: false,
+      isFlagged: false,
       impact: 'High - Affects all SaMD manufacturers and clinical evaluation protocols',
       relatedStandards: ['ISO 14155', 'ISO 13485', 'IEC 62304']
     },
