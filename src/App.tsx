@@ -52,15 +52,15 @@ import {
   SSOProviderWizard,
   SSOManagementDashboard,
   SSOTestingValidation,
-  AutomatedSSOIntegrationHub
+  AutomatedSSOIntegrationHub,
+  ArchitecturePage,
+  AuditTrailViewer,
+  SSOConfiguration,
+  BreadcrumbNavigation,
+  EnhancedEnterpriseSSOPage,
+  GlobalSearchInterface,
+  SSOIntegrationDocumentation
 } from '@/components'
-import { ArchitecturePage } from '@/components/ArchitecturePage'
-import { AuditTrailViewer } from '@/components/AuditTrailViewer'
-import { SSOConfiguration } from '@/components/SSOConfiguration'
-import { BreadcrumbNavigation } from '@/components/BreadcrumbNavigation'
-import { EnhancedEnterpriseSSOPage } from '@/components/EnhancedEnterpriseSSOPage'
-import { GlobalSearchInterface } from '@/components/GlobalSearchInterface'
-import { SSOIntegrationDocumentation } from '@/components/SSOIntegrationDocumentation'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('overview')
