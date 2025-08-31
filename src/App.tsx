@@ -61,7 +61,6 @@ import { BreadcrumbNavigation } from '@/components/BreadcrumbNavigation'
 import { EnhancedEnterpriseSSOPage } from '@/components/EnhancedEnterpriseSSOPage'
 import { GlobalSearchInterface } from '@/components/GlobalSearchInterface'
 import { SSOIntegrationDocumentation } from '@/components/SSOIntegrationDocumentation'
-import { AutomatedSSOIntegrationHub } from '@/components/AutomatedSSOIntegrationHub'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('overview')
