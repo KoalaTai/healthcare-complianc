@@ -13,7 +13,12 @@ import {
   BookOpen,
   Lock,
   BarChart3,
-  Search
+  Search,
+  Brain,
+  Target,
+  Building,
+  Activity,
+  Server
 } from '@phosphor-icons/react'
 
 interface NavigationProps {
@@ -24,13 +29,45 @@ interface NavigationProps {
 export function Navigation({ currentPage, onNavigate }: NavigationProps) {
   const [isCollapsed, setIsCollapsed] = useState(false)
 
-  const mainSections = [
+  const coreFeatures = [
     {
       id: 'overview',
-      label: 'Overview',
+      label: 'Platform Overview',
       icon: Home,
-      description: 'Project dashboard and status'
+      description: 'Production deployment status',
+      badge: 'Live'
     },
+    {
+      id: 'regulatory-analysis',
+      label: 'Regulatory Analysis Engine',
+      icon: Brain,
+      description: 'AI-powered gap analysis across global regulations',
+      badge: '12 AI Models'
+    },
+    {
+      id: 'audit-simulation',
+      label: 'Audit Simulation Engine',
+      icon: Target,
+      description: 'Interactive audit training with voice AI',
+      badge: 'Voice Enabled'
+    },
+    {
+      id: 'multi-tenant',
+      label: 'Multi-Tenant Administration',
+      icon: Building,
+      description: 'Enterprise tenant management & security',
+      badge: '21 CFR Part 11'
+    },
+    {
+      id: 'production-monitoring',
+      label: 'Infrastructure Monitoring',
+      icon: Activity,
+      description: 'Real-time production system health',
+      badge: '99.97% Uptime'
+    }
+  ]
+
+  const platformSections = [
     {
       id: 'search',
       label: 'Global Search',
@@ -84,21 +121,21 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
   const technicalSections = [
     {
       id: 'architecture',
-      label: 'Architecture',
+      label: 'System Architecture',
       icon: Database,
-      description: 'System design and infrastructure'
+      description: 'Technical design and infrastructure'
     },
     {
       id: 'audit-trail',
-      label: 'Audit Trail',
+      label: 'Audit Trail Viewer',
       icon: Lock,
       description: 'Security and compliance monitoring'
     },
     {
       id: 'deployment',
-      label: 'Deployment',
+      label: 'Deployment Pipeline',
       icon: Settings,
-      description: 'Infrastructure and CI/CD status'
+      description: 'CI/CD and infrastructure status'
     }
   ]
 
@@ -169,21 +206,35 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
         </div>
 
         <div className="space-y-6">
-          {/* Main Navigation */}
+          {/* Core Platform Features */}
           <div>
             {!isCollapsed && (
               <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-                Main Sections
+                Core Platform
               </h3>
             )}
             <div className="space-y-1">
-              {mainSections.map((section) => (
+              {coreFeatures.map((section) => (
                 <NavItem key={section.id} section={section} isMain />
               ))}
             </div>
           </div>
 
-          {/* Technical Sections */}
+          {/* Platform Features */}
+          <div>
+            {!isCollapsed && (
+              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                Platform Features
+              </h3>
+            )}
+            <div className="space-y-1">
+              {platformSections.map((section) => (
+                <NavItem key={section.id} section={section} isMain />
+              ))}
+            </div>
+          </div>
+
+          {/* Technical & Operations */}
           <div>
             {!isCollapsed && (
               <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
@@ -208,7 +259,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
               </span>
             </div>
             <p className="text-xs text-green-600 dark:text-green-400">
-              All systems operational
+              99.97% uptime • 8 global regions • 21 CFR Part 11 compliant
             </p>
           </div>
         )}
