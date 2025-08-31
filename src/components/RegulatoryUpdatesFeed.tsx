@@ -231,6 +231,17 @@ export function RegulatoryUpdatesFeed() {
       filtered = filtered.filter(update => update.status === filterStatus)
     }
 
+    // Apply quick tag filters
+    if (quickFilterTags.length > 0) {
+      filtered = filtered.filter(update => 
+        quickFilterTags.some(tag => 
+          update.tags.some(updateTag => 
+            updateTag.toLowerCase().includes(tag.toLowerCase())
+          )
+        )
+      )
+    }
+
     // Apply tab filter
     if (activeTab === 'bookmarked') {
       filtered = filtered.filter(update => update.isBookmarked)
@@ -238,10 +249,37 @@ export function RegulatoryUpdatesFeed() {
       filtered = filtered.filter(update => !update.isRead)
     } else if (activeTab === 'critical') {
       filtered = filtered.filter(update => update.priority === 'critical')
+    } else if (activeTab === 'flagged') {
+      filtered = filtered.filter(update => update.isFlagged)
     }
 
+    // Sort the filtered results
+    filtered = [...filtered].sort((a, b) => {
+      let comparison = 0
+      
+      switch (sortBy) {
+        case 'publishDate':
+          comparison = new Date(a.publishDate).getTime() - new Date(b.publishDate).getTime()
+          break
+        case 'priority':
+          const priorityOrder = { critical: 4, high: 3, medium: 2, low: 1 }
+          comparison = priorityOrder[a.priority] - priorityOrder[b.priority]
+          break
+        case 'agency':
+          comparison = a.agency.localeCompare(b.agency)
+          break
+        case 'title':
+          comparison = a.title.localeCompare(b.title)
+          break
+        default:
+          comparison = 0
+      }
+      
+      return sortOrder === 'desc' ? -comparison : comparison
+    })
+
     setFilteredUpdates(filtered)
-  }, [updates, searchQuery, filterAgency, filterPriority, filterStatus, activeTab])
+  }, [updates, searchQuery, filterAgency, filterPriority, filterStatus, activeTab, quickFilterTags, sortBy, sortOrder])
 
   const syncUpdates = async () => {
     setIsLoading(true)
@@ -296,6 +334,59 @@ export function RegulatoryUpdatesFeed() {
         ? { ...update, isRead: true }
         : update
     ))
+  }
+
+  const toggleFlag = (updateId: string) => {
+    setUpdates(prev => prev.map(update => 
+      update.id === updateId 
+        ? { ...update, isFlagged: !update.isFlagged }
+        : update
+    ))
+    toast.success('Update flagged for follow-up')
+  }
+
+  const archiveUpdate = (updateId: string) => {
+    setUpdates(prev => prev.map(update => 
+      update.id === updateId 
+        ? { ...update, isArchived: true }
+        : update
+    ))
+    toast.success('Update archived')
+  }
+
+  const copyUpdateLink = (update: RegulatoryUpdate) => {
+    navigator.clipboard.writeText(update.url)
+    toast.success('Link copied to clipboard')
+  }
+
+  const shareUpdate = (update: RegulatoryUpdate) => {
+    const shareText = `Regulatory Update: ${update.title}\n\nAgency: ${update.agency}\nPriority: ${update.priority}\n\n${update.summary}\n\nLink: ${update.url}`
+    navigator.clipboard.writeText(shareText)
+    toast.success('Update details copied for sharing')
+  }
+
+  const addQuickFilter = (tag: string) => {
+    if (!quickFilterTags.includes(tag)) {
+      setQuickFilterTags(prev => [...prev, tag])
+    }
+  }
+
+  const removeQuickFilter = (tag: string) => {
+    setQuickFilterTags(prev => prev.filter(t => t !== tag))
+  }
+
+  const clearAllFilters = () => {
+    setSearchQuery('')
+    setFilterAgency('all')
+    setFilterPriority('all')
+    setFilterStatus('all')
+    setQuickFilterTags([])
+    setActiveTab('all')
+    toast.info('All filters cleared')
+  }
+
+  const toggleExpanded = (updateId: string) => {
+    setExpandedUpdate(expandedUpdate === updateId ? null : updateId)
   }
 
   const getPriorityColor = (priority: string) => {
@@ -391,12 +482,12 @@ export function RegulatoryUpdatesFeed() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Bookmarked</p>
-                <p className="text-2xl font-bold text-yellow-600">
-                  {updates.filter(u => u.isBookmarked).length}
+                <p className="text-sm text-muted-foreground">Flagged for Review</p>
+                <p className="text-2xl font-bold text-orange-600">
+                  {updates.filter(u => u.isFlagged).length}
                 </p>
               </div>
-              <BookmarkSimple size={24} className="text-yellow-600" />
+              <Flag size={24} className="text-orange-600" />
             </div>
           </CardContent>
         </Card>
@@ -405,78 +496,123 @@ export function RegulatoryUpdatesFeed() {
       {/* Filters and Search */}
       <Card>
         <CardContent className="p-6">
-          <div className="flex flex-col lg:flex-row gap-4">
-            <div className="flex-1">
-              <div className="relative">
-                <Search size={16} className="absolute left-3 top-3 text-muted-foreground" />
-                <Input
-                  placeholder="Search updates, agencies, or tags..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                />
+          <div className="space-y-4">
+            <div className="flex flex-col lg:flex-row gap-4">
+              <div className="flex-1">
+                <div className="relative">
+                  <Search size={16} className="absolute left-3 top-3 text-muted-foreground" />
+                  <Input
+                    placeholder="Search updates, agencies, or tags..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+              
+              <div className="flex gap-3">
+                <Select value={filterAgency} onValueChange={setFilterAgency}>
+                  <SelectTrigger className="w-40">
+                    <SelectValue placeholder="Agency" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Agencies</SelectItem>
+                    <SelectItem value="FDA">FDA</SelectItem>
+                    <SelectItem value="European Commission">EU Commission</SelectItem>
+                    <SelectItem value="ICH">ICH</SelectItem>
+                    <SelectItem value="PMDA">PMDA</SelectItem>
+                    <SelectItem value="Health Canada">Health Canada</SelectItem>
+                    <SelectItem value="TGA">TGA</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Select value={filterPriority} onValueChange={setFilterPriority}>
+                  <SelectTrigger className="w-32">
+                    <SelectValue placeholder="Priority" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Priority</SelectItem>
+                    <SelectItem value="critical">Critical</SelectItem>
+                    <SelectItem value="high">High</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="low">Low</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Select value={filterStatus} onValueChange={setFilterStatus}>
+                  <SelectTrigger className="w-32">
+                    <SelectValue placeholder="Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Status</SelectItem>
+                    <SelectItem value="new">New</SelectItem>
+                    <SelectItem value="updated">Updated</SelectItem>
+                    <SelectItem value="effective">Effective</SelectItem>
+                    <SelectItem value="proposed">Proposed</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Select value={sortBy} onValueChange={setSortBy}>
+                  <SelectTrigger className="w-32">
+                    <SelectValue placeholder="Sort by" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="publishDate">Date</SelectItem>
+                    <SelectItem value="priority">Priority</SelectItem>
+                    <SelectItem value="agency">Agency</SelectItem>
+                    <SelectItem value="title">Title</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+                >
+                  {sortOrder === 'asc' ? <SortAscending size={16} /> : <SortDescending size={16} />}
+                </Button>
+
+                <Button variant="outline" size="sm" onClick={clearAllFilters}>
+                  <Funnel size={16} className="mr-2" />
+                  Clear All
+                </Button>
               </div>
             </div>
-            
-            <div className="flex gap-3">
-              <Select value={filterAgency} onValueChange={setFilterAgency}>
-                <SelectTrigger className="w-40">
-                  <SelectValue placeholder="Agency" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Agencies</SelectItem>
-                  <SelectItem value="FDA">FDA</SelectItem>
-                  <SelectItem value="European Commission">EU Commission</SelectItem>
-                  <SelectItem value="ICH">ICH</SelectItem>
-                  <SelectItem value="PMDA">PMDA</SelectItem>
-                  <SelectItem value="Health Canada">Health Canada</SelectItem>
-                  <SelectItem value="TGA">TGA</SelectItem>
-                </SelectContent>
-              </Select>
 
-              <Select value={filterPriority} onValueChange={setFilterPriority}>
-                <SelectTrigger className="w-32">
-                  <SelectValue placeholder="Priority" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Priority</SelectItem>
-                  <SelectItem value="critical">Critical</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="low">Low</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Select value={filterStatus} onValueChange={setFilterStatus}>
-                <SelectTrigger className="w-32">
-                  <SelectValue placeholder="Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="new">New</SelectItem>
-                  <SelectItem value="updated">Updated</SelectItem>
-                  <SelectItem value="effective">Effective</SelectItem>
-                  <SelectItem value="proposed">Proposed</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            {/* Quick Tag Filters */}
+            {quickFilterTags.length > 0 && (
+              <div className="flex items-center gap-2 pt-2 border-t">
+                <span className="text-sm text-muted-foreground">Active filters:</span>
+                {quickFilterTags.map((tag) => (
+                  <Badge
+                    key={tag}
+                    variant="secondary"
+                    className="cursor-pointer hover:bg-destructive hover:text-destructive-foreground"
+                    onClick={() => removeQuickFilter(tag)}
+                  >
+                    {tag} ×
+                  </Badge>
+                ))}
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
 
       {/* Content Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="all">All Updates</TabsTrigger>
           <TabsTrigger value="unread">Unread ({updates.filter(u => !u.isRead).length})</TabsTrigger>
           <TabsTrigger value="bookmarked">Bookmarked</TabsTrigger>
           <TabsTrigger value="critical">Critical</TabsTrigger>
+          <TabsTrigger value="flagged">Flagged</TabsTrigger>
         </TabsList>
 
         <TabsContent value={activeTab} className="mt-6">
           <div className="space-y-4">
             {filteredUpdates.map((update) => (
-              <Card key={update.id} className={`${!update.isRead ? 'ring-1 ring-blue-200' : ''}`}>
+              <Card key={update.id} className={`${!update.isRead ? 'ring-1 ring-blue-200' : ''} ${update.isFlagged ? 'ring-1 ring-orange-200' : ''}`}>
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -487,10 +623,18 @@ export function RegulatoryUpdatesFeed() {
                         <Badge className={getStatusColor(update.status)} variant="outline">
                           {update.status}
                         </Badge>
-                        <Badge variant="outline" className="text-xs">
+                        <Badge 
+                          variant="outline" 
+                          className="text-xs cursor-pointer hover:bg-primary hover:text-primary-foreground"
+                          onClick={() => addQuickFilter(update.agency)}
+                        >
                           {update.agency}
                         </Badge>
-                        <Badge variant="outline" className="text-xs">
+                        <Badge 
+                          variant="outline" 
+                          className="text-xs cursor-pointer hover:bg-primary hover:text-primary-foreground"
+                          onClick={() => addQuickFilter(update.region)}
+                        >
                           {update.region}
                         </Badge>
                         {!update.isRead && (
@@ -498,15 +642,63 @@ export function RegulatoryUpdatesFeed() {
                             New
                           </Badge>
                         )}
+                        {update.isFlagged && (
+                          <Badge className="bg-orange-100 text-orange-800 border-orange-200" variant="outline">
+                            <Flag size={12} className="mr-1" />
+                            Flagged
+                          </Badge>
+                        )}
                       </div>
                       
-                      <h3 className="text-lg font-semibold text-foreground mb-2 hover:text-primary cursor-pointer">
+                      <h3 
+                        className="text-lg font-semibold text-foreground mb-2 hover:text-primary cursor-pointer"
+                        onClick={() => toggleExpanded(update.id)}
+                      >
                         {update.title}
+                        {expandedUpdate === update.id ? (
+                          <CaretUp size={16} className="inline ml-2" />
+                        ) : (
+                          <CaretDown size={16} className="inline ml-2" />
+                        )}
                       </h3>
                       
                       <p className="text-muted-foreground mb-3">
                         {update.summary}
                       </p>
+
+                      {/* Expanded Content */}
+                      {expandedUpdate === update.id && (
+                        <div className="mb-4 p-4 bg-muted/30 rounded-lg space-y-3">
+                          <p className="text-sm text-foreground">{update.content}</p>
+                          
+                          <div className="flex items-center gap-4 text-sm">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => window.open(update.url, '_blank')}
+                            >
+                              <ExternalLink size={14} className="mr-1" />
+                              View Original
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => copyUpdateLink(update)}
+                            >
+                              <Copy size={14} className="mr-1" />
+                              Copy Link
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => shareUpdate(update)}
+                            >
+                              <Share size={14} className="mr-1" />
+                              Share
+                            </Button>
+                          </div>
+                        </div>
+                      )}
 
                       <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
                         <span className="flex items-center gap-1">
@@ -523,7 +715,13 @@ export function RegulatoryUpdatesFeed() {
 
                       <div className="flex flex-wrap gap-1 mb-3">
                         {update.tags.map((tag, index) => (
-                          <Badge key={index} variant="secondary" className="text-xs">
+                          <Badge 
+                            key={index} 
+                            variant="secondary" 
+                            className="text-xs cursor-pointer hover:bg-primary hover:text-primary-foreground"
+                            onClick={() => addQuickFilter(tag)}
+                          >
+                            <Tag size={12} className="mr-1" />
                             {tag}
                           </Badge>
                         ))}
@@ -539,7 +737,12 @@ export function RegulatoryUpdatesFeed() {
                           <p className="text-sm font-medium text-muted-foreground mb-2">Related Standards:</p>
                           <div className="flex flex-wrap gap-1">
                             {update.relatedStandards.map((standard, index) => (
-                              <Badge key={index} variant="outline" className="text-xs">
+                              <Badge 
+                                key={index} 
+                                variant="outline" 
+                                className="text-xs cursor-pointer hover:bg-secondary"
+                                onClick={() => addQuickFilter(standard)}
+                              >
                                 {standard}
                               </Badge>
                             ))}
@@ -552,7 +755,10 @@ export function RegulatoryUpdatesFeed() {
                       <Button
                         size="sm"
                         variant="outline"
-                        onClick={() => toggleBookmark(update.id)}
+                        onClick={() => {
+                          toggleBookmark(update.id)
+                          toast.success(update.isBookmarked ? 'Bookmark removed' : 'Update bookmarked')
+                        }}
                       >
                         {update.isBookmarked ? (
                           <Bookmark size={16} className="text-yellow-600" />
@@ -560,23 +766,50 @@ export function RegulatoryUpdatesFeed() {
                           <BookmarkSimple size={16} />
                         )}
                       </Button>
+
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => toggleFlag(update.id)}
+                      >
+                        <Flag size={16} className={update.isFlagged ? 'text-orange-600' : ''} />
+                      </Button>
                       
                       {!update.isRead && (
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => markAsRead(update.id)}
+                          onClick={() => {
+                            markAsRead(update.id)
+                            toast.success('Marked as read')
+                          }}
                         >
                           <Eye size={16} />
                         </Button>
                       )}
                       
-                      <Button size="sm" variant="outline">
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => window.open(update.url, '_blank')}
+                      >
                         <ExternalLink size={16} />
                       </Button>
                       
-                      <Button size="sm" variant="outline">
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => copyUpdateLink(update)}
+                      >
                         <Download size={16} />
+                      </Button>
+
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => archiveUpdate(update.id)}
+                      >
+                        <Archive size={16} />
                       </Button>
                     </div>
                   </div>
