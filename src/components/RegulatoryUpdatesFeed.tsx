@@ -106,6 +106,8 @@ export function RegulatoryUpdatesFeed() {
       tags: ['EU MDR', 'Notified Body', 'Assessment', 'Compliance'],
       isBookmarked: true,
       isRead: false,
+      isArchived: false,
+      isFlagged: false,
       impact: 'Medium - Affects EU market authorization timelines and processes',
       relatedStandards: ['EU MDR', 'ISO 13485', 'EN ISO 14971']
     },
@@ -125,6 +127,8 @@ export function RegulatoryUpdatesFeed() {
       tags: ['ICH Q12', 'Lifecycle Management', 'Post-approval Changes', 'Quality'],
       isBookmarked: false,
       isRead: true,
+      isArchived: false,
+      isFlagged: true,
       impact: 'High - Affects pharmaceutical manufacturing and change control processes',
       relatedStandards: ['ICH Q8', 'ICH Q9', 'ICH Q10', 'ICH Q11']
     },
@@ -144,6 +148,8 @@ export function RegulatoryUpdatesFeed() {
       tags: ['PMDA', 'AI/ML', 'Digital Health', 'Validation', 'Japan'],
       isBookmarked: true,
       isRead: false,
+      isArchived: false,
+      isFlagged: true,
       impact: 'Critical - First comprehensive AI/ML device guidelines in Asia-Pacific region',
       relatedStandards: ['ISO/IEC 23053', 'ISO/IEC 23094', 'IEC 62304']
     },
