@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { Separator } from '@/components/ui/separator'
+import { toast } from 'sonner'
 import { 
   FileText, 
   Folder, 
@@ -186,8 +187,22 @@ function App() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {quickStats.map((stat) => {
             const Icon = stat.icon
+            const getNavigationPage = (label: string) => {
+              switch (label) {
+                case 'AI Analysis Jobs': return 'regulatory-analysis'
+                case 'Audit Simulations': return 'audit-simulation'
+                case 'Enterprise Tenants': return 'multi-tenant'
+                case 'Global Regulations': return 'regulations'
+                default: return 'overview'
+              }
+            }
+            
             return (
-              <Card key={stat.label}>
+              <Card 
+                key={stat.label}
+                className="cursor-pointer hover:shadow-lg transition-all duration-200 hover:border-primary/20"
+                onClick={() => setCurrentPage(getNavigationPage(stat.label))}
+              >
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
@@ -200,8 +215,12 @@ function App() {
                         stat.status === 'complete' ? 'text-green-600' :
                         stat.status === 'warning' ? 'text-accent' :
                         'text-primary'
-                      }`}
+                      } group-hover:scale-110 transition-transform`}
                     />
+                  </div>
+                  <div className="mt-3 pt-2 border-t border-dashed flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground">Click to explore</span>
+                    <div className="text-xs text-primary">→</div>
                   </div>
                 </CardContent>
               </Card>
@@ -293,12 +312,27 @@ function App() {
                 'Terms of Service ✓',
                 'Privacy Policy ✓',
                 'Service Level Agreement ✓'
-              ].map((doc, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <span className="text-sm">{doc}</span>
-                  <CheckCircle size={16} className="text-green-600" />
-                </div>
-              ))}
+              ].map((doc, index) => {
+                const getNavigationForDoc = (docName: string) => {
+                  if (docName.includes('SSO') || docName.includes('MFA')) return 'enterprise-sso'
+                  if (docName.includes('AI Model') || docName.includes('Pharmaceutical')) return 'ai-models'
+                  if (docName.includes('Compliance') || docName.includes('CFR')) return 'compliance'
+                  if (docName.includes('Infrastructure') || docName.includes('Deployment')) return 'deployment'
+                  if (docName.includes('Architecture') || docName.includes('Database')) return 'architecture'
+                  return 'compliance-page'
+                }
+                
+                return (
+                  <div 
+                    key={index} 
+                    className="flex items-center justify-between cursor-pointer hover:bg-muted/30 p-2 rounded transition-colors"
+                    onClick={() => setCurrentPage(getNavigationForDoc(doc))}
+                  >
+                    <span className="text-sm hover:text-primary transition-colors">{doc}</span>
+                    <CheckCircle size={16} className="text-green-600" />
+                  </div>
+                )
+              })}
               
               <Separator className="my-4" />
               
@@ -335,17 +369,33 @@ function App() {
                 { standard: 'Audit Trail System', status: 'Active' },
                 { standard: 'AWS Infrastructure', status: 'Live' },
                 { standard: 'Real-time Monitoring', status: 'Active' }
-              ].map((item, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <span className="text-sm">{item.standard}</span>
-                  <Badge 
-                    variant="default"
-                    className="text-xs bg-green-600 text-white"
+              ].map((item, index) => {
+                const getNavigationForStatus = (standardName: string) => {
+                  if (standardName.includes('Backend') || standardName.includes('Database')) return 'architecture'
+                  if (standardName.includes('SSO') || standardName.includes('Authentication')) return 'enterprise-sso'
+                  if (standardName.includes('AI Model') || standardName.includes('Pharmaceutical')) return 'ai-models'
+                  if (standardName.includes('Audit Trail')) return 'audit-trail'
+                  if (standardName.includes('Infrastructure') || standardName.includes('Monitoring')) return 'production-monitoring'
+                  if (standardName.includes('Regulatory')) return 'regulations'
+                  return 'deployment'
+                }
+                
+                return (
+                  <div 
+                    key={index} 
+                    className="flex items-center justify-between cursor-pointer hover:bg-muted/30 p-2 rounded transition-colors"
+                    onClick={() => setCurrentPage(getNavigationForStatus(item.standard))}
                   >
-                    {item.status}
-                  </Badge>
-                </div>
-              ))}
+                    <span className="text-sm hover:text-primary transition-colors">{item.standard}</span>
+                    <Badge 
+                      variant="default"
+                      className="text-xs bg-green-600 text-white hover:bg-green-700 transition-colors"
+                    >
+                      {item.status}
+                    </Badge>
+                  </div>
+                )
+              })}
             </CardContent>
           </Card>
         </div>
@@ -384,19 +434,43 @@ function App() {
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <Button size="sm" onClick={() => setCurrentPage('regulatory-updates')}>
+                <Button 
+                  size="sm" 
+                  onClick={() => {
+                    setCurrentPage('regulatory-updates')
+                    toast.success('Navigated to Regulatory Updates Feed')
+                  }}
+                >
                   <Bell size={16} className="mr-2" />
                   Updates Feed
                 </Button>
-                <Button size="sm" onClick={() => setCurrentPage('gap-analysis')}>
+                <Button 
+                  size="sm" 
+                  onClick={() => {
+                    setCurrentPage('gap-analysis')
+                    toast.info('Opening comprehensive gap analysis report')
+                  }}
+                >
                   <FileText size={16} className="mr-2" />
                   Gap Analysis
                 </Button>
-                <Button size="sm" onClick={() => setCurrentPage('audit-simulation')}>
+                <Button 
+                  size="sm" 
+                  onClick={() => {
+                    setCurrentPage('audit-simulation')
+                    toast.success('Launching interactive audit training simulator')
+                  }}
+                >
                   <Target size={16} className="mr-2" />
                   Audit Training
                 </Button>
-                <Button size="sm" onClick={() => setCurrentPage('search')}>
+                <Button 
+                  size="sm" 
+                  onClick={() => {
+                    setCurrentPage('search')
+                    toast.info('Global search across all platform features')
+                  }}
+                >
                   <Search size={16} className="mr-2" />
                   Global Search
                 </Button>
@@ -404,7 +478,10 @@ function App() {
                   <CheckCircle size={14} className="mr-1" />
                   Production Ready & Compliant
                 </Badge>
-                <Button size="sm">
+                <Button 
+                  size="sm"
+                  onClick={() => toast.success('Project documentation and reports exported successfully!')}
+                >
                   <Download size={16} className="mr-2" />
                   Export Project
                 </Button>

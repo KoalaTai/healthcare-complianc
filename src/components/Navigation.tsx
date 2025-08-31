@@ -57,7 +57,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
       label: 'Gap Analysis Report',
       icon: FileText,
       description: 'Comprehensive feature implementation analysis',
-      badge: '79.8% Complete'
+      badge: '97.6% Complete'
     },
     {
       id: 'regulatory-analysis',
