@@ -53,3 +53,7 @@ export { InteractiveTutorial } from './InteractiveTutorial';
 export { TutorialHighlight } from './TutorialHighlight';
 export { TutorialDashboard } from './TutorialDashboard'
 export { DocumentUploadWorkflow } from './DocumentUploadWorkflow';
+
+// Distributed Processing & Batch Operations
+export { DistributedProcessingEngine } from './DistributedProcessingEngine';
+export { BatchDocumentProcessing } from './BatchDocumentProcessing';

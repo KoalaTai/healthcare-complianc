@@ -24,7 +24,9 @@ import {
   Building,
   Globe,
   Bell,
-  Upload
+  Upload,
+  Network,
+  ListChecks
 } from '@phosphor-icons/react'
 import { 
   ProjectStructure,
@@ -68,7 +70,9 @@ import {
   RegulatoryFeedConfiguration,
   InteractiveTutorial,
   TutorialDashboard,
-  DocumentUploadWorkflow
+  DocumentUploadWorkflow,
+  DistributedProcessingEngine,
+  BatchDocumentProcessing
 } from '@/components'
 
 function App() {
@@ -82,6 +86,10 @@ function App() {
 
   const renderPage = () => {
     switch (currentPage) {
+      case 'distributed-processing':
+        return <DistributedProcessingEngine />
+      case 'batch-processing':
+        return <BatchDocumentProcessing />
       case 'document-upload':
         return <DocumentUploadWorkflow />
       case 'tutorial-dashboard':
@@ -452,6 +460,26 @@ function App() {
                 </div>
               </div>
               <div className="flex items-center gap-4">
+                <Button 
+                  size="sm" 
+                  onClick={() => {
+                    setCurrentPage('distributed-processing')
+                    toast.success('Opening Distributed AI Processing Engine')
+                  }}
+                >
+                  <Network size={16} className="mr-2" />
+                  AI Load Balancer
+                </Button>
+                <Button 
+                  size="sm" 
+                  onClick={() => {
+                    setCurrentPage('batch-processing')
+                    toast.success('Opening Batch Document Processing Center')
+                  }}
+                >
+                  <ListChecks size={16} className="mr-2" />
+                  Batch Processing
+                </Button>
                 <Button 
                   size="sm" 
                   onClick={() => {

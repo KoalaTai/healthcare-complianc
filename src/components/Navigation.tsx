@@ -20,7 +20,9 @@ import {
   Activity,
   Server,
   Bell,
-  Upload
+  Upload,
+  Network,
+  ListChecks
 } from '@phosphor-icons/react'
 
 interface NavigationProps {
@@ -38,6 +40,20 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
       icon: House,
       description: 'Production deployment status',
       badge: 'Live'
+    },
+    {
+      id: 'distributed-processing',
+      label: 'Distributed AI Processing',
+      icon: Network,
+      description: 'Enterprise-scale AI model load balancing',
+      badge: '6 Endpoints'
+    },
+    {
+      id: 'batch-processing',
+      label: 'Batch Document Processing',
+      icon: ListChecks,
+      description: 'Parallel processing of multiple documents',
+      badge: 'Multi-Model'
     },
     {
       id: 'document-upload',
