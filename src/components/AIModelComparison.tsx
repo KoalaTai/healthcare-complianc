@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -11,12 +11,12 @@ import { Separator } from '@/components/ui/separator'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { 
   Brain, 
-  BarChart, 
+  ChartBar, 
   PlayCircle, 
   Clock, 
   CheckCircle,
-  AlertTriangle,
-  Zap,
+  Warning,
+  Lightning,
   Target,
   TrendUp,
   Download,
@@ -62,13 +62,30 @@ export function AIModelComparison() {
   const [selectedRegulation, setSelectedRegulation] = useState('21-cfr-820')
   const [isRunning, setIsRunning] = useState(false)
   
-  const [modelData, setModelData] = useKV('ai-model-performance', [] as ModelPerformance[])
-  const [comparisonHistory, setComparisonHistory] = useKV('model-comparison-history', [] as ComparisonResult[])
+  const [modelData, setModelData] = useKV('ai-model-performance', JSON.stringify([] as ModelPerformance[]))
+  const [comparisonHistory, setComparisonHistory] = useKV('model-comparison-history', JSON.stringify([] as ComparisonResult[]))
+
+  // Parse data from KV store
+  const parsedModelData = useMemo(() => {
+    try {
+      return typeof modelData === 'string' ? JSON.parse(modelData) : modelData
+    } catch {
+      return []
+    }
+  }, [modelData])
+
+  const parsedComparisonHistory = useMemo(() => {
+    try {
+      return typeof comparisonHistory === 'string' ? JSON.parse(comparisonHistory) : comparisonHistory
+    } catch {
+      return []
+    }
+  }, [comparisonHistory])
 
   // Initialize model data if empty
   useEffect(() => {
-    if (modelData.length === 0) {
-      setModelData([
+    if (parsedModelData.length === 0) {
+      const defaultData = [
         {
           modelName: 'GPT-4o',
           provider: 'OpenAI',
@@ -165,9 +182,10 @@ export function AIModelComparison() {
           weaknesses: ['Regulatory Depth', 'Citation Quality'],
           status: 'testing'
         }
-      ])
+      ]
+      setModelData(JSON.stringify(defaultData))
     }
-  }, [modelData.length, setModelData])
+  }, [parsedModelData.length, setModelData])
 
   const runComparison = async () => {
     if (selectedModels.length < 2) {
@@ -187,12 +205,12 @@ export function AIModelComparison() {
     
     try {
       // Simulate analysis for each selected model
-      const results = []
+      const results: any[] = []
       
       for (const modelName of selectedModels) {
         await delay(1000) // Simulate processing time
         
-        const model = modelData.find(m => m.modelName === modelName)
+        const model = parsedModelData.find(m => m.modelName === modelName)
         if (!model) continue
 
         // Generate realistic but varied results
@@ -219,7 +237,10 @@ export function AIModelComparison() {
         goldStandardAccuracy: Math.floor(85 + Math.random() * 10)
       }
 
-      setComparisonHistory(prev => [newComparison, ...prev.slice(0, 9)])
+      setComparisonHistory(prev => {
+        const prevHistory = typeof prev === 'string' ? JSON.parse(prev) : prev
+        return JSON.stringify([newComparison, ...prevHistory.slice(0, 9)])
+      })
       toast.success('Model comparison completed successfully')
       
     } catch (error) {
@@ -229,7 +250,7 @@ export function AIModelComparison() {
     }
   }
 
-  const availableModels = modelData.filter(m => m.status === 'active' || m.status === 'testing')
+  const availableModels = parsedModelData.filter(m => m.status === 'active' || m.status === 'testing')
   const regulations = [
     // Pharmaceutical Regulations (New Focus)
     { value: '21-cfr-211', label: '21 CFR 211 - Current Good Manufacturing Practice (cGMP)' },
@@ -284,7 +305,7 @@ export function AIModelComparison() {
 
         <TabsContent value="overview" className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {modelData.map((model) => (
+            {parsedModelData.map((model) => (
               <Card key={model.modelName} className={model.status === 'deprecated' ? 'opacity-60' : ''}>
                 <CardHeader>
                   <div className="flex items-center justify-between">
@@ -436,7 +457,7 @@ export function AIModelComparison() {
                   </div>
 
                   <Alert>
-                    <AlertTriangle size={16} />
+                    <Warning size={16} />
                     <AlertDescription className="text-xs">
                       Test documents are not stored and are used only for comparison purposes. 
                       Ensure no confidential information is included.
@@ -472,10 +493,10 @@ export function AIModelComparison() {
         </TabsContent>
 
         <TabsContent value="results" className="space-y-6">
-          {comparisonHistory.length === 0 ? (
+          {parsedComparisonHistory.length === 0 ? (
             <Card>
               <CardContent className="p-12 text-center">
-                <BarChart size={48} className="mx-auto text-muted-foreground mb-4" />
+                <ChartBar size={48} className="mx-auto text-muted-foreground mb-4" />
                 <h3 className="text-lg font-medium text-foreground mb-2">No Comparison Results</h3>
                 <p className="text-muted-foreground text-sm">
                   Run your first model comparison to see detailed performance analysis here.
@@ -484,7 +505,7 @@ export function AIModelComparison() {
             </Card>
           ) : (
             <div className="space-y-6">
-              {comparisonHistory.map((result) => (
+              {parsedComparisonHistory.map((result) => (
                 <Card key={result.id}>
                   <CardHeader>
                     <div className="flex items-center justify-between">
@@ -579,7 +600,7 @@ export function AIModelComparison() {
                       <span className="font-medium">Industry Standard</span>
                     </div>
                     <div className="space-y-2">
-                      {modelData.filter(m => m.status === 'active').map((model) => (
+                      {parsedModelData.filter(m => m.status === 'active').map((model) => (
                         <div key={model.modelName} className="flex items-center gap-2">
                           <span className="text-xs w-24 truncate">{model.modelName}</span>
                           <Progress value={model.accuracy} className="flex-1 h-2" />
@@ -600,7 +621,7 @@ export function AIModelComparison() {
                       <span className="font-medium">Regulatory Adherence</span>
                     </div>
                     <div className="space-y-2">
-                      {modelData.filter(m => m.status === 'active').map((model) => (
+                      {parsedModelData.filter(m => m.status === 'active').map((model) => (
                         <div key={model.modelName} className="flex items-center gap-2">
                           <span className="text-xs w-24 truncate">{model.modelName}</span>
                           <Progress value={model.compliance} className="flex-1 h-2" />
@@ -619,7 +640,7 @@ export function AIModelComparison() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Zap size={20} />
+                  <Lightning size={20} />
                   Model Recommendations
                 </CardTitle>
               </CardHeader>

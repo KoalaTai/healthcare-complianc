@@ -6,17 +6,17 @@ import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { 
-  Search,
+  MagnifyingGlass,
   Globe,
-  Building2,
+  Buildings,
   FileText,
   Users,
   Shield,
-  ChevronRight,
-  ExternalLink,
+  CaretRight,
+  ArrowSquareOut,
   BookOpen,
   Star,
-  Filter,
+  Funnel,
   ArrowRight,
   Lightbulb
 } from '@phosphor-icons/react'
@@ -325,7 +325,7 @@ export function GlobalSearchInterface({ onNavigate }: { onNavigate: (page: strin
       id: 'search-global-regulations',
       title: 'Search Global Regulations',
       description: 'Find specific requirements across 8 global markets (FDA, EU MDR, PMDA, etc.)',
-      icon: Search,
+      icon: MagnifyingGlass,
       category: 'regulations',
       onClick: () => onNavigate('regulations')
     },
@@ -333,7 +333,7 @@ export function GlobalSearchInterface({ onNavigate }: { onNavigate: (page: strin
       id: 'configure-enterprise-sso',
       title: 'Configure Enterprise SSO',
       description: 'Set up Microsoft Azure AD, Google Workspace, or Okta integration',
-      icon: Building2,
+      icon: Buildings,
       category: 'sso',
       onClick: () => onNavigate('enterprise-sso')
     },
@@ -403,7 +403,7 @@ export function GlobalSearchInterface({ onNavigate }: { onNavigate: (page: strin
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'regulation': return <FileText size={16} className="text-primary" />
-      case 'sso': return <Building2 size={16} className="text-blue-600" />
+      case 'sso': return <Buildings size={16} className="text-blue-600" />
       case 'feature': return <Shield size={16} className="text-green-600" />
       case 'tool': return <Star size={16} className="text-amber-600" />
       default: return <Globe size={16} className="text-muted-foreground" />
@@ -425,7 +425,7 @@ export function GlobalSearchInterface({ onNavigate }: { onNavigate: (page: strin
       {/* Search Header */}
       <div className="text-center space-y-4">
         <h1 className="text-3xl font-bold text-foreground flex items-center justify-center gap-3">
-          <Search size={32} className="text-primary" />
+          <MagnifyingGlass size={32} className="text-primary" />
           Global Platform Search
         </h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -439,7 +439,7 @@ export function GlobalSearchInterface({ onNavigate }: { onNavigate: (page: strin
           <div className="space-y-4">
             {/* Search Bar */}
             <div className="relative">
-              <Search size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+              <MagnifyingGlass size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
               <Input
                 placeholder="Search regulations, SSO providers, compliance features, or tools..."
                 value={searchTerm}
@@ -480,7 +480,7 @@ export function GlobalSearchInterface({ onNavigate }: { onNavigate: (page: strin
           {searchResults.length === 0 ? (
             <Card>
               <CardContent className="p-8 text-center">
-                <Search size={32} className="text-muted-foreground mx-auto mb-4" />
+                <MagnifyingGlass size={32} className="text-muted-foreground mx-auto mb-4" />
                 <h4 className="font-medium mb-2">No results found</h4>
                 <p className="text-sm text-muted-foreground mb-4">
                   Try adjusting your search terms or browse our quick actions below
@@ -534,7 +534,7 @@ export function GlobalSearchInterface({ onNavigate }: { onNavigate: (page: strin
                       <div className="pt-2">
                         <Button size="sm" onClick={result.action.onClick}>
                           {result.action.label}
-                          <ChevronRight size={14} className="ml-2" />
+                          <CaretRight size={14} className="ml-2" />
                         </Button>
                       </div>
                     )}
@@ -621,7 +621,7 @@ export function GlobalSearchInterface({ onNavigate }: { onNavigate: (page: strin
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-base">
-                <Filter size={18} />
+                <Funnel size={18} />
                 Search Tips
               </CardTitle>
             </CardHeader>

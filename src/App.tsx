@@ -14,10 +14,10 @@ import {
   Shield, 
   CheckCircle, 
   Clock,
-  AlertTriangle,
+  Warning,
   Download,
   Plus,
-  Search,
+  MagnifyingGlass,
   BookOpen,
   Brain,
   Target,
@@ -71,12 +71,12 @@ import {
 
 function App() {
   const [currentPage, setCurrentPage] = useState('overview')
-  const [projectData, setProjectData] = useKV('virtualbackroom-project', {
+  const [projectData, setProjectData] = useKV('virtualbackroom-project', JSON.stringify({
     name: 'VirtualBackroom.ai V2.0',
     phase: 'Production Deployment - Complete',
     progress: 100,
     lastUpdated: new Date().toISOString()
-  })
+  }))
 
   const renderPage = () => {
     switch (currentPage) {
@@ -495,7 +495,7 @@ function App() {
                     toast.info('Global search across all platform features')
                   }}
                 >
-                  <Search size={16} className="mr-2" />
+                  <MagnifyingGlass size={16} className="mr-2" />
                   Global Search
                 </Button>
                 <Badge variant="secondary" className="px-3 py-1">

@@ -6,14 +6,14 @@ import {
   Shield, 
   FileText, 
   Database, 
-  Settings, 
+  Gear, 
   Users,
-  ChevronRight,
-  Home,
+  CaretRight,
+  House,
   BookOpen,
   Lock,
-  BarChart3,
-  Search,
+  ChartBar,
+  MagnifyingGlass,
   Brain,
   Target,
   Building,
@@ -34,7 +34,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     {
       id: 'overview',
       label: 'Platform Overview',
-      icon: Home,
+      icon: House,
       description: 'Production deployment status',
       badge: 'Live'
     },
@@ -55,7 +55,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     {
       id: 'feed-configuration',
       label: 'Feed Configuration',
-      icon: Settings,
+      icon: Gear,
       description: 'Configure automated update sources',
       badge: 'Auto-Sync'
     },
@@ -100,7 +100,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     {
       id: 'search',
       label: 'Global Search',
-      icon: Search,
+      icon: MagnifyingGlass,
       description: 'Search across all platform features',
       badge: 'AI-Powered'
     },
@@ -135,7 +135,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     {
       id: 'ai-models',
       label: 'AI Models',
-      icon: BarChart3,
+      icon: ChartBar,
       description: 'Model comparison and performance',
       badge: '12 Models'
     },
@@ -170,7 +170,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     {
       id: 'deployment',
       label: 'Deployment Pipeline',
-      icon: Settings,
+      icon: Gear,
       description: 'CI/CD and infrastructure status'
     }
   ]
@@ -212,7 +212,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
           </Badge>
         )}
         {!isCollapsed && (
-          <ChevronRight 
+          <CaretRight 
             size={14} 
             className={`text-muted-foreground transition-transform ${isActive ? 'rotate-90' : ''}`}
           />
@@ -237,7 +237,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="p-2"
           >
-            <ChevronRight size={16} className={`transition-transform ${isCollapsed ? '' : 'rotate-180'}`} />
+            <CaretRight size={16} className={`transition-transform ${isCollapsed ? '' : 'rotate-180'}`} />
           </Button>
         </div>
 
