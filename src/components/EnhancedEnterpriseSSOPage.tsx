@@ -23,7 +23,9 @@ import {
   Network,
   Eye,
   UserCheck,
-  Activity
+  Activity,
+  BookOpen,
+  ExternalLink
 } from '@phosphor-icons/react'
 
 interface SSOProvider {
@@ -55,9 +57,10 @@ interface SSOConfiguration {
   }
 }
 
-export function EnterpriseSSOPage() {
+export function EnhancedEnterpriseSSOPage() {
   const [activeTab, setActiveTab] = useState('overview')
   const [selectedProvider, setSelectedProvider] = useState<string | null>(null)
+  const [currentView, setCurrentView] = useState<'main' | 'setup-guide' | 'troubleshooting'>('main')
 
   const ssoProviders: SSOProvider[] = [
     {
@@ -199,13 +202,26 @@ export function EnterpriseSSOPage() {
                   {provider.status === 'configured' ? 'Active' : 
                    provider.status === 'pending' ? 'Pending' : 'Error'}
                 </Badge>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => setSelectedProvider(provider.id)}
-                >
-                  Configure
-                </Button>
+                <div className="flex gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => setSelectedProvider(provider.id)}
+                  >
+                    Configure
+                  </Button>
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    onClick={() => {
+                      setSelectedProvider(provider.id)
+                      setCurrentView('setup-guide')
+                    }}
+                  >
+                    <BookOpen size={14} className="mr-1" />
+                    Setup Guide
+                  </Button>
+                </div>
               </div>
             </div>
           ))}
@@ -611,6 +627,264 @@ export function EnterpriseSSOPage() {
     </div>
   )
 
+  const SetupGuideView = () => {
+    const provider = ssoProviders.find(p => p.id === selectedProvider)
+    if (!provider) return null
+
+    const getSetupSteps = (providerId: string) => {
+      switch (providerId) {
+        case 'azure-ad':
+          return [
+            {
+              step: 1,
+              title: 'Register VirtualBackroom.ai in Azure AD',
+              description: 'Go to Azure AD App registrations and create a new application',
+              details: [
+                'Sign in to the Azure portal as a Global Administrator',
+                'Navigate to Azure Active Directory > App registrations',
+                'Click "New registration" and name it "VirtualBackroom.ai"',
+                'Set redirect URI to: https://app.virtualbackroom.ai/auth/callback'
+              ]
+            },
+            {
+              step: 2,
+              title: 'Configure Authentication',
+              description: 'Set up SAML 2.0 or OpenID Connect authentication',
+              details: [
+                'In the app registration, go to Authentication',
+                'Enable "ID tokens" and "Access tokens"',
+                'Add web redirect URIs for your domain',
+                'Configure logout URL: https://app.virtualbackroom.ai/auth/logout'
+              ]
+            },
+            {
+              step: 3,
+              title: 'Configure API Permissions',
+              description: 'Grant necessary permissions for user profile access',
+              details: [
+                'Go to API permissions',
+                'Add Microsoft Graph permissions: User.Read, Directory.Read.All',
+                'Grant admin consent for your organization',
+                'Note the Application (client) ID and Directory (tenant) ID'
+              ]
+            },
+            {
+              step: 4,
+              title: 'Enable Enterprise Features',
+              description: 'Configure conditional access and MFA requirements',
+              details: [
+                'Set up conditional access policies',
+                'Configure MFA requirements for VirtualBackroom.ai',
+                'Enable security defaults if not using custom policies',
+                'Test authentication with a pilot user group'
+              ]
+            }
+          ]
+        case 'google-workspace':
+          return [
+            {
+              step: 1,
+              title: 'Create OAuth 2.0 Application',
+              description: 'Set up OAuth application in Google Cloud Console',
+              details: [
+                'Go to Google Cloud Console > APIs & Services > Credentials',
+                'Click "Create Credentials" > "OAuth 2.0 Client ID"',
+                'Choose "Web application" as application type',
+                'Add authorized redirect URI: https://app.virtualbackroom.ai/auth/google/callback'
+              ]
+            },
+            {
+              step: 2,
+              title: 'Configure SAML SSO (Optional)',
+              description: 'Set up SAML for enhanced enterprise features',
+              details: [
+                'In Google Admin Console, go to Apps > Web and mobile apps',
+                'Click "Add app" > "Add custom SAML app"',
+                'Download IdP metadata or note SSO URL and certificate',
+                'Configure service provider details with VirtualBackroom.ai URLs'
+              ]
+            },
+            {
+              step: 3,
+              title: 'Enable Directory API',
+              description: 'Allow user provisioning and directory sync',
+              details: [
+                'Enable Google Admin SDK API in Cloud Console',
+                'Create a service account with domain-wide delegation',
+                'Grant necessary scopes: directory.user.read, directory.group.read',
+                'Download service account key file (JSON)'
+              ]
+            },
+            {
+              step: 4,
+              title: 'Configure Security Policies',
+              description: 'Set up 2FA and advanced protection',
+              details: [
+                'Enable 2-Step Verification for all users',
+                'Consider enrolling key users in Advanced Protection Program',
+                'Configure app passwords if needed',
+                'Set up context-aware access policies'
+              ]
+            }
+          ]
+        case 'okta':
+          return [
+            {
+              step: 1,
+              title: 'Create Okta Application',
+              description: 'Set up VirtualBackroom.ai as a new application in Okta',
+              details: [
+                'Log in to Okta Admin Console',
+                'Go to Applications > Applications',
+                'Click "Create App Integration"',
+                'Choose "SAML 2.0" or "OpenID Connect" based on your preference'
+              ]
+            },
+            {
+              step: 2,
+              title: 'Configure SAML Settings',
+              description: 'Set up SAML configuration for secure authentication',
+              details: [
+                'Single sign on URL: https://app.virtualbackroom.ai/auth/saml/callback',
+                'Audience URI: https://app.virtualbackroom.ai',
+                'Name ID format: EmailAddress',
+                'Configure attribute statements for user profile mapping'
+              ]
+            },
+            {
+              step: 3,
+              title: 'Set Up User Provisioning',
+              description: 'Enable SCIM for automated user lifecycle management',
+              details: [
+                'Go to Provisioning tab in your application',
+                'Enable "To App" provisioning',
+                'Configure SCIM 2.0 endpoint: https://api.virtualbackroom.ai/scim/v2',
+                'Set up attribute mappings for user profiles'
+              ]
+            },
+            {
+              step: 4,
+              title: 'Configure Security Policies',
+              description: 'Set up adaptive MFA and risk-based policies',
+              details: [
+                'Configure MFA policy for VirtualBackroom.ai access',
+                'Set up adaptive authentication based on risk factors',
+                'Configure network zone restrictions if needed',
+                'Test with pilot user group before full rollout'
+              ]
+            }
+          ]
+        default:
+          return []
+      }
+    }
+
+    const steps = getSetupSteps(selectedProvider!)
+
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" onClick={() => setCurrentView('main')}>
+            ← Back to SSO Overview
+          </Button>
+          <div>
+            <h2 className="text-2xl font-bold">{provider.name} Setup Guide</h2>
+            <p className="text-muted-foreground text-sm">
+              Step-by-step configuration instructions for enterprise SSO integration
+            </p>
+          </div>
+        </div>
+
+        {/* Setup Progress */}
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-semibold">Setup Progress</h3>
+              <Badge variant="secondary">
+                {steps.filter((_, i) => i < 2).length}/{steps.length} Complete
+              </Badge>
+            </div>
+            <div className="flex gap-2">
+              {steps.map((step, index) => (
+                <div
+                  key={step.step}
+                  className={`flex-1 h-2 rounded-full ${
+                    index < 2 ? 'bg-primary' : 'bg-muted'
+                  }`}
+                />
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Setup Steps */}
+        <div className="space-y-6">
+          {steps.map((step, index) => (
+            <Card key={step.step} className={index < 2 ? 'border-primary/50' : ''}>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                    index < 2 ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
+                  }`}>
+                    {step.step}
+                  </div>
+                  {step.title}
+                  {index < 2 && <CheckCircle size={20} className="text-green-600" />}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-muted-foreground">{step.description}</p>
+                <div className="space-y-2">
+                  {step.details.map((detail, detailIndex) => (
+                    <div key={detailIndex} className="flex items-start gap-3 text-sm">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
+                      <span>{detail}</span>
+                    </div>
+                  ))}
+                </div>
+                {index >= 2 && (
+                  <Button variant="outline" size="sm">
+                    <ExternalLink size={14} className="mr-2" />
+                    Open {provider.name} Console
+                  </Button>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Configuration Test */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Shield size={20} />
+              Test Configuration
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-sm text-muted-foreground">
+              Once configuration is complete, test the SSO integration to ensure everything works correctly.
+            </p>
+            <div className="flex gap-3">
+              <Button>
+                <Shield size={16} className="mr-2" />
+                Test SSO Connection
+              </Button>
+              <Button variant="outline">
+                <Users size={16} className="mr-2" />
+                Test User Provisioning
+              </Button>
+              <Button variant="outline">
+                <Lock size={16} className="mr-2" />
+                Test MFA Flow
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
   const getComplexityColor = (level: string) => {
     switch (level) {
       case 'standard': return 'bg-blue-100 text-blue-800'
@@ -618,6 +892,10 @@ export function EnterpriseSSOPage() {
       case 'enterprise': return 'bg-purple-100 text-purple-800'
       default: return 'bg-gray-100 text-gray-800'
     }
+  }
+
+  if (currentView === 'setup-guide') {
+    return <SetupGuideView />
   }
 
   return (
@@ -637,6 +915,10 @@ export function EnterpriseSSOPage() {
           <Button variant="outline">
             <Globe size={16} className="mr-2" />
             SSO Health Check
+          </Button>
+          <Button variant="outline">
+            <BookOpen size={16} className="mr-2" />
+            Setup Guides
           </Button>
           <Button>
             <UserCheck size={16} className="mr-2" />

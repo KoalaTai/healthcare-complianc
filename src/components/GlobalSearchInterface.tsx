@@ -48,9 +48,9 @@ export function GlobalSearchInterface({ onNavigate }: { onNavigate: (page: strin
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
 
-  // Mock global search data combining regulations, SSO, and features
+  // Comprehensive search database with enhanced global regulations and enterprise features
   const searchDatabase: GlobalSearchResult[] = [
-    // Regulations
+    // Global Regulations (Enhanced Coverage)
     {
       id: 'fda-qsr',
       title: '21 CFR Part 820 - FDA Quality System Regulation',
@@ -58,9 +58,9 @@ export function GlobalSearchInterface({ onNavigate }: { onNavigate: (page: strin
       category: 'US Regulations',
       description: 'Comprehensive quality system regulation for medical device manufacturers under FDA jurisdiction',
       relevanceScore: 10,
-      tags: ['FDA', 'quality systems', 'medical devices', 'design controls', 'manufacturing'],
+      tags: ['FDA', 'quality systems', 'medical devices', 'design controls', 'manufacturing', 'validation'],
       action: {
-        label: 'View Regulation',
+        label: 'Browse Standard',
         onClick: () => onNavigate('regulations')
       }
     },
@@ -71,9 +71,9 @@ export function GlobalSearchInterface({ onNavigate }: { onNavigate: (page: strin
       category: 'EU Regulations',
       description: 'European medical device regulation for CE marking and market access',
       relevanceScore: 10,
-      tags: ['EU MDR', 'CE marking', 'medical devices', 'clinical evaluation', 'post-market surveillance'],
+      tags: ['EU MDR', 'CE marking', 'medical devices', 'clinical evaluation', 'post-market surveillance', 'UDI'],
       action: {
-        label: 'View Regulation',
+        label: 'Browse Standard',
         onClick: () => onNavigate('regulations')
       }
     },
@@ -84,157 +84,290 @@ export function GlobalSearchInterface({ onNavigate }: { onNavigate: (page: strin
       category: 'International Standards',
       description: 'International standard for quality management systems specific to medical devices',
       relevanceScore: 9,
-      tags: ['ISO', 'quality management', 'medical devices', 'risk management', 'documentation'],
+      tags: ['ISO', 'quality management', 'medical devices', 'risk management', 'documentation', 'CAPA'],
       action: {
-        label: 'View Standard',
+        label: 'Browse Standard',
+        onClick: () => onNavigate('regulations')
+      }
+    },
+    {
+      id: 'pmda-japan',
+      title: 'PMD Act - Japan Medical Device Regulations',
+      type: 'regulation',
+      category: 'Asia Pacific',
+      description: 'Japanese Pharmaceuticals and Medical Devices Act under PMDA oversight',
+      relevanceScore: 9,
+      tags: ['PMDA', 'Japan', 'medical devices', 'clinical data', 'approval pathway'],
+      action: {
+        label: 'Browse Standard',
+        onClick: () => onNavigate('regulations')
+      }
+    },
+    {
+      id: 'tga-australia',
+      title: 'TGA Therapeutic Goods Act - Australia',
+      type: 'regulation',
+      category: 'Asia Pacific',
+      description: 'Australian regulatory framework for therapeutic goods and medical devices',
+      relevanceScore: 8,
+      tags: ['TGA', 'Australia', 'therapeutic goods', 'registration', 'conformity assessment'],
+      action: {
+        label: 'Browse Standard',
+        onClick: () => onNavigate('regulations')
+      }
+    },
+    {
+      id: 'health-canada',
+      title: 'Health Canada Medical Device Regulations',
+      type: 'regulation',
+      category: 'Americas',
+      description: 'Canadian medical device regulations aligned with MDSAP framework',
+      relevanceScore: 8,
+      tags: ['Health Canada', 'MDSAP', 'medical devices', 'quality systems', 'licensing'],
+      action: {
+        label: 'Browse Standard',
+        onClick: () => onNavigate('regulations')
+      }
+    },
+    {
+      id: 'anvisa-brazil',
+      title: 'ANVISA RDC 16/2013 - Brazil GMP',
+      type: 'regulation',
+      category: 'Americas',
+      description: 'Brazilian Good Manufacturing Practices for medical devices',
+      relevanceScore: 7,
+      tags: ['ANVISA', 'Brazil', 'GMP', 'manufacturing', 'quality control'],
+      action: {
+        label: 'Browse Standard',
+        onClick: () => onNavigate('regulations')
+      }
+    },
+    {
+      id: 'nmpa-china',
+      title: 'NMPA Medical Device Regulations - China',
+      type: 'regulation',
+      category: 'Asia Pacific',
+      description: 'Chinese National Medical Products Administration device regulations',
+      relevanceScore: 8,
+      tags: ['NMPA', 'China', 'medical devices', 'registration', 'clinical trials'],
+      action: {
+        label: 'Browse Standard',
         onClick: () => onNavigate('regulations')
       }
     },
 
-    // SSO and Identity
+    // Enterprise SSO Providers (Enhanced)
     {
-      id: 'azure-ad-sso',
-      title: 'Microsoft Azure Active Directory Integration',
+      id: 'microsoft-azure-ad',
+      title: 'Microsoft Azure Active Directory Enterprise SSO',
       type: 'sso',
-      category: 'Identity Providers',
-      description: 'Enterprise-grade SSO with Azure AD, supporting SAML 2.0, MFA, and conditional access',
-      relevanceScore: 9,
-      tags: ['Azure AD', 'Microsoft', 'SSO', 'SAML', 'MFA', 'enterprise'],
+      category: 'Enterprise Identity',
+      description: 'Enterprise-grade SSO with Azure AD, supporting SAML 2.0, OpenID Connect, MFA, and conditional access policies',
+      relevanceScore: 10,
+      tags: ['Microsoft', 'Azure AD', 'SAML', 'OpenID Connect', 'MFA', 'conditional access', 'enterprise'],
       action: {
-        label: 'Configure SSO',
+        label: 'Configure Microsoft SSO',
         onClick: () => onNavigate('enterprise-sso')
       }
     },
     {
-      id: 'google-workspace-sso',
-      title: 'Google Workspace SSO Integration',
+      id: 'google-workspace-enterprise',
+      title: 'Google Workspace Enterprise SSO',
       type: 'sso',
-      category: 'Identity Providers',
-      description: 'Seamless integration with Google Workspace for user authentication and provisioning',
-      relevanceScore: 8,
-      tags: ['Google', 'Workspace', 'SSO', 'OAuth', 'directory sync'],
+      category: 'Enterprise Identity',
+      description: 'Google Workspace SSO with advanced security, OAuth 2.0, SAML, directory sync, and Advanced Protection Program',
+      relevanceScore: 9,
+      tags: ['Google', 'Workspace', 'OAuth 2.0', 'SAML', 'directory sync', 'advanced protection'],
       action: {
-        label: 'Configure SSO',
+        label: 'Configure Google SSO',
         onClick: () => onNavigate('enterprise-sso')
       }
     },
     {
-      id: 'okta-sso',
-      title: 'Okta Identity Platform Integration',
+      id: 'okta-enterprise',
+      title: 'Okta Identity Cloud Enterprise',
       type: 'sso',
-      category: 'Identity Providers',
-      description: 'Advanced identity management with Okta, featuring adaptive MFA and risk-based authentication',
+      category: 'Enterprise Identity',
+      description: 'Advanced identity management with Okta, featuring adaptive MFA, risk-based authentication, and SCIM provisioning',
       relevanceScore: 9,
-      tags: ['Okta', 'identity platform', 'adaptive MFA', 'SCIM', 'provisioning'],
+      tags: ['Okta', 'adaptive MFA', 'risk-based auth', 'SCIM', 'identity cloud', 'zero trust'],
       action: {
-        label: 'Configure SSO',
+        label: 'Configure Okta SSO',
         onClick: () => onNavigate('enterprise-sso')
       }
     },
 
-    // Features and Tools
+    // Platform Features (Enhanced)
     {
-      id: 'ai-analysis',
-      title: 'AI-Powered Regulatory Analysis',
+      id: 'ai-multi-model',
+      title: 'Multi-Model AI Analysis Engine',
       type: 'feature',
-      category: 'Analysis Tools',
-      description: 'Advanced AI models for automated compliance gap analysis and regulatory document review',
+      category: 'AI & Analysis',
+      description: 'Compare results across GPT-5, Claude 4, Gemini 2.5 Pro, and Grok with pharmaceutical specialization',
       relevanceScore: 10,
-      tags: ['AI analysis', 'compliance', 'gap analysis', 'automation', 'regulatory review'],
+      tags: ['multi-model AI', 'GPT-5', 'Claude 4', 'Gemini', 'Grok', 'pharmaceutical AI', 'comparison'],
       action: {
         label: 'View AI Models',
         onClick: () => onNavigate('ai-models')
       }
     },
     {
-      id: 'audit-trail',
+      id: 'pharmaceutical-ai',
+      title: 'Pharmaceutical AI Specialization',
+      type: 'feature',
+      category: 'AI & Analysis',
+      description: 'Specialized AI models for cGMP, FDA submissions, biologics, and advanced therapy compliance',
+      relevanceScore: 9,
+      tags: ['pharmaceutical', 'cGMP', 'FDA submissions', 'biologics', 'advanced therapy', 'specialized AI'],
+      action: {
+        label: 'View Pharma AI',
+        onClick: () => onNavigate('ai-models')
+      }
+    },
+    {
+      id: 'global-search-engine',
+      title: 'Interactive Global Regulatory Search',
+      type: 'tool',
+      category: 'Search & Discovery',
+      description: 'AI-powered search across 1,200+ regulatory requirements from 8 global markets with cross-reference detection',
+      relevanceScore: 10,
+      tags: ['global search', 'cross-reference', 'AI-powered', '1200+ requirements', '8 markets'],
+      action: {
+        label: 'Launch Advanced Search',
+        onClick: () => onNavigate('regulations')
+      }
+    },
+    {
+      id: 'audit-trail-cfr11',
       title: '21 CFR Part 11 Compliant Audit Trail',
       type: 'feature',
-      category: 'Compliance Features',
-      description: 'Comprehensive audit trail system meeting FDA electronic records requirements',
+      category: 'Compliance & Security',
+      description: 'Comprehensive audit trail system with electronic signatures, timestamping, and FDA electronic records compliance',
       relevanceScore: 9,
-      tags: ['audit trail', '21 CFR Part 11', 'FDA', 'electronic records', 'compliance'],
+      tags: ['21 CFR Part 11', 'audit trail', 'electronic signatures', 'FDA compliance', 'timestamping'],
       action: {
-        label: 'View Audit Trail',
+        label: 'View Audit System',
         onClick: () => onNavigate('audit-trail')
       }
     },
     {
-      id: 'multi-tenant',
-      title: 'Multi-Tenant Architecture',
+      id: 'multi-tenant-security',
+      title: 'Multi-Tenant Security Architecture',
       type: 'feature',
-      category: 'Platform Features',
-      description: 'Secure multi-tenant database design with row-level security and data isolation',
+      category: 'Security & Architecture',
+      description: 'Enterprise-grade multi-tenant database with row-level security, data isolation, and tenant-specific access controls',
       relevanceScore: 8,
-      tags: ['multi-tenant', 'security', 'data isolation', 'scalability', 'enterprise'],
+      tags: ['multi-tenant', 'row-level security', 'data isolation', 'tenant controls', 'enterprise'],
       action: {
         label: 'View Architecture',
         onClick: () => onNavigate('architecture')
       }
     },
-
-    // Specific Tools
     {
-      id: 'regulatory-search',
-      title: 'Advanced Regulatory Search Engine',
+      id: 'real-time-compliance',
+      title: 'Real-time Compliance Monitoring',
       type: 'tool',
-      category: 'Search Tools',
-      description: 'AI-powered search across global regulatory standards with relevance ranking',
-      relevanceScore: 10,
-      tags: ['search', 'regulations', 'AI-powered', 'global standards', 'relevance ranking'],
+      category: 'Monitoring & Analytics',
+      description: 'Live monitoring of compliance status, regulatory changes, audit activities, and risk indicators',
+      relevanceScore: 8,
+      tags: ['real-time monitoring', 'compliance status', 'regulatory changes', 'risk indicators', 'analytics'],
       action: {
-        label: 'Launch Search',
+        label: 'View Dashboard',
+        onClick: () => onNavigate('compliance')
+      }
+    },
+
+    // Advanced Features
+    {
+      id: 'regulation-comparison',
+      title: 'Cross-Regulation Comparison Engine',
+      type: 'tool',
+      category: 'Analysis Tools',
+      description: 'Compare requirements across multiple global regulations to identify overlaps and unique requirements',
+      relevanceScore: 9,
+      tags: ['regulation comparison', 'cross-reference', 'overlaps', 'unique requirements', 'global analysis'],
+      action: {
+        label: 'Launch Comparison',
         onClick: () => onNavigate('regulations')
       }
     },
     {
-      id: 'compliance-dashboard',
-      title: 'Real-time Compliance Dashboard',
-      type: 'tool',
-      category: 'Monitoring Tools',
-      description: 'Live monitoring of compliance status, audit activities, and regulatory updates',
+      id: 'automated-validation',
+      title: 'Automated AI Model Validation',
+      type: 'feature',
+      category: 'Quality Assurance',
+      description: 'Continuous validation of AI model performance with golden datasets and precision/recall metrics',
       relevanceScore: 8,
-      tags: ['dashboard', 'compliance', 'monitoring', 'real-time', 'analytics'],
+      tags: ['AI validation', 'golden dataset', 'precision metrics', 'recall metrics', 'continuous monitoring'],
       action: {
-        label: 'View Dashboard',
+        label: 'View Validation',
+        onClick: () => onNavigate('compliance')
+      }
+    },
+    {
+      id: 'enterprise-reporting',
+      title: 'Enterprise Compliance Reporting',
+      type: 'tool',
+      category: 'Reporting & Analytics',
+      description: 'Generate audit-ready reports with timestamps, digital signatures, and regulatory traceability',
+      relevanceScore: 9,
+      tags: ['enterprise reporting', 'audit-ready', 'digital signatures', 'traceability', 'timestamps'],
+      action: {
+        label: 'Generate Reports',
         onClick: () => onNavigate('compliance')
       }
     }
   ]
 
-  // Quick actions for common tasks
+  // Enhanced quick actions for enterprise users
   const quickActions: QuickAction[] = [
     {
-      id: 'search-regulations',
+      id: 'search-global-regulations',
       title: 'Search Global Regulations',
-      description: 'Find specific regulatory requirements across 8 global markets',
+      description: 'Find specific requirements across 8 global markets (FDA, EU MDR, PMDA, etc.)',
       icon: Search,
       category: 'regulations',
       onClick: () => onNavigate('regulations')
     },
     {
-      id: 'configure-sso',
+      id: 'configure-enterprise-sso',
       title: 'Configure Enterprise SSO',
-      description: 'Set up Microsoft, Google, or Okta SSO integration',
+      description: 'Set up Microsoft Azure AD, Google Workspace, or Okta integration',
       icon: Building2,
       category: 'sso',
       onClick: () => onNavigate('enterprise-sso')
     },
     {
-      id: 'run-analysis',
-      title: 'Run AI Compliance Analysis',
-      description: 'Analyze documents against regulatory standards',
+      id: 'run-ai-analysis',
+      title: 'Multi-Model AI Analysis',
+      description: 'Compare analysis results across GPT-5, Claude 4, Gemini 2.5 Pro, and Grok',
       icon: Shield,
       category: 'analysis',
       onClick: () => onNavigate('ai-models')
     },
     {
-      id: 'view-audit-trail',
-      title: 'Access Audit Trail',
-      description: 'Review 21 CFR Part 11 compliant activity logs',
+      id: 'access-audit-trail',
+      title: 'Access Audit Trail System',
+      description: 'Review 21 CFR Part 11 compliant activity logs and electronic records',
       icon: FileText,
       category: 'compliance',
       onClick: () => onNavigate('audit-trail')
+    },
+    {
+      id: 'pharmaceutical-ai',
+      title: 'Pharmaceutical AI Models',
+      description: 'Access specialized AI for cGMP, FDA submissions, and biologics compliance',
+      icon: Users,
+      category: 'analysis',
+      onClick: () => onNavigate('ai-models')
+    },
+    {
+      id: 'compliance-monitoring',
+      title: 'Real-time Compliance Monitoring',
+      description: 'Monitor regulatory changes, compliance status, and risk indicators',
+      icon: Shield,
+      category: 'compliance',
+      onClick: () => onNavigate('compliance')
     }
   ]
 
@@ -457,14 +590,18 @@ export function GlobalSearchInterface({ onNavigate }: { onNavigate: (page: strin
             </CardHeader>
             <CardContent className="space-y-2">
               {[
+                'Microsoft Azure AD setup',
+                'Google Workspace SSO',
                 'FDA design controls',
-                'Azure AD integration',
-                'ISO 13485 requirements',
-                'audit trail configuration',
                 'EU MDR clinical evaluation',
-                'MFA setup guide',
-                'risk management protocols',
-                'Google SSO setup'
+                'multi-model AI comparison',
+                'pharmaceutical cGMP',
+                'audit trail configuration',
+                'Okta enterprise integration',
+                'ISO 13485 requirements',
+                'PMDA Japan regulations',
+                'automated validation protocols',
+                'real-time compliance monitoring'
               ].map((search) => (
                 <Button
                   key={search}
@@ -491,21 +628,27 @@ export function GlobalSearchInterface({ onNavigate }: { onNavigate: (page: strin
             <CardContent className="space-y-3">
               <div className="text-sm space-y-2">
                 <div>
-                  <span className="font-medium">Regulations:</span>
+                  <span className="font-medium">Global Regulations:</span>
                   <p className="text-muted-foreground text-xs">
-                    "FDA QSR", "EU MDR", "ISO 13485", "design controls"
+                    "FDA QSR", "EU MDR", "ISO 13485", "PMDA Japan", "TGA Australia"
                   </p>
                 </div>
                 <div>
-                  <span className="font-medium">SSO Providers:</span>
+                  <span className="font-medium">Enterprise SSO:</span>
                   <p className="text-muted-foreground text-xs">
-                    "Azure AD", "Google Workspace", "Okta", "SAML"
+                    "Microsoft Azure AD", "Google Workspace", "Okta", "SAML", "MFA"
                   </p>
                 </div>
                 <div>
-                  <span className="font-medium">Features:</span>
+                  <span className="font-medium">AI & Analysis:</span>
                   <p className="text-muted-foreground text-xs">
-                    "audit trail", "multi-tenant", "AI analysis"
+                    "multi-model comparison", "pharmaceutical AI", "cGMP analysis"
+                  </p>
+                </div>
+                <div>
+                  <span className="font-medium">Compliance Features:</span>
+                  <p className="text-muted-foreground text-xs">
+                    "audit trail", "21 CFR Part 11", "electronic records", "validation"
                   </p>
                 </div>
               </div>

@@ -39,27 +39,28 @@ interface Regulation {
 export function GlobalRegulationsPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedRegion, setSelectedRegion] = useState('all')
-  const [currentView, setCurrentView] = useState<'overview' | 'search' | 'browse'>('overview')
+  const [currentView, setCurrentView] = useState<'overview' | 'search' | 'browse' | 'detail'>('overview')
+  const [selectedRegulation, setSelectedRegulation] = useState<string | null>(null)
 
   const regulations: Regulation[] = [
     {
       id: 'fda-qsr',
       name: '21 CFR Part 820 (Quality System Regulation)',
       region: 'United States',
-      description: 'FDA quality system regulation for medical device manufacturers',
+      description: 'FDA quality system regulation for medical device manufacturers with comprehensive design controls and manufacturing requirements',
       lastUpdated: '2024-01-15',
       sections: 23,
-      applicability: ['Medical Devices', 'Manufacturing', 'Design Controls'],
+      applicability: ['Medical Devices', 'Manufacturing', 'Design Controls', 'Risk Management', 'Software as Medical Device'],
       status: 'active'
     },
     {
       id: 'eu-mdr',
       name: 'EU MDR 2017/745',
       region: 'European Union',
-      description: 'Medical Device Regulation for CE marking and market access',
+      description: 'Medical Device Regulation for CE marking and market access with enhanced clinical evaluation requirements',
       lastUpdated: '2024-02-20',
       sections: 127,
-      applicability: ['Medical Devices', 'Clinical Trials', 'Post-Market Surveillance'],
+      applicability: ['Medical Devices', 'Clinical Trials', 'Post-Market Surveillance', 'UDI', 'EUDAMED'],
       status: 'updated'
     },
     {
@@ -69,17 +70,17 @@ export function GlobalRegulationsPage() {
       description: 'Quality management systems for medical devices',
       lastUpdated: '2024-01-10',
       sections: 45,
-      applicability: ['Quality Management', 'Medical Devices', 'Risk Management'],
+      applicability: ['Quality Management', 'Medical Devices', 'Risk Management', 'Documentation Control'],
       status: 'active'
     },
     {
       id: 'pmda-japan',
       name: 'PMD Act (Japan)',
       region: 'Japan',
-      description: 'Pharmaceuticals and Medical Devices Act',
+      description: 'Pharmaceuticals and Medical Devices Act under PMDA oversight for Japanese market access',
       lastUpdated: '2024-03-01',
       sections: 67,
-      applicability: ['Medical Devices', 'Pharmaceuticals', 'Clinical Data'],
+      applicability: ['Medical Devices', 'Pharmaceuticals', 'Clinical Data', 'Market Authorization'],
       status: 'new'
     },
     {
@@ -89,17 +90,17 @@ export function GlobalRegulationsPage() {
       description: 'Regulatory framework for therapeutic goods',
       lastUpdated: '2024-01-25',
       sections: 34,
-      applicability: ['Therapeutic Goods', 'Manufacturing', 'Registration'],
+      applicability: ['Therapeutic Goods', 'Manufacturing', 'Registration', 'Conformity Assessment'],
       status: 'active'
     },
     {
       id: 'health-canada',
       name: 'Health Canada Medical Device Regulations',
       region: 'Canada',
-      description: 'MDSAP-aligned medical device regulations',
+      description: 'MDSAP-aligned medical device regulations for Canadian market access',
       lastUpdated: '2024-02-10',
       sections: 56,
-      applicability: ['Medical Devices', 'MDSAP', 'Quality Systems'],
+      applicability: ['Medical Devices', 'MDSAP', 'Quality Systems', 'Licensing'],
       status: 'active'
     },
     {
@@ -109,7 +110,7 @@ export function GlobalRegulationsPage() {
       description: 'Good Manufacturing Practices for medical devices',
       lastUpdated: '2024-01-30',
       sections: 28,
-      applicability: ['Manufacturing', 'Quality Control', 'Registration'],
+      applicability: ['Manufacturing', 'Quality Control', 'Registration', 'GMP'],
       status: 'active'
     },
     {
@@ -119,7 +120,7 @@ export function GlobalRegulationsPage() {
       description: 'National Medical Products Administration device regulations',
       lastUpdated: '2024-02-15',
       sections: 89,
-      applicability: ['Medical Devices', 'Clinical Trials', 'Registration'],
+      applicability: ['Medical Devices', 'Clinical Trials', 'Registration', 'Market Access'],
       status: 'updated'
     }
   ]
@@ -163,6 +164,240 @@ export function GlobalRegulationsPage() {
           </div>
         </div>
         <RegulatorySearchEngine />
+      </div>
+    )
+  }
+
+  if (currentView === 'detail' && selectedRegulation) {
+    const regulation = regulations.find(r => r.id === selectedRegulation)
+    if (!regulation) {
+      setCurrentView('overview')
+      return null
+    }
+
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" onClick={() => setCurrentView('overview')}>
+            ← Back to Regulations
+          </Button>
+          <div className="flex-1">
+            <h2 className="text-2xl font-bold">{regulation.name}</h2>
+            <p className="text-muted-foreground text-sm">
+              {regulation.region} • {regulation.sections} sections • Updated {new Date(regulation.lastUpdated).toLocaleDateString()}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Button variant="outline">
+              <Download size={16} className="mr-2" />
+              Download PDF
+            </Button>
+            <Button>
+              <Shield size={16} className="mr-2" />
+              Run Analysis
+            </Button>
+          </div>
+        </div>
+
+        {/* Regulation Detail Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
+            {/* Overview */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Regulation Overview</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-muted-foreground">{regulation.description}</p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h5 className="font-medium mb-2">Key Information</h5>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span>Total Sections:</span>
+                        <span className="font-medium">{regulation.sections}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Last Updated:</span>
+                        <span className="font-medium">{new Date(regulation.lastUpdated).toLocaleDateString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Status:</span>
+                        <Badge variant={regulation.status === 'new' ? 'default' : regulation.status === 'updated' ? 'secondary' : 'outline'} className="text-xs">
+                          {regulation.status}
+                        </Badge>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-2">Applicability</h5>
+                    <div className="flex flex-wrap gap-1">
+                      {regulation.applicability.map((area, index) => (
+                        <Badge key={index} variant="secondary" className="text-xs">
+                          {area}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Key Sections Preview */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Key Sections</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {regulation.id === 'fda-qsr' && (
+                  <>
+                    <div className="border-l-4 border-primary pl-4">
+                      <h6 className="font-medium">§820.30 Design Controls</h6>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Design and development planning, inputs, outputs, review, verification, validation, transfer, and design changes.
+                      </p>
+                    </div>
+                    <div className="border-l-4 border-primary pl-4">
+                      <h6 className="font-medium">§820.70 Production and Process Controls</h6>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Process validation, installation controls, inspection, measuring, and test equipment.
+                      </p>
+                    </div>
+                    <div className="border-l-4 border-primary pl-4">
+                      <h6 className="font-medium">§820.198 Complaint Files</h6>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Procedures for receiving, reviewing, and evaluating complaints by a formally designated unit.
+                      </p>
+                    </div>
+                  </>
+                )}
+                {regulation.id === 'eu-mdr' && (
+                  <>
+                    <div className="border-l-4 border-primary pl-4">
+                      <h6 className="font-medium">Article 10 - Classification Rules</h6>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Risk-based classification system for medical devices (Class I, IIa, IIb, III).
+                      </p>
+                    </div>
+                    <div className="border-l-4 border-primary pl-4">
+                      <h6 className="font-medium">Article 61 - Clinical Evidence</h6>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Clinical evaluation and post-market clinical follow-up requirements.
+                      </p>
+                    </div>
+                    <div className="border-l-4 border-primary pl-4">
+                      <h6 className="font-medium">Article 87 - Post-Market Surveillance</h6>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Systematic procedures for collecting and reviewing experience data.
+                      </p>
+                    </div>
+                  </>
+                )}
+                {regulation.id === 'iso-13485' && (
+                  <>
+                    <div className="border-l-4 border-primary pl-4">
+                      <h6 className="font-medium">Clause 7.3 - Design and Development</h6>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Planning, inputs, outputs, review, verification, validation, and transfer requirements.
+                      </p>
+                    </div>
+                    <div className="border-l-4 border-primary pl-4">
+                      <h6 className="font-medium">Clause 8.2.4 - Management Review</h6>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Top management shall review the organization's quality management system.
+                      </p>
+                    </div>
+                  </>
+                )}
+                <Button variant="outline" className="w-full">
+                  <BookOpen size={16} className="mr-2" />
+                  View All {regulation.sections} Sections
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Quick Actions */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Quick Actions</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Button className="w-full">
+                  <Shield size={16} className="mr-2" />
+                  Analyze Document
+                </Button>
+                <Button variant="outline" className="w-full">
+                  <Download size={16} className="mr-2" />
+                  Download Standard
+                </Button>
+                <Button variant="outline" className="w-full">
+                  <Search size={16} className="mr-2" />
+                  Search Within Standard
+                </Button>
+                <Button variant="outline" className="w-full">
+                  <Scale size={16} className="mr-2" />
+                  Compare with Other Standards
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Related Standards */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Related Standards</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {regulations
+                  .filter(r => r.id !== regulation.id)
+                  .slice(0, 4)
+                  .map((related) => (
+                    <Button
+                      key={related.id}
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setSelectedRegulation(related.id)}
+                      className="w-full justify-start p-3"
+                    >
+                      <div className="text-left">
+                        <div className="text-xs font-medium">{related.name}</div>
+                        <div className="text-xs text-muted-foreground">{related.region}</div>
+                      </div>
+                    </Button>
+                  ))}
+              </CardContent>
+            </Card>
+
+            {/* AI Analysis Preview */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">AI Analysis Ready</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-sm text-muted-foreground">
+                  This standard is optimized for AI analysis with our specialized models.
+                </p>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-xs">
+                    <span>Coverage:</span>
+                    <span className="font-medium">100%</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span>AI Accuracy:</span>
+                    <span className="font-medium">98.7%</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span>Processing Time:</span>
+                    <span className="font-medium">~2 min</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     )
   }
@@ -307,7 +542,15 @@ export function GlobalRegulationsPage() {
               <Separator />
 
               <div className="flex gap-2">
-                <Button variant="outline" size="sm" className="flex-1">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="flex-1"
+                  onClick={() => {
+                    setSelectedRegulation(regulation.id)
+                    setCurrentView('detail')
+                  }}
+                >
                   <BookOpen size={14} className="mr-2" />
                   Browse Standard
                 </Button>
