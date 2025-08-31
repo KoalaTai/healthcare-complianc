@@ -1,93 +1,39 @@
-# VirtualBackroom.ai V2.0 - Database and Backend Dependencies
-# Multi-tenant SaaS with audit trails and regulatory compliance
-
-# ============================================================================
-# CORE FRAMEWORK
-# ============================================================================
-fastapi==0.104.1                # Modern async web framework
-uvicorn[standard]==0.24.0        # ASGI server with auto-reload and performance features
-pydantic==2.5.0                 # Data validation and serialization
-pydantic-settings==2.1.0        # Environment variable management
-
-# ============================================================================
-# DATABASE STACK
-# ============================================================================
-SQLAlchemy==2.0.23              # Async ORM with modern features
-asyncpg==0.29.0                 # High-performance async PostgreSQL driver
-psycopg2-binary==2.9.9          # Sync PostgreSQL driver for migrations
-alembic==1.13.1                 # Database migrations
-
-# ============================================================================
-# AUTHENTICATION & SECURITY
-# ============================================================================
-python-jose[cryptography]==3.3.0    # JWT token handling
-passlib[bcrypt]==1.7.4              # Password hashing (for emergency auth)
-python-multipart==0.0.6             # Form data parsing
-cryptography==41.0.8                # Cryptographic utilities
-
-# ============================================================================
-# CLOUD SERVICES (AWS)
-# ============================================================================
-boto3==1.34.0                   # AWS SDK for S3, Cognito, etc.
-botocore==1.34.0                # Core AWS library
-
-# ============================================================================
-# BACKGROUND PROCESSING
-# ============================================================================
-celery==5.3.4                   # Distributed task queue
-redis==5.0.1                    # In-memory data store for Celery broker
-kombu==5.3.4                    # Messaging library for Celery
-
-# ============================================================================
-# AI/ML INTEGRATION
-# ============================================================================
-openai==1.6.1                   # OpenAI API client
-anthropic==0.8.1                # Claude API client (alternative)
-tiktoken==0.5.2                 # Token counting for AI models
-
-# ============================================================================
-# DATA PROCESSING & VALIDATION
-# ============================================================================
-pypdf==3.17.1                   # PDF processing
-python-docx==1.1.0              # Word document processing
-openpyxl==3.1.2                 # Excel file processing
-validators==0.22.0              # Data validation utilities
-
-# ============================================================================
-# MONITORING & LOGGING
-# ============================================================================
-structlog==23.2.0               # Structured logging
-prometheus-client==0.19.0       # Metrics collection
-sentry-sdk[fastapi]==1.40.0     # Error tracking and performance monitoring
-
-# ============================================================================
-# DEVELOPMENT & TESTING
-# ============================================================================
-pytest==7.4.3                   # Testing framework
-pytest-asyncio==0.21.1          # Async test support
-pytest-cov==4.1.0               # Coverage reporting
-httpx==0.25.2                   # HTTP client for testing APIs
-factory-boy==3.3.0              # Test data factories
-faker==20.1.0                   # Fake data generation
-
-# ============================================================================
-# UTILITIES
-# ============================================================================
-python-dotenv==1.0.0            # Environment variable loading
-typer==0.9.0                    # CLI framework for management commands
-rich==13.7.0                    # Beautiful terminal output
-tenacity==8.2.3                 # Retry mechanisms for external API calls
-email-validator==2.1.0          # Email validation
-
-# ============================================================================
-# HTTP & API UTILITIES
-# ============================================================================
-httptools==0.6.1                # HTTP parsing (uvicorn dependency)
-uvloop==0.19.0                  # High-performance event loop (Unix only)
-orjson==3.9.10                  # Fast JSON serialization
-
-# ============================================================================
-# PRODUCTION DEPENDENCIES
-# ============================================================================
-gunicorn==21.2.0                # WSGI server for production deployment
-newrelic==9.2.0                 # Application performance monitoring
+flask==3.0.0
+flask-sqlalchemy==3.1.1
+psycopg2-binary==2.9.9
+flask-login==0.6.3
+flask-wtf==1.2.1
+werkzeug==3.0.1
+pydantic==2.5.0
+pydantic-settings==2.1.0
+python-dotenv==1.0.0
+google-generativeai==0.3.2
+openai==1.6.1
+anthropic==0.8.1
+requests==2.31.0
+email-validator==2.1.0
+reportlab==4.0.9
+beautifulsoup4==4.12.2
+markdown==3.5.2
+pypdf==3.17.4
+pdf2image==1.17.0
+pytesseract==0.3.10
+wtforms==3.1.1
+itsdangerous==2.1.2
+oauthlib==3.2.2
+google-auth==2.25.2
+google-auth-oauthlib==1.2.0
+google-auth-httplib2==0.2.0
+pytest==7.4.3
+pytest-mock==3.12.0
+flask-testing==0.8.1
+flask-migrate==4.0.5
+alembic==1.13.1
+celery==5.3.4
+redis==5.0.1
+boto3==1.34.0
+python-multipart==0.0.6
+fastapi==0.104.1
+uvicorn==0.24.0
+sqlalchemy==2.0.23
+python-jose[cryptography]==3.3.0

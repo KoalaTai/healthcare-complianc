@@ -1,0 +1,295 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - VirtualBackroom.ai{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-lg-8">
+            <h1 class="fw-bold">Welcome back, {{ current_user.full_name or current_user.username }}!</h1>
+            <p class="text-muted mb-0">Here's your compliance activity overview</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+            <button class="btn btn-primary">
+                <i class="bi bi-plus-circle me-2"></i>New Analysis
+            </button>
+        </div>
+    </div>
+
+    <!-- Quick Stats Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <i class="bi bi-clipboard-data fs-1 text-primary"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="fw-bold mb-0">{{ dashboard_stats.get('total_simulations', 0) }}</h5>
+                            <p class="text-muted mb-0">Total Simulations</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <i class="bi bi-check-circle fs-1 text-success"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="fw-bold mb-0">{{ dashboard_stats.get('completed_simulations', 0) }}</h5>
+                            <p class="text-muted mb-0">Completed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <i class="bi bi-file-earmark-text fs-1 text-info"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="fw-bold mb-0">{{ dashboard_stats.get('total_documents', 0) }}</h5>
+                            <p class="text-muted mb-0">Documents</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <i class="bi bi-bell fs-1 text-warning"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="fw-bold mb-0">{{ dashboard_stats.get('unread_notifications', 0) }}</h5>
+                            <p class="text-muted mb-0">Notifications</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI System Status -->
+    {% if ai_status %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h6 class="fw-bold mb-1">AI System Status</h6>
+                            <p class="text-muted mb-0">
+                                {{ ai_status.get('available_providers', 0) }} of {{ ai_status.get('total_providers', 0) }} AI providers online
+                            </p>
+                        </div>
+                        <div class="text-end">
+                            {% if ai_status.get('status') == 'healthy' %}
+                                <span class="badge bg-success px-3 py-2">
+                                    <i class="bi bi-check-circle me-1"></i>Healthy
+                                </span>
+                            {% elif ai_status.get('status') == 'degraded' %}
+                                <span class="badge bg-warning px-3 py-2">
+                                    <i class="bi bi-exclamation-triangle me-1"></i>Degraded
+                                </span>
+                            {% else %}
+                                <span class="badge bg-danger px-3 py-2">
+                                    <i class="bi bi-x-circle me-1"></i>Critical
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Main Content Row -->
+    <div class="row">
+        <!-- Recent Simulations -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-transparent border-0 d-flex align-items-center justify-content-between">
+                    <h6 class="fw-bold mb-0">
+                        <i class="bi bi-play-circle me-2 text-primary"></i>Recent Simulations
+                    </h6>
+                    <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="card-body p-0">
+                    {% if recent_simulations %}
+                        <div class="list-group list-group-flush">
+                            {% for simulation in recent_simulations %}
+                            <div class="list-group-item border-0 px-4 py-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <h6 class="fw-bold mb-1">{{ simulation.title }}</h6>
+                                        <p class="text-muted mb-1">{{ simulation.regulatory_standard }}</p>
+                                        <small class="text-muted">Created {{ simulation.created_date.strftime('%B %d, %Y') }}</small>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        {% if simulation.status.value == 'completed' %}
+                                            <span class="badge bg-success">Completed</span>
+                                        {% elif simulation.status.value == 'in_progress' %}
+                                            <span class="badge bg-primary">In Progress</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">Pending</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="bi bi-clipboard-x display-1 text-muted"></i>
+                            <h5 class="text-muted mt-3">No simulations yet</h5>
+                            <p class="text-muted">Create your first audit simulation to get started</p>
+                            <button class="btn btn-primary">
+                                <i class="bi bi-plus-circle me-2"></i>Create Simulation
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Recent Documents -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 d-flex align-items-center justify-content-between">
+                    <h6 class="fw-bold mb-0">
+                        <i class="bi bi-file-earmark-text me-2 text-info"></i>Recent Documents
+                    </h6>
+                    <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="card-body p-0">
+                    {% if recent_documents %}
+                        <div class="list-group list-group-flush">
+                            {% for document in recent_documents %}
+                            <div class="list-group-item border-0 px-4 py-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0 me-3">
+                                        <i class="bi bi-file-earmark fs-4 text-muted"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="fw-bold mb-1">{{ document.title }}</h6>
+                                        <p class="text-muted mb-1">{{ document.file_name }}</p>
+                                        <small class="text-muted">Uploaded {{ document.upload_date.strftime('%B %d, %Y') }}</small>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        {% if document.is_processed %}
+                                            <span class="badge bg-success">Processed</span>
+                                        {% else %}
+                                            <span class="badge bg-warning">Processing</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="bi bi-cloud-upload display-1 text-muted"></i>
+                            <h5 class="text-muted mt-3">No documents uploaded</h5>
+                            <p class="text-muted">Upload your first document for AI analysis</p>
+                            <button class="btn btn-primary">
+                                <i class="bi bi-upload me-2"></i>Upload Document
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Quick Actions -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-transparent border-0">
+                    <h6 class="fw-bold mb-0">
+                        <i class="bi bi-lightning me-2 text-warning"></i>Quick Actions
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary">
+                            <i class="bi bi-file-plus me-2"></i>New Document Analysis
+                        </button>
+                        <button class="btn btn-outline-primary">
+                            <i class="bi bi-people me-2"></i>Create Simulation
+                        </button>
+                        <button class="btn btn-outline-secondary">
+                            <i class="bi bi-book me-2"></i>Browse Standards
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Notifications -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0">
+                    <h6 class="fw-bold mb-0">
+                        <i class="bi bi-bell me-2 text-warning"></i>Recent Notifications
+                    </h6>
+                </div>
+                <div class="card-body p-0">
+                    {% if notifications %}
+                        <div class="list-group list-group-flush">
+                            {% for notification in notifications %}
+                            <div class="list-group-item border-0 px-3 py-2">
+                                <div class="d-flex align-items-start">
+                                    <div class="flex-shrink-0 me-2">
+                                        {% if notification.notification_type == 'simulation' %}
+                                            <i class="bi bi-play-circle text-primary"></i>
+                                        {% elif notification.notification_type == 'system' %}
+                                            <i class="bi bi-gear text-secondary"></i>
+                                        {% else %}
+                                            <i class="bi bi-info-circle text-info"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="fw-bold mb-1 fs-6">{{ notification.title }}</h6>
+                                        <p class="text-muted mb-1 small">{{ notification.message[:100] }}{% if notification.message|length > 100 %}...{% endif %}</p>
+                                        <small class="text-muted">{{ notification.created_date.strftime('%B %d') }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="bi bi-bell-slash text-muted fs-1"></i>
+                            <p class="text-muted mt-2 mb-0">No notifications</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-refresh dashboard stats every 5 minutes
+    setInterval(function() {
+        // This could fetch updated stats via AJAX
+        console.log('Dashboard stats refresh');
+    }, 300000);
+});
+</script>
+{% endblock %}

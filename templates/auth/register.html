@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up - VirtualBackroom.ai{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border-0 shadow-lg">
+                <div class="card-body p-5">
+                    <!-- Header -->
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold text-primary mb-2">Create Your Account</h2>
+                        <p class="text-muted">Join VirtualBackroom.ai and transform your regulatory processes</p>
+                    </div>
+
+                    <!-- Registration Form -->
+                    <form method="POST" action="{{ url_for('auth.register') }}" id="registrationForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="first_name" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name" 
+                                       placeholder="Enter your first name">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="last_name" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name" 
+                                       placeholder="Enter your last name">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="username" name="username" required 
+                                   placeholder="Choose a username" minlength="3" maxlength="30">
+                            <div class="form-text">3-30 characters, letters, numbers, and underscores only</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="email" name="email" required 
+                                   placeholder="Enter your email address">
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" id="password" name="password" required 
+                                       placeholder="Create a strong password" minlength="8">
+                                <div class="form-text">Minimum 8 characters</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="confirm_password" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required 
+                                       placeholder="Confirm your password" minlength="8">
+                                <div id="passwordMatchFeedback" class="form-text"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="organization" class="form-label">Organization</label>
+                            <input type="text" class="form-control" id="organization" name="organization" 
+                                   placeholder="Your company or organization (optional)">
+                        </div>
+                        
+                        <!-- Terms and Conditions -->
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+                                <label class="form-check-label" for="terms">
+                                    I agree to the <a href="#" class="text-primary">Terms of Service</a> and 
+                                    <a href="#" class="text-primary">Privacy Policy</a>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter">
+                                <label class="form-check-label" for="newsletter">
+                                    I'd like to receive product updates and regulatory compliance insights
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-lg w-100 mb-3" id="submitBtn">
+                            <i class="bi bi-person-plus me-2"></i>Create Account
+                        </button>
+                    </form>
+
+                    <!-- Divider -->
+                    <div class="text-center my-4">
+                        <span class="text-muted">or</span>
+                    </div>
+
+                    <!-- Google Sign Up -->
+                    <button id="googleSignUpBtn" class="btn btn-outline-secondary btn-lg w-100 mb-4">
+                        <i class="bi bi-google me-2"></i>Sign up with Google
+                    </button>
+
+                    <!-- Sign In Link -->
+                    <div class="text-center">
+                        <p class="text-muted">
+                            Already have an account? 
+                            <a href="{{ url_for('auth.login') }}" class="text-primary text-decoration-none fw-bold">
+                                Sign in here
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional Info -->
+            <div class="text-center mt-4">
+                <p class="text-muted small">
+                    By creating an account, you agree that we'll process your information in accordance with our Privacy Policy.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Firebase Configuration -->
+<script src="{{ url_for('auth.firebase_config') }}"></script>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Form validation
+    const form = document.getElementById('registrationForm');
+    const passwordField = document.getElementById('password');
+    const confirmPasswordField = document.getElementById('confirm_password');
+    const passwordMatchFeedback = document.getElementById('passwordMatchFeedback');
+    const usernameField = document.getElementById('username');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    // Username validation
+    usernameField.addEventListener('input', function() {
+        const username = this.value.trim();
+        const isValid = /^[a-zA-Z0-9_]{3,30}$/.test(username);
+        
+        if (username.length > 0 && !isValid) {
+            this.setCustomValidity('Username must be 3-30 characters and contain only letters, numbers, and underscores');
+            this.classList.add('is-invalid');
+        } else {
+            this.setCustomValidity('');
+            this.classList.remove('is-invalid');
+        }
+    });
+    
+    // Password confirmation validation
+    function validatePasswordMatch() {
+        const password = passwordField.value;
+        const confirmPassword = confirmPasswordField.value;
+        
+        if (confirmPassword.length > 0) {
+            if (password === confirmPassword) {
+                confirmPasswordField.setCustomValidity('');
+                confirmPasswordField.classList.remove('is-invalid');
+                confirmPasswordField.classList.add('is-valid');
+                passwordMatchFeedback.textContent = 'Passwords match';
+                passwordMatchFeedback.className = 'form-text text-success';
+            } else {
+                confirmPasswordField.setCustomValidity('Passwords do not match');
+                confirmPasswordField.classList.remove('is-valid');
+                confirmPasswordField.classList.add('is-invalid');
+                passwordMatchFeedback.textContent = 'Passwords do not match';
+                passwordMatchFeedback.className = 'form-text text-danger';
+            }
+        } else {
+            confirmPasswordField.setCustomValidity('');
+            confirmPasswordField.classList.remove('is-valid', 'is-invalid');
+            passwordMatchFeedback.textContent = '';
+            passwordMatchFeedback.className = 'form-text';
+        }
+    }
+    
+    passwordField.addEventListener('input', validatePasswordMatch);
+    confirmPasswordField.addEventListener('input', validatePasswordMatch);
+    
+    // Form submission validation
+    form.addEventListener('submit', function(e) {
+        const password = passwordField.value;
+        const confirmPassword = confirmPasswordField.value;
+        const terms = document.getElementById('terms').checked;
+        
+        if (password !== confirmPassword) {
+            e.preventDefault();
+            if (window.VirtualBackroom && window.VirtualBackroom.utils) {
+                VirtualBackroom.utils.showAlert('Passwords do not match', 'error');
+            }
+            confirmPasswordField.focus();
+            return false;
+        }
+        
+        if (!terms) {
+            e.preventDefault();
+            if (window.VirtualBackroom && window.VirtualBackroom.utils) {
+                VirtualBackroom.utils.showAlert('Please agree to the Terms of Service and Privacy Policy', 'error');
+            }
+            return false;
+        }
+        
+        // Show loading state
+        submitBtn.innerHTML = '<span class="loading-spinner me-2"></span>Creating Account...';
+        submitBtn.disabled = true;
+    });
+    
+    // Initialize Firebase for Google Sign-Up
+    if (window.firebaseConfig && window.firebaseConfig.apiKey) {
+        try {
+            firebase.initializeApp(window.firebaseConfig);
+            
+            const provider = new firebase.auth.GoogleAuthProvider();
+            provider.addScope('email');
+            provider.addScope('profile');
+            
+            document.getElementById('googleSignUpBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const btn = e.target;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<span class="loading-spinner me-2"></span>Signing up...';
+                btn.disabled = true;
+                
+                firebase.auth().signInWithPopup(provider)
+                    .then(function(result) {
+                        return result.user.getIdToken();
+                    })
+                    .then(function(idToken) {
+                        return fetch('/auth/google-login', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': document.querySelector('meta[name=csrf-token]').getAttribute('content')
+                            },
+                            body: JSON.stringify({ id_token: idToken })
+                        });
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = data.redirect_url;
+                        } else {
+                            throw new Error(data.message || 'Authentication failed');
+                        }
+                    })
+                    .catch(function(error) {
+                        console.error('Google Sign-Up error:', error);
+                        
+                        if (window.VirtualBackroom && window.VirtualBackroom.utils) {
+                            VirtualBackroom.utils.showAlert(
+                                error.message || 'Google Sign-Up failed. Please try again.',
+                                'error'
+                            );
+                        } else {
+                            alert('Google Sign-Up failed. Please try again.');
+                        }
+                        
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    });
+            });
+        } catch (error) {
+            console.error('Firebase initialization error:', error);
+            document.getElementById('googleSignUpBtn').style.display = 'none';
+        }
+    } else {
+        document.getElementById('googleSignUpBtn').style.display = 'none';
+    }
+    
+    // Auto-focus first input
+    document.getElementById('first_name').focus();
+});
+</script>
+{% endblock %}
