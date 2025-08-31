@@ -276,7 +276,7 @@ export function RegulatoryAnalysisEngine() {
                             {framework.region}
                           </Badge>
                         </div>
-                      </SelectContent>
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
