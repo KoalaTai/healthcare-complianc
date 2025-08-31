@@ -1250,6 +1250,10 @@ export function EnhancedEnterpriseSSOPage() {
             }
           ]
         }
+        default:
+          return []
+      }
+    }
 
     const TroubleshootingView = () => {
       const provider = ssoProviders.find(p => p.id === selectedProvider)
@@ -1258,7 +1262,7 @@ export function EnhancedEnterpriseSSOPage() {
       const commonIssues = {
         'azure-ad': [
           {
-            issue: 'Users unable to authenticate',
+              'Missing API permissions or admin consent',
             symptoms: ['Login redirects to error page', 'Token validation fails', 'Access denied errors'],
             causes: [
               'Incorrect redirect URI configuration',
