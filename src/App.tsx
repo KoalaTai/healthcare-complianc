@@ -21,7 +21,8 @@ import {
   Brain,
   Target,
   Building,
-  Globe
+  Globe,
+  Bell
 } from '@phosphor-icons/react'
 import { 
   ProjectStructure,

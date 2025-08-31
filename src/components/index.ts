@@ -12,7 +12,6 @@ export { EnterpriseAuth } from './EnterpriseAuth';
 export { AuditTrailViewer } from './AuditTrailViewer';
 export { SSOConfiguration } from './SSOConfiguration';
 export { SSOConfigurationWizard } from './SSOConfigurationWizard';
-export { SSOIntegrationDocumentation } from './SSOIntegrationDocumentation'
 export { GapAnalysisReport } from './GapAnalysisReport';
 export { RegulatoryUpdatesFeed } from './RegulatoryUpdatesFeed';
 export { RegulatoryFeedConfiguration } from './RegulatoryFeedConfiguration';
