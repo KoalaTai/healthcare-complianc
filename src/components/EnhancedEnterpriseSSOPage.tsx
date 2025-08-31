@@ -1379,7 +1379,6 @@ export function EnhancedEnterpriseSSOPage() {
             issue: 'SAML configuration errors',
             symptoms: ['Invalid issuer errors', 'Signature validation failures', 'Attribute assertion errors'],
             causes: [
-      }
               'Certificate configuration issues',
               'Attribute mapping errors'
             ],
