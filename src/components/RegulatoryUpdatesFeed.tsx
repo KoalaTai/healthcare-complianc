@@ -169,6 +169,8 @@ export function RegulatoryUpdatesFeed() {
       tags: ['Health Canada', 'GMP', 'API', 'Manufacturing', 'Supply Chain'],
       isBookmarked: false,
       isRead: true,
+      isArchived: false,
+      isFlagged: false,
       impact: 'Medium - Affects API manufacturers and pharmaceutical supply chains',
       relatedStandards: ['ICH Q7', 'ISO 9001', 'PIC/S GMP']
     },
