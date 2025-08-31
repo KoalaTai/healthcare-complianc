@@ -1248,7 +1248,8 @@ export function EnhancedEnterpriseSSOPage() {
                 { label: 'Default Role', value: 'Quality Analyst' }
               ]
             }
-    }
+          ]
+        }
 
     const TroubleshootingView = () => {
       const provider = ssoProviders.find(p => p.id === selectedProvider)

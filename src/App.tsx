@@ -16,7 +16,8 @@ import {
   AlertTriangle,
   Download,
   Plus,
-  Search
+  Search,
+  BookOpen
 } from '@phosphor-icons/react'
 import { 
   ProjectStructure,
