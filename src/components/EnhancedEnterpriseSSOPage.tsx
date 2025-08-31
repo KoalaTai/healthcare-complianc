@@ -1249,6 +1249,7 @@ export function EnhancedEnterpriseSSOPage() {
               ]
             }
           ]
+          break;
         default:
           return []
       }
