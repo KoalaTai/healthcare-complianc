@@ -90,6 +90,13 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
       badge: 'Microsoft/Google'
     },
     {
+      id: 'sso-integration',
+      label: 'SSO Integration Wizard',
+      icon: Settings,
+      description: 'Automated provider setup',
+      badge: 'New'
+    },
+    {
       id: 'sso-docs',
       label: 'SSO Integration Guides',
       icon: BookOpen,

@@ -48,7 +48,11 @@ import {
   RegulatoryAnalysisEngine,
   AuditSimulationEngine,
   MultiTenantDashboard,
-  ProductionMonitoringDashboard
+  ProductionMonitoringDashboard,
+  SSOProviderWizard,
+  SSOManagementDashboard,
+  SSOTestingValidation,
+  AutomatedSSOIntegrationHub
 } from '@/components'
 import { ArchitecturePage } from '@/components/ArchitecturePage'
 import { AuditTrailViewer } from '@/components/AuditTrailViewer'
@@ -57,6 +61,7 @@ import { BreadcrumbNavigation } from '@/components/BreadcrumbNavigation'
 import { EnhancedEnterpriseSSOPage } from '@/components/EnhancedEnterpriseSSOPage'
 import { GlobalSearchInterface } from '@/components/GlobalSearchInterface'
 import { SSOIntegrationDocumentation } from '@/components/SSOIntegrationDocumentation'
+import { AutomatedSSOIntegrationHub } from '@/components/AutomatedSSOIntegrationHub'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('overview')
@@ -83,6 +88,8 @@ function App() {
         return <GlobalRegulationsPage />
       case 'enterprise-sso':
         return <EnhancedEnterpriseSSOPage />
+      case 'sso-integration':
+        return <AutomatedSSOIntegrationHub />
       case 'sso-docs':
         return <SSOIntegrationDocumentation />
       case 'ai-models':

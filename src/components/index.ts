@@ -38,3 +38,9 @@ export { RegulatoryAnalysisEngine } from './RegulatoryAnalysisEngine';
 export { AuditSimulationEngine } from './AuditSimulationEngine';
 export { MultiTenantDashboard } from './MultiTenantDashboard';
 export { ProductionMonitoringDashboard } from './ProductionMonitoringDashboard';
+
+// Automated SSO Integration System
+export { SSOProviderWizard } from './SSOProviderWizard';
+export { SSOManagementDashboard } from './SSOManagementDashboard';
+export { SSOTestingValidation } from './SSOTestingValidation';
+export { AutomatedSSOIntegrationHub } from './AutomatedSSOIntegrationHub';
