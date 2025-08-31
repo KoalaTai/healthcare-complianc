@@ -53,6 +53,13 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
       badge: 'Microsoft/Google'
     },
     {
+      id: 'sso-docs',
+      label: 'SSO Integration Guides',
+      icon: BookOpen,
+      description: 'Step-by-step setup documentation',
+      badge: 'Detailed'
+    },
+    {
       id: 'ai-models',
       label: 'AI Models',
       icon: BarChart3,
@@ -61,9 +68,16 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     },
     {
       id: 'compliance',
-      label: 'Compliance',
+      label: 'Compliance Tracking',
       icon: FileText,
-      description: 'QMS documentation and validation'
+      description: 'Real-time compliance monitoring',
+      badge: '96.8% Score'
+    },
+    {
+      id: 'compliance-page',
+      label: 'QMS Documentation',
+      icon: BookOpen,
+      description: 'Quality management system docs'
     }
   ]
 

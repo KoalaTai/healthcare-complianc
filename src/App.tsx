@@ -37,7 +37,9 @@ import {
   GlobalRegulationsPage,
   EnterpriseSSOPage,
   AIModelsPage,
-  CompliancePage
+  CompliancePage,
+  SSOConfigurationWizard,
+  ComplianceTrackingDashboard
 } from '@/components'
 import { ArchitecturePage } from '@/components/ArchitecturePage'
 import { AuditTrailViewer } from '@/components/AuditTrailViewer'
@@ -45,6 +47,7 @@ import { SSOConfiguration } from '@/components/SSOConfiguration'
 import { BreadcrumbNavigation } from '@/components/BreadcrumbNavigation'
 import { EnhancedEnterpriseSSOPage } from '@/components/EnhancedEnterpriseSSOPage'
 import { GlobalSearchInterface } from '@/components/GlobalSearchInterface'
+import { SSOIntegrationDocumentation } from '@/components/SSOIntegrationDocumentation'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('overview')
@@ -63,9 +66,13 @@ function App() {
         return <GlobalRegulationsPage />
       case 'enterprise-sso':
         return <EnhancedEnterpriseSSOPage />
+      case 'sso-docs':
+        return <SSOIntegrationDocumentation />
       case 'ai-models':
         return <AIModelsPage />
       case 'compliance':
+        return <ComplianceTrackingDashboard />
+      case 'compliance-page':
         return <CompliancePage />
       case 'architecture':
         return <ArchitecturePage />
@@ -229,6 +236,10 @@ function App() {
                 'Microsoft Azure AD SSO Integration ✓',
                 'Google Workspace SSO Integration ✓',
                 'Okta Enterprise SSO Integration ✓',
+                'PingIdentity SSO Integration ✓',
+                'Step-by-Step SSO Configuration Guides ✓',
+                'Interactive SSO Configuration Wizard ✓',
+                'SSO Troubleshooting & Diagnostic Tools ✓',
                 'Multi-Factor Authentication (MFA) ✓',
                 'Infrastructure as Code (Terraform) ✓',
                 'Production Deployment Pipeline ✓',
@@ -343,6 +354,10 @@ function App() {
                 <Button size="sm" onClick={() => setCurrentPage('search')}>
                   <Search size={16} className="mr-2" />
                   Global Search
+                </Button>
+                <Button size="sm" onClick={() => setCurrentPage('sso-docs')}>
+                  <BookOpen size={16} className="mr-2" />
+                  SSO Setup Guides
                 </Button>
                 <Badge variant="secondary" className="px-3 py-1">
                   <CheckCircle size={14} className="mr-1" />
