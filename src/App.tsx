@@ -456,11 +456,11 @@ function App() {
                   size="sm" 
                   onClick={() => {
                     setCurrentPage('document-upload')
-                    toast.success('Opening Document Upload & AI Analysis')
+                    toast.success('Opening Document Upload & Batch AI Analysis')
                   }}
                 >
                   <Upload size={16} className="mr-2" />
-                  Upload & Analyze
+                  Upload & Batch Analyze
                 </Button>
                 <Button 
                   size="sm" 
