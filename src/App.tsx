@@ -59,7 +59,8 @@ import {
   BreadcrumbNavigation,
   EnhancedEnterpriseSSOPage,
   GlobalSearchInterface,
-  SSOIntegrationDocumentation
+  SSOIntegrationDocumentation,
+  GapAnalysisReport
 } from '@/components'
 
 function App() {
@@ -73,6 +74,8 @@ function App() {
 
   const renderPage = () => {
     switch (currentPage) {
+      case 'gap-analysis':
+        return <GapAnalysisReport />
       case 'regulatory-analysis':
         return <RegulatoryAnalysisEngine />
       case 'audit-simulation':
@@ -374,9 +377,9 @@ function App() {
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <Button size="sm" onClick={() => setCurrentPage('regulatory-analysis')}>
-                  <Brain size={16} className="mr-2" />
-                  Analysis Engine
+                <Button size="sm" onClick={() => setCurrentPage('gap-analysis')}>
+                  <FileText size={16} className="mr-2" />
+                  Gap Analysis
                 </Button>
                 <Button size="sm" onClick={() => setCurrentPage('audit-simulation')}>
                   <Target size={16} className="mr-2" />

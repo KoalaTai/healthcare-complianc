@@ -38,6 +38,13 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
       badge: 'Live'
     },
     {
+      id: 'gap-analysis',
+      label: 'Gap Analysis Report',
+      icon: FileText,
+      description: 'Comprehensive feature implementation analysis',
+      badge: '79.8% Complete'
+    },
+    {
       id: 'regulatory-analysis',
       label: 'Regulatory Analysis Engine',
       icon: Brain,
