@@ -18,7 +18,8 @@ import {
   Target,
   Building,
   Activity,
-  Server
+  Server,
+  Bell
 } from '@phosphor-icons/react'
 
 interface NavigationProps {
@@ -36,6 +37,20 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
       icon: Home,
       description: 'Production deployment status',
       badge: 'Live'
+    },
+    {
+      id: 'regulatory-updates',
+      label: 'Regulatory Updates Feed',
+      icon: Bell,
+      description: 'Real-time regulatory changes monitoring',
+      badge: 'Live Feed'
+    },
+    {
+      id: 'feed-configuration',
+      label: 'Feed Configuration',
+      icon: Settings,
+      description: 'Configure automated update sources',
+      badge: 'Auto-Sync'
     },
     {
       id: 'gap-analysis',
@@ -99,7 +114,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     {
       id: 'sso-integration',
       label: 'SSO Integration Wizard',
-      icon: Settings,
+      icon: Lock,
       description: 'Automated provider setup',
       badge: 'New'
     },

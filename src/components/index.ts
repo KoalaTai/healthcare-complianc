@@ -14,6 +14,8 @@ export { SSOConfiguration } from './SSOConfiguration';
 export { SSOConfigurationWizard } from './SSOConfigurationWizard';
 export { SSOIntegrationDocumentation } from './SSOIntegrationDocumentation'
 export { GapAnalysisReport } from './GapAnalysisReport';
+export { RegulatoryUpdatesFeed } from './RegulatoryUpdatesFeed';
+export { RegulatoryFeedConfiguration } from './RegulatoryFeedConfiguration';
 export { ComplianceTrackingDashboard } from './ComplianceTrackingDashboard';
 export { InfrastructureMonitoring } from './InfrastructureMonitoring';
 export { PharmaceuticalAI } from './PharmaceuticalAI';

@@ -60,7 +60,9 @@ import {
   EnhancedEnterpriseSSOPage,
   GlobalSearchInterface,
   SSOIntegrationDocumentation,
-  GapAnalysisReport
+  GapAnalysisReport,
+  RegulatoryUpdatesFeed,
+  RegulatoryFeedConfiguration
 } from '@/components'
 
 function App() {
@@ -74,6 +76,10 @@ function App() {
 
   const renderPage = () => {
     switch (currentPage) {
+      case 'regulatory-updates':
+        return <RegulatoryUpdatesFeed />
+      case 'feed-configuration':
+        return <RegulatoryFeedConfiguration />
       case 'gap-analysis':
         return <GapAnalysisReport />
       case 'regulatory-analysis':
@@ -377,6 +383,10 @@ function App() {
                 </div>
               </div>
               <div className="flex items-center gap-4">
+                <Button size="sm" onClick={() => setCurrentPage('regulatory-updates')}>
+                  <Bell size={16} className="mr-2" />
+                  Updates Feed
+                </Button>
                 <Button size="sm" onClick={() => setCurrentPage('gap-analysis')}>
                   <FileText size={16} className="mr-2" />
                   Gap Analysis
