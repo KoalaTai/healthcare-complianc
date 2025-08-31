@@ -11,7 +11,6 @@ export { ModelPerformanceDashboard } from './ModelPerformanceDashboard';
 export { EnterpriseAuth } from './EnterpriseAuth';
 export { AuditTrailViewer } from './AuditTrailViewer';
 export { SSOConfiguration } from './SSOConfiguration';
-export { SSOConfigurationWizard } from './SSOConfigurationWizard';
 export { GapAnalysisReport } from './GapAnalysisReport';
 export { RegulatoryUpdatesFeed } from './RegulatoryUpdatesFeed';
 export { RegulatoryFeedConfiguration } from './RegulatoryFeedConfiguration';
@@ -40,12 +39,6 @@ export { RegulatoryAnalysisEngine } from './RegulatoryAnalysisEngine';
 export { AuditSimulationEngine } from './AuditSimulationEngine';
 export { MultiTenantDashboard } from './MultiTenantDashboard';
 export { ProductionMonitoringDashboard } from './ProductionMonitoringDashboard';
-
-// Automated SSO Integration System
-export { SSOProviderWizard } from './SSOProviderWizard';
-export { SSOManagementDashboard } from './SSOManagementDashboard';
-export { SSOTestingValidation } from './SSOTestingValidation';
-export { AutomatedSSOIntegrationHub } from './AutomatedSSOIntegrationHub';
 
 // SSO Components from sso directory
 export { SSOProviderConfig } from './sso/SSOProviderConfig';
