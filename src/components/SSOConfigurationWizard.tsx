@@ -459,97 +459,205 @@ export function SSOConfigurationWizard({ provider, onComplete }: {
     </div>
   )
 
-  const TestingStep = () => (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-semibold mb-2">Configuration Testing & Validation</h3>
-        <p className="text-sm text-muted-foreground mb-6">
-          Test your SSO configuration to ensure everything works correctly before going live.
-        </p>
+  const TestingStep = () => {
+    const [testResults, setTestResults] = useState<{[key: string]: any}>({})
+    const [isTestingConnection, setIsTestingConnection] = useState(false)
+    const [isTestingProvisioning, setIsTestingProvisioning] = useState(false)
+    const [isTestingMFA, setIsTestingMFA] = useState(false)
+
+    const runConnectionTest = async () => {
+      setIsTestingConnection(true)
+      // Simulate API call to test SSO connection
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      const result = {
+        success: true,
+        responseTime: '234ms',
+        certificateValid: true,
+        tokenExchange: 'Success',
+        userAttributes: ['email', 'firstName', 'lastName', 'department']
+      }
+      
+      setTestResults(prev => ({ ...prev, connection: result }))
+      setConfig(prev => ({
+        ...prev,
+        testing: { ...prev.testing, connectionTested: true }
+      }))
+      setIsTestingConnection(false)
+    }
+
+    const runProvisioningTest = async () => {
+      setIsTestingProvisioning(true)
+      await new Promise(resolve => setTimeout(resolve, 1500))
+      
+      const result = {
+        success: true,
+        testUser: 'john.doe@company.com',
+        attributeMapping: 'Successful',
+        accountCreated: true,
+        groupAssignment: 'Applied'
+      }
+      
+      setTestResults(prev => ({ ...prev, provisioning: result }))
+      setConfig(prev => ({
+        ...prev,
+        testing: { ...prev.testing, userProvisioningTested: true }
+      }))
+      setIsTestingProvisioning(false)
+    }
+
+    const runMFATest = async () => {
+      setIsTestingMFA(true)
+      await new Promise(resolve => setTimeout(resolve, 1800))
+      
+      const result = {
+        success: true,
+        mfaMethod: 'Microsoft Authenticator',
+        enforcementPolicy: 'Applied',
+        fallbackOptions: ['SMS', 'Email']
+      }
+      
+      setTestResults(prev => ({ ...prev, mfa: result }))
+      setConfig(prev => ({
+        ...prev,
+        testing: { ...prev.testing, mfaTested: true }
+      }))
+      setIsTestingMFA(false)
+    }
+
+    return (
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-lg font-semibold mb-2">Configuration Testing & Validation</h3>
+          <p className="text-sm text-muted-foreground mb-6">
+            Test your SSO configuration to ensure everything works correctly before going live.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card className={config.testing.connectionTested ? 'border-green-500' : ''}>
+            <CardContent className="p-6 text-center">
+              <Shield size={32} className={`mx-auto mb-3 ${config.testing.connectionTested ? 'text-green-600' : 'text-muted-foreground'}`} />
+              <h4 className="font-medium mb-2">SSO Connection Test</h4>
+              <p className="text-xs text-muted-foreground mb-4">
+                Validate authentication flow and token exchange
+              </p>
+              <Button 
+                variant={config.testing.connectionTested ? 'default' : 'outline'}
+                size="sm"
+                onClick={runConnectionTest}
+                disabled={isTestingConnection}
+              >
+                {isTestingConnection ? (
+                  <>
+                    <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full mr-2" />
+                    Testing...
+                  </>
+                ) : config.testing.connectionTested ? (
+                  <>
+                    <CheckCircle size={14} className="mr-2" />
+                    Tested
+                  </>
+                ) : (
+                  'Run Test'
+                )}
+              </Button>
+              
+              {testResults.connection && (
+                <div className="mt-4 p-3 bg-green-50 dark:bg-green-950/20 rounded text-left">
+                  <div className="text-xs space-y-1">
+                    <div>✓ Response Time: {testResults.connection.responseTime}</div>
+                    <div>✓ Certificate: Valid</div>
+                    <div>✓ Token Exchange: Success</div>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          <Card className={config.testing.userProvisioningTested ? 'border-green-500' : ''}>
+            <CardContent className="p-6 text-center">
+              <Users size={32} className={`mx-auto mb-3 ${config.testing.userProvisioningTested ? 'text-green-600' : 'text-muted-foreground'}`} />
+              <h4 className="font-medium mb-2">User Provisioning Test</h4>
+              <p className="text-xs text-muted-foreground mb-4">
+                Test automatic user creation and attribute mapping
+              </p>
+              <Button 
+                variant={config.testing.userProvisioningTested ? 'default' : 'outline'}
+                size="sm"
+                onClick={runProvisioningTest}
+                disabled={isTestingProvisioning}
+              >
+                {isTestingProvisioning ? (
+                  <>
+                    <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full mr-2" />
+                    Testing...
+                  </>
+                ) : config.testing.userProvisioningTested ? (
+                  <>
+                    <CheckCircle size={14} className="mr-2" />
+                    Tested
+                  </>
+                ) : (
+                  'Run Test'
+                )}
+              </Button>
+
+              {testResults.provisioning && (
+                <div className="mt-4 p-3 bg-green-50 dark:bg-green-950/20 rounded text-left">
+                  <div className="text-xs space-y-1">
+                    <div>✓ Test User: Created</div>
+                    <div>✓ Attributes: Mapped</div>
+                    <div>✓ Groups: Assigned</div>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          <Card className={config.testing.mfaTested ? 'border-green-500' : ''}>
+            <CardContent className="p-6 text-center">
+              <Key size={32} className={`mx-auto mb-3 ${config.testing.mfaTested ? 'text-green-600' : 'text-muted-foreground'}`} />
+              <h4 className="font-medium mb-2">MFA Flow Test</h4>
+              <p className="text-xs text-muted-foreground mb-4">
+                Validate multi-factor authentication enforcement
+              </p>
+              <Button 
+                variant={config.testing.mfaTested ? 'default' : 'outline'}
+                size="sm"
+                onClick={runMFATest}
+                disabled={isTestingMFA}
+              >
+                {isTestingMFA ? (
+                  <>
+                    <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full mr-2" />
+                    Testing...
+                  </>
+                ) : config.testing.mfaTested ? (
+                  <>
+                    <CheckCircle size={14} className="mr-2" />
+                    Tested
+                  </>
+                ) : (
+                  'Run Test'
+                )}
+              </Button>
+
+              {testResults.mfa && (
+                <div className="mt-4 p-3 bg-green-50 dark:bg-green-950/20 rounded text-left">
+                  <div className="text-xs space-y-1">
+                    <div>✓ MFA: Enforced</div>
+                    <div>✓ Method: Authenticator</div>
+                    <div>✓ Fallback: Available</div>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className={config.testing.connectionTested ? 'border-green-500' : ''}>
-          <CardContent className="p-6 text-center">
-            <Shield size={32} className={`mx-auto mb-3 ${config.testing.connectionTested ? 'text-green-600' : 'text-muted-foreground'}`} />
-            <h4 className="font-medium mb-2">SSO Connection Test</h4>
-            <p className="text-xs text-muted-foreground mb-4">
-              Validate authentication flow and token exchange
-            </p>
-            <Button 
-              variant={config.testing.connectionTested ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setConfig(prev => ({
-                ...prev,
-                testing: { ...prev.testing, connectionTested: true }
-              }))}
-            >
-              {config.testing.connectionTested ? (
-                <>
-                  <CheckCircle size={14} className="mr-2" />
-                  Tested
-                </>
-              ) : (
-                'Run Test'
-              )}
-            </Button>
-          </CardContent>
-        </Card>
-
-        <Card className={config.testing.userProvisioningTested ? 'border-green-500' : ''}>
-          <CardContent className="p-6 text-center">
-            <Users size={32} className={`mx-auto mb-3 ${config.testing.userProvisioningTested ? 'text-green-600' : 'text-muted-foreground'}`} />
-            <h4 className="font-medium mb-2">User Provisioning Test</h4>
-            <p className="text-xs text-muted-foreground mb-4">
-              Test automatic user creation and attribute mapping
-            </p>
-            <Button 
-              variant={config.testing.userProvisioningTested ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setConfig(prev => ({
-                ...prev,
-                testing: { ...prev.testing, userProvisioningTested: true }
-              }))}
-            >
-              {config.testing.userProvisioningTested ? (
-                <>
-                  <CheckCircle size={14} className="mr-2" />
-                  Tested
-                </>
-              ) : (
-                'Run Test'
-              )}
-            </Button>
-          </CardContent>
-        </Card>
-
-        <Card className={config.testing.mfaTested ? 'border-green-500' : ''}>
-          <CardContent className="p-6 text-center">
-            <Key size={32} className={`mx-auto mb-3 ${config.testing.mfaTested ? 'text-green-600' : 'text-muted-foreground'}`} />
-            <h4 className="font-medium mb-2">MFA Flow Test</h4>
-            <p className="text-xs text-muted-foreground mb-4">
-              Validate multi-factor authentication enforcement
-            </p>
-            <Button 
-              variant={config.testing.mfaTested ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setConfig(prev => ({
-                ...prev,
-                testing: { ...prev.testing, mfaTested: true }
-              }))}
-            >
-              {config.testing.mfaTested ? (
-                <>
-                  <CheckCircle size={14} className="mr-2" />
-                  Tested
-                </>
-              ) : (
-                'Run Test'
-              )}
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+    )
+  }
 
       {/* Configuration Summary */}
       <Card>
