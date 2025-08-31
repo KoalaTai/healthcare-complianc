@@ -14,6 +14,7 @@ interface BreadcrumbNavigationProps {
 
 const pageMapping: Record<string, { title: string; category?: string }> = {
   'overview': { title: 'Overview' },
+  'tutorial-dashboard': { title: 'Learning Center', category: 'Training' },
   'regulatory-updates': { title: 'Regulatory Updates Feed', category: 'Monitoring' },
   'feed-configuration': { title: 'Feed Configuration', category: 'Monitoring' },
   'gap-analysis': { title: 'Gap Analysis Report', category: 'Analysis' },

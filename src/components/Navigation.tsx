@@ -39,6 +39,13 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
       badge: 'Live'
     },
     {
+      id: 'tutorial-dashboard',
+      label: 'Learning Center',
+      icon: BookOpen,
+      description: 'Interactive tutorials and training',
+      badge: 'New User Guide'
+    },
+    {
       id: 'regulatory-updates',
       label: 'Regulatory Updates Feed',
       icon: Bell,

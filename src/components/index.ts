@@ -47,3 +47,8 @@ export { SSOTestingValidation } from './SSOTestingValidation';
 export { AutomatedSSOIntegrationHub } from './AutomatedSSOIntegrationHub';
 export { SSOIntegrationDocumentation } from './SSOIntegrationDocumentation';
 export { SSOProviderWizard } from './SSOProviderWizard';
+
+// Tutorial System
+export { InteractiveTutorial } from './InteractiveTutorial';
+export { TutorialHighlight } from './TutorialHighlight';
+export { TutorialDashboard } from './TutorialDashboard';

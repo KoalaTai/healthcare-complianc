@@ -64,7 +64,9 @@ import {
   SSOIntegrationDocumentation,
   GapAnalysisReport,
   RegulatoryUpdatesFeed,
-  RegulatoryFeedConfiguration
+  RegulatoryFeedConfiguration,
+  InteractiveTutorial,
+  TutorialDashboard
 } from '@/components'
 
 function App() {
@@ -78,6 +80,18 @@ function App() {
 
   const renderPage = () => {
     switch (currentPage) {
+      case 'tutorial-dashboard':
+        return <TutorialDashboard 
+          onStartTutorial={() => {
+            setCurrentPage('overview')
+            // The InteractiveTutorial will auto-start for new users
+          }}
+          onStartSpecificTutorial={(tutorialId) => {
+            toast.info(`Starting tutorial: ${tutorialId}`)
+            // Handle specific tutorial navigation
+            setCurrentPage('overview')
+          }}
+        />
       case 'regulatory-updates':
         return <RegulatoryUpdatesFeed />
       case 'feed-configuration':
@@ -437,6 +451,16 @@ function App() {
                 <Button 
                   size="sm" 
                   onClick={() => {
+                    setCurrentPage('tutorial-dashboard')
+                    toast.success('Opening Interactive Learning Center')
+                  }}
+                >
+                  <BookOpen size={16} className="mr-2" />
+                  Learning Center
+                </Button>
+                <Button 
+                  size="sm" 
+                  onClick={() => {
                     setCurrentPage('regulatory-updates')
                     toast.success('Navigated to Regulatory Updates Feed')
                   }}
@@ -495,6 +519,10 @@ function App() {
           <div className="mb-6">
             <BreadcrumbNavigation currentPage={currentPage} />
           </div>
+          
+          {/* Interactive Tutorial System */}
+          <InteractiveTutorial onNavigate={setCurrentPage} currentPage={currentPage} />
+          
           {renderPage()}
         </div>
       </div>
