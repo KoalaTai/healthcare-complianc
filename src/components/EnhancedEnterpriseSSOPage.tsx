@@ -1262,7 +1262,7 @@ export function EnhancedEnterpriseSSOPage() {
       const commonIssues = {
         'azure-ad': [
           {
-              'Missing API permissions or admin consent',
+            title: 'Missing API permissions or admin consent',
             symptoms: ['Login redirects to error page', 'Token validation fails', 'Access denied errors'],
             causes: [
               'Incorrect redirect URI configuration',
