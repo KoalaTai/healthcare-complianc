@@ -1374,7 +1374,7 @@ export function EnhancedEnterpriseSSOPage() {
             issue: 'SAML configuration errors',
             symptoms: ['Invalid issuer errors', 'Signature validation failures', 'Attribute assertion errors'],
             causes: [
-              'Entity ID mismatch',
+      }
               'Certificate configuration issues',
               'Attribute mapping errors'
             ],
@@ -1533,7 +1533,216 @@ export function EnhancedEnterpriseSSOPage() {
                       <ExternalLink size={14} className="mr-2" />
                       {provider.name} Community Forums
                     </Button>
-                    <Button variant="ghost" size="sm" className="justify-start">
+    }
+
+    const steps = getSetupSteps(selectedProvider!)
+
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" onClick={() => setCurrentView('main')}>
+            ← Back to SSO Overview
+          </Button>
+          <div>
+            <h2 className="text-2xl font-bold">{provider.name} Setup Guide</h2>
+            <p className="text-muted-foreground text-sm">
+              Step-by-step configuration instructions for enterprise SSO integration
+            </p>
+          </div>
+        </div>
+
+        {/* Setup Progress */}
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-semibold">Setup Progress</h3>
+              <Badge variant="secondary">
+                {steps.filter((_, i) => i < 2).length}/{steps.length} Complete
+              </Badge>
+            </div>
+            <div className="flex gap-2">
+              {steps.map((step, index) => (
+                <div
+                  key={step.step}
+                  className={`flex-1 h-2 rounded-full ${
+                    index < 2 ? 'bg-primary' : 'bg-muted'
+                  }`}
+                />
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Setup Steps */}
+        <div className="space-y-6">
+          {steps.map((step, index) => (
+            <Card key={step.step} className={index < 2 ? 'border-primary/50' : ''}>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                    index < 2 ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
+                  }`}>
+                    {step.step}
+                  </div>
+                  {step.title}
+                  {index < 2 && <CheckCircle size={20} className="text-green-600" />}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <p className="text-muted-foreground">{step.description}</p>
+                
+                {/* Detailed Instructions */}
+                <div className="space-y-2">
+                  {step.details.map((detail, detailIndex) => (
+                    <div key={detailIndex} className="flex items-start gap-3 text-sm">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
+                      <span className={detail.startsWith('  •') ? 'ml-4 text-muted-foreground' : ''}>{detail}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Configuration Reference Table */}
+                {(step as any).configItems && (
+                  <div className="mt-6">
+                    <h5 className="font-medium mb-3 text-sm">Configuration Reference</h5>
+                    <div className="border rounded-lg">
+                      <div className="bg-muted/50 px-4 py-2 border-b">
+                        <div className="grid grid-cols-2 gap-4 text-xs font-medium text-muted-foreground">
+                          <span>Parameter</span>
+                          <span>Value</span>
+                        </div>
+                      </div>
+                      <div className="divide-y">
+                        {(step as any).configItems.map((item: any, itemIndex: number) => (
+                          <div key={itemIndex} className="px-4 py-3">
+                            <div className="grid grid-cols-2 gap-4 text-sm">
+                              <span className="font-medium">{item.label}</span>
+                              <span className="font-mono text-muted-foreground text-xs">{item.value}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Action Buttons */}
+                <div className="flex gap-3 mt-4">
+                  {index >= 2 && (
+                    <Button variant="outline" size="sm">
+                      <ExternalLink size={14} className="mr-2" />
+                      Open {provider.name} Console
+                    </Button>
+                  )}
+                  {step.step === steps.length && (
+                    <Button size="sm">
+                      <Shield size={14} className="mr-2" />
+                      Test Configuration
+                    </Button>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Configuration Test */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Shield size={20} />
+              Test Configuration
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-sm text-muted-foreground">
+              Once configuration is complete, test the SSO integration to ensure everything works correctly.
+            </p>
+            <div className="flex gap-3">
+              <Button>
+                <Shield size={16} className="mr-2" />
+                Test SSO Connection
+              </Button>
+              <Button variant="outline">
+                <Users size={16} className="mr-2" />
+                Test User Provisioning
+              </Button>
+              <Button variant="outline">
+                <Lock size={16} className="mr-2" />
+                Test MFA Flow
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
+  const getComplexityColor = (level: string) => {
+    switch (level) {
+      case 'standard': return 'bg-blue-100 text-blue-800'
+      case 'enhanced': return 'bg-yellow-100 text-yellow-800'
+      case 'enterprise': return 'bg-purple-100 text-purple-800'
+      default: return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  if (currentView === 'setup-guide') {
+    return <SetupGuideView />
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
+            <Building2 size={32} />
+            Enterprise SSO & Identity Management
+          </h1>
+          <p className="text-muted-foreground mt-2">
+            Secure, scalable identity management with enterprise-grade SSO integration
+          </p>
+        </div>
+        <div className="flex gap-2">
+          <Button variant="outline">
+            <Globe size={16} className="mr-2" />
+            SSO Health Check
+          </Button>
+          <Button variant="outline">
+            <BookOpen size={16} className="mr-2" />
+            Setup Guides
+          </Button>
+          <Button>
+            <UserCheck size={16} className="mr-2" />
+            Invite Users
+          </Button>
+        </div>
+      </div>
+
+      {/* Tabs Navigation */}
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="overview">Overview & Monitoring</TabsTrigger>
+          <TabsTrigger value="configuration">Provider Configuration</TabsTrigger>
+          <TabsTrigger value="users">User Management</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview" className="mt-6">
+          <OverviewTab />
+        </TabsContent>
+
+        <TabsContent value="configuration" className="mt-6">
+          <ConfigurationTab />
+        </TabsContent>
+
+        <TabsContent value="users" className="mt-6">
+          <UsersTab />
+        </TabsContent>
+      </Tabs>
+    </div>
+  )
+}                    <Button variant="ghost" size="sm" className="justify-start">
                       <Activity size={14} className="mr-2" />
                       Enterprise Support Portal
                     </Button>
