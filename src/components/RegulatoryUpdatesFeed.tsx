@@ -190,6 +190,8 @@ export function RegulatoryUpdatesFeed() {
       tags: ['TGA', 'Clinical Trials', 'Monitoring', 'Data Integrity', 'Australia'],
       isBookmarked: false,
       isRead: false,
+      isArchived: false,
+      isFlagged: false,
       impact: 'High - Affects all clinical trials conducted in Australia',
       relatedStandards: ['ICH GCP', 'ISO 14155', 'OECD GLP']
     }
@@ -264,6 +266,8 @@ export function RegulatoryUpdatesFeed() {
         tags: ['Auto-detected', 'Real-time'],
         isBookmarked: false,
         isRead: false,
+        isArchived: false,
+        isFlagged: false,
         impact: 'TBD - Requires review for impact assessment',
         relatedStandards: []
       }
