@@ -56,4 +56,5 @@ export { DocumentUploadWorkflow } from './DocumentUploadWorkflow';
 
 // Distributed Processing & Batch Operations
 export { DistributedProcessingEngine } from './DistributedProcessingEngine';
-export { BatchDocumentProcessing } from './BatchDocumentProcessing';
+export { BatchDocumentProcessing } from './BatchDocumentProcessing'
+export { ProductionSSODeployment } from './ProductionSSODeployment';

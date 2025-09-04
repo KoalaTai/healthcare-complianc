@@ -72,7 +72,8 @@ import {
   TutorialDashboard,
   DocumentUploadWorkflow,
   DistributedProcessingEngine,
-  BatchDocumentProcessing
+  BatchDocumentProcessing,
+  ProductionSSODeployment
 } from '@/components'
 
 function App() {
@@ -86,6 +87,8 @@ function App() {
 
   const renderPage = () => {
     switch (currentPage) {
+      case 'production-sso':
+        return <ProductionSSODeployment />
       case 'distributed-processing':
         return <DistributedProcessingEngine />
       case 'batch-processing':
@@ -463,6 +466,16 @@ function App() {
                 <Button 
                   size="sm" 
                   onClick={() => {
+                    setCurrentPage('production-sso')
+                    toast.success('Opening Production SSO Deployment Center')
+                  }}
+                >
+                  <Shield size={16} className="mr-2" />
+                  Production SSO
+                </Button>
+                <Button 
+                  size="sm" 
+                  onClick={() => {
                     setCurrentPage('distributed-processing')
                     toast.success('Opening Distributed AI Processing Engine')
                   }}
@@ -479,16 +492,6 @@ function App() {
                 >
                   <ListChecks size={16} className="mr-2" />
                   Batch Processing
-                </Button>
-                <Button 
-                  size="sm" 
-                  onClick={() => {
-                    setCurrentPage('document-upload')
-                    toast.success('Opening Document Upload & Batch AI Analysis')
-                  }}
-                >
-                  <Upload size={16} className="mr-2" />
-                  Upload & Batch Analyze
                 </Button>
                 <Button 
                   size="sm" 
