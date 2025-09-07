@@ -35,6 +35,12 @@ export { ArchitecturePage } from './ArchitecturePage';
 export { BreadcrumbNavigation } from './BreadcrumbNavigation';
 
 // VirtualBackroom.ai V2.0 Core Platform Components
+export { VirtualBackroomApp } from './VirtualBackroomApp';
+export { AuditSimulationDashboard } from './AuditSimulationDashboard';
+export { RegulatoryKnowledgeBase } from './RegulatoryKnowledgeBase';
+export { AIAssistantHub } from './AIAssistantHub';
+export { ComplianceTracker, UserManagement, SystemMonitoring, DocumentProcessor } from './ComplianceComponents';
+
 export { RegulatoryAnalysisEngine } from './RegulatoryAnalysisEngine';
 export { AuditSimulationEngine } from './AuditSimulationEngine';
 export { MultiTenantDashboard } from './MultiTenantDashboard';

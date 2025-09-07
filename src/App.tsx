@@ -28,6 +28,10 @@ import {
   Network,
   ListChecks
 } from '@phosphor-icons/react'
+
+// Import VirtualBackroom Platform
+import { VirtualBackroomApp } from '@/components/VirtualBackroomApp'
+
 import { 
   ProjectStructure,
   ArchitectureDiagram,
@@ -77,7 +81,7 @@ import {
 } from '@/components'
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('overview')
+  const [currentPage, setCurrentPage] = useState('virtualbackroom')
   const [projectData, setProjectData] = useKV('virtualbackroom-project', JSON.stringify({
     name: 'VirtualBackroom.ai V2.0',
     phase: 'Production Deployment - Complete',
@@ -87,6 +91,8 @@ function App() {
 
   const renderPage = () => {
     switch (currentPage) {
+      case 'virtualbackroom':
+        return <VirtualBackroomApp />
       case 'production-sso':
         return <ProductionSSODeployment />
       case 'distributed-processing':
@@ -466,12 +472,12 @@ function App() {
                 <Button 
                   size="sm" 
                   onClick={() => {
-                    setCurrentPage('production-sso')
-                    toast.success('Opening Production SSO Deployment Center')
+                    setCurrentPage('virtualbackroom')
+                    toast.success('Opening VirtualBackroom.ai Platform')
                   }}
                 >
                   <Shield size={16} className="mr-2" />
-                  Production SSO
+                  Platform
                 </Button>
                 <Button 
                   size="sm" 
